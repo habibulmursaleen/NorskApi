@@ -1,0 +1,80 @@
+# Common directories to ignore
+**/bin/
+**/obj/
+**/out/
+build/
+dist/
+.vs/
+.vscode/
+.idea/
+node_modules/
+jspm_packages/
+bower_components/
+vendor/
+env/
+venv/
+ENV/
+
+# C# and .NET
+*.csproj.user
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.pidb
+*.psess
+*.cache
+*.crash
+*.dll.config
+*.exe.config
+*.log
+*.vspscc
+*.vssscc
+_._*
+_ReSharper*/
+Ankh.NoLoad
+StyleCopReport.xml
+
+# PHP
+composer.lock
+vendor/
+
+# Python
+*.py[cod]
+*.pyo
+*.pyd
+__pycache__/
+*.pyc
+
+# TypeScript
+*.tsbuildinfo
+
+# JavaScript
+*.log
+*.tsbuildinfo
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
+*.temp
+*.sublime-project
+*.sublime-workspace
+*.kate-swp
+*.asv
+*.ntvs_analysis.dat
+*.m~
+*.err
+*.orig
+*.log
+*.suo
+*.user
+*.pidb
+*.sdf
+*.cache
+*.dbmdl
+*.jfm
+.ipynb_checkpoints/
