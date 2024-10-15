@@ -1,6 +1,6 @@
 using NorskApi.Domain.Common.Models;
-using NorskApi.Domain.SubjunctionAgreegate.Events.DomainEvent;
-using NorskApi.Domain.SubjunctionAgreegate.ValueObjects;
+using NorskApi.Domain.SubjunctionAggregate.Events.DomainEvent;
+using NorskApi.Domain.SubjunctionAggregate.ValueObjects;
 
 namespace NorskApi.Domain.SubjunctionAgreegate;
 

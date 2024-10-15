@@ -1,6 +1,6 @@
 using NorskApi.Domain.Common.Models;
 
-namespace NorskApi.Domain.SubjunctionAgreegate.ValueObjects;
+namespace NorskApi.Domain.SubjunctionAggregate.ValueObjects;
 public sealed class SubjunctionId : AggregateRootId<Guid>
 {
     private SubjunctionId()

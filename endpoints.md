@@ -353,7 +353,7 @@
 [
   {
     "id": "6d737c85-35fa-4e1b-b341-ac883ef751d4",
-    "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
+    "grammarRuleId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
     "label": "Quia illo aliquid consequuntur.",
     "description": "Sed et qui iusto omnis sed et modi.",
     "explanatoryNotes": "animi consequatur suscipit",
@@ -365,7 +365,7 @@
     "exceptions": [
       {
         "id": "1a1d6cd8-d652-4491-8765-fc0b6f216782",
-        "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
+        "grammarRuleId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
         "title": "dignissimos",
         "description": "Hun",
         "comments": "in",
