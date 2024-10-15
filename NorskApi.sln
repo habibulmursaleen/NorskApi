@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Api", "NorskApi.Api\NorskApi.Api.csproj", "{C8EF9210-5B3A-4E14-92B9-86270E7F0EA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Api", "src\NorskApi.Api\NorskApi.Api.csproj", "{C8EF9210-5B3A-4E14-92B9-86270E7F0EA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Application", "NorskApi.Application\NorskApi.Application.csproj", "{0D9F9AF2-793F-4FAA-84F9-3D63686DA28C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Application", "src\NorskApi.Application\NorskApi.Application.csproj", "{0D9F9AF2-793F-4FAA-84F9-3D63686DA28C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Contracts", "NorskApi.Contracts\NorskApi.Contracts.csproj", "{D3BF515D-8892-444F-A4A5-4631984FDD7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Contracts", "src\NorskApi.Contracts\NorskApi.Contracts.csproj", "{D3BF515D-8892-444F-A4A5-4631984FDD7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Domain", "NorskApi.Domain\NorskApi.Domain.csproj", "{3279BDE5-C918-41E6-AECB-CB29FA713741}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Domain", "src\NorskApi.Domain\NorskApi.Domain.csproj", "{3279BDE5-C918-41E6-AECB-CB29FA713741}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Infrastructure", "NorskApi.Infrastructure\NorskApi.Infrastructure.csproj", "{B5EFBE3F-A9B9-429D-9A0C-D0BB31C77E8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorskApi.Infrastructure", "src\NorskApi.Infrastructure\NorskApi.Infrastructure.csproj", "{B5EFBE3F-A9B9-429D-9A0C-D0BB31C77E8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

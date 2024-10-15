@@ -1,0 +1,7 @@
+:On Error Exit
+SET XACT_ABORT ON
+BEGIN TRANSACTION
+
+:r $(ScriptFile)
+
+COMMIT
