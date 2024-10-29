@@ -29,8 +29,6 @@
 
 This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .NET application.
 
-
-
 ### Requirements
 
 - [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) or later
