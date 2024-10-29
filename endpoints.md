@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Setup](#setup)
+- [LocalExpressions](#localexpressions)
 - [Quiz](#quiz)
 - [Discussion](#discussion)
 - [Word](#word)

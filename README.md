@@ -4,9 +4,15 @@
 
 - [Norsk API](#norsk-api)
   - [Table of contents](#table-of-contents)
-  - [LocalExpressions](#localexpressions)
-    - [POST PUT DELETE GET `{host}/api/v1/localexpressions`](#post-put-delete-get-hostapiv1localexpressions)
-    - [GET `{host}/api/v1/localexpressions/{localexpressionId}`](#get-hostapiv1localexpressionslocalexpressionid)
+    - [Requirements](#requirements)
+    - [Architecture Overview](#architecture-overview)
+    - [Setup](#setup)
+      - [Step 1: Clone the Repository](#step-1-clone-the-repository)
+      - [Step 2: Set Up Database](#step-2-set-up-database)
+      - [Step 3: Apply Migrations](#step-3-apply-migrations)
+      - [Step 4: Run the Application](#step-4-run-the-application)
+      - [Other Commands](#other-commands)
+    - [LocalExpressions Endpoints](#localexpressions-endpoints)
     - [Quiz Endpoints](#quiz-endpoints)
     - [Discussion Endpoints](#discussion-endpoints)
     - [Word Endpoints](#word-endpoints)
@@ -21,31 +27,90 @@
 
 ![Norsk API Aggregate](norskapi.png)
 
-## LocalExpressions
+This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .NET application.
 
-### POST PUT DELETE GET `{host}/api/v1/localexpressions`
 
-### GET `{host}/api/v1/localexpressions/{localexpressionId}`
 
-```json
-[
-  {
-    "id": "430c537b-3f63-439e-a7b2-acaf5e1ce836",
-    "label": "Totam minus dolores deserunt quod iste sapiente?",
-    "description": "fugiat illum et",
-    "meaningInNorsk": "quis dolorem impedit",
-    "meaningInEnglish":  "totam consequuntur est",
-    "type": "PHASES_IDIOMS", // enum "EVERYDAY_PHRASE" OR "YOUTH_SLANG" OR "PROFESSIONAL" OR "PHASES_IDIOMS" OR "URBAN_SLANG"
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-  }
-]
+### Requirements
+
+- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) or later
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (or any database of your choice)
+- [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (Recommended for development)
+
+### Architecture Overview
+
+This project is structured based on Clean Architecture, with separation into the following main layers:
+
+- **Core** - Contains the Domain layer, including entities, aggregates, value objects, and domain services.
+- **Application** - Contains use cases, DTOs, and interfaces.
+- **Infrastructure** - Contains the implementations of repositories, data access, and integrations.
+- **WebApi** - The entry point for the API, handling requests and responses.
+
+### Setup
+
+####  Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/habibulmursaleen/NorskApi
+cd NorskApi
 ```
+
+####  Step 2: Set Up Database
+Ensure your SQL Server is running. Update the connection string in appsettings.Development.json located in the WebApi project:
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=MyDatabase;User Id=your-username;Password=your-password;"
+  }
+}
+
+```
+
+####  Step 3: Apply Migrations
+Navigate to the Infrastructure layer where the DbContext is located and run the following commands to apply migrations:
+```bash
+dotnet ef migrations add InitialCreate --project src/Infrastructure --startup-project src/WebApi
+dotnet ef database update --project src/Infrastructure --startup-project src/WebApi
+```
+
+####  Step 4: Run the Application
+Navigate to the WebApi project directory and start the API:
+
+```bash
+cd src/NorskApi.Api
+dotnet run
+```
+#### Other Commands
+
+```
+dotnet test
+dotnet watch
+dotnet run
+dotnet build
+```
+
+### LocalExpressions Endpoints
+
+- **POST `{host}/api/v1/localexpressions`**  
+  Create a new local expression.
+
+- **PUT `{host}/api/v1/localexpressions/{localexpressionId}`**  
+  Update an existing local expression by `localexpressionId`.
+
+- **DELETE `{host}/api/v1/localexpressions/{localexpressionId}`**  
+  Delete the local expression by `localexpressionId`.
+
+- **GET `{host}/api/v1/localexpressions`**  
+  Retrieve all local expressions available.
+
+- **GET `{host}/api/v1/localexpressions/{localexpressionId}`**  
+  Retrieve details of a specific local expression by `exlocalexpressionIdpressionId`.
+
 
 ### Quiz Endpoints
 
 - **POST `{host}/api/v1/level/{b1}/quizes`**  
-  Create a new quiz under the specified level `{b1}`.
+  Create a new quiz.
 
 - **PUT `{host}/api/v1/level/{b1}/quizes/{quizId}`**  
   Update an existing quiz by `quizId` under the level `{b1}`.
