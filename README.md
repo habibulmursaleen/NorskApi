@@ -41,7 +41,6 @@
   }
 ]
 ```
-
 ### Quiz Endpoints
 
 - **POST `{host}/api/v1/level/{b1}/quizes`**  
