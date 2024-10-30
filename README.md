@@ -1,5 +1,7 @@
 # Norsk API
 
+A comprehensive backend api for norsk learning application. 
+
 ## Table of contents
 
 - [Norsk API](#norsk-api)
@@ -12,18 +14,19 @@
       - [Step 3: Apply Migrations](#step-3-apply-migrations)
       - [Step 4: Run the Application](#step-4-run-the-application)
       - [Other Commands](#other-commands)
-    - [LocalExpressions Endpoints](#localexpressions-endpoints)
-    - [Quiz Endpoints](#quiz-endpoints)
-    - [Discussion Endpoints](#discussion-endpoints)
-    - [Word Endpoints](#word-endpoints)
-    - [Question Endpoints](#question-endpoints)
-    - [Dictation Endpoints](#dictation-endpoints)
-    - [Roleplay Endpoints](#roleplay-endpoints)
-    - [Podcast Endpoints](#podcast-endpoints)
-    - [Essay Endpoints](#essay-endpoints)
-    - [Grammar Topic Endpoints](#grammar-topic-endpoints)
-    - [Grammar Rule Endpoints](#grammar-rule-endpoints)
-    - [Subjunction Endpoints](#subjunction-endpoints)
+  - [Endpoints](#endpoints)
+      - [LocalExpressions Endpoints](#localexpressions-endpoints)
+      - [Quiz Endpoints](#quiz-endpoints)
+      - [Discussion Endpoints](#discussion-endpoints)
+      - [Word Endpoints](#word-endpoints)
+      - [Question Endpoints](#question-endpoints)
+      - [Dictation Endpoints](#dictation-endpoints)
+      - [Roleplay Endpoints](#roleplay-endpoints)
+      - [Podcast Endpoints](#podcast-endpoints)
+      - [Essay Endpoints](#essay-endpoints)
+      - [Grammar Topic Endpoints](#grammar-topic-endpoints)
+      - [Grammar Rule Endpoints](#grammar-rule-endpoints)
+      - [Subjunction Endpoints](#subjunction-endpoints)
 
 ![Norsk API Aggregate](norskapi.png)
 
@@ -31,7 +34,7 @@ This project follows Clean Architecture principles combined with Domain-Driven D
 
 ### Requirements
 
-- [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0) or later
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (or any database of your choice)
 - [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (Recommended for development)
 
@@ -86,222 +89,115 @@ dotnet watch
 dotnet run
 dotnet build
 ```
+## Endpoints 
 
-### LocalExpressions Endpoints
+These are the main endpoints for the Norsk learning platform, grouped by type. They cover common CRUD (Create, Read, Update, Delete) actions and allow you to manage, localExpressions, quizzes, discussions, words, questions, dictations, roleplays, podcasts, essays, grammar topics, grammar rules, and subjunctions.
 
-- **POST `{host}/api/v1/localexpressions`**  
-  Create a new local expression.
+#### LocalExpressions Endpoints
 
-- **PUT `{host}/api/v1/localexpressions/{localexpressionId}`**  
-  Update an existing local expression by `localexpressionId`.
+- POST `{host}/api/v1/localexpressions` 
+- PUT `{host}/api/v1/localexpressions/{localexpressionId}`  
+- DELETE `{host}/api/v1/localexpressions/{localexpressionId}`  
+- GET `{host}/api/v1/localexpressions`  
+- GET `{host}/api/v1/localexpressions/{localexpressionId}`  
+---
 
-- **DELETE `{host}/api/v1/localexpressions/{localexpressionId}`**  
-  Delete the local expression by `localexpressionId`.
+#### Quiz Endpoints
 
-- **GET `{host}/api/v1/localexpressions`**  
-  Retrieve all local expressions available.
+- POST `{host}/api/v1/level/{b1}/quizes`  
+- PUT `{host}/api/v1/level/{b1}/quizes/{quizId}` 
+- DELETE `{host}/api/v1/level/{b1}/quizes/{quizId}`  
+- GET `{host}/api/v1/level/{b1}/quizes`  
+- GET `{host}/api/v1/level/{b1}/quizes/{quizId}` 
+---
 
-- **GET `{host}/api/v1/localexpressions/{localexpressionId}`**  
-  Retrieve details of a specific local expression by `exlocalexpressionIdpressionId`.
+#### Discussion Endpoints
 
-
-### Quiz Endpoints
-
-- **POST `{host}/api/v1/level/{b1}/quizes`**  
-  Create a new quiz.
-
-- **PUT `{host}/api/v1/level/{b1}/quizes/{quizId}`**  
-  Update an existing quiz by `quizId` under the level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/quizes/{quizId}`**  
-  Delete the quiz by `quizId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/quizes`**  
-  Retrieve all quizzes available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/quizes/{quizId}`**  
-  Retrieve details of a specific quiz by `quizId` under the specified level `{b1}`.
+- POST `{host}/api/v1/level/{b1}/discussions`  
+- PUT `{host}/api/v1/level/{b1}/discussions/{discussionId}`  
+- DELETE `{host}/api/v1/level/{b1}/discussions/{discussionId}`  
+- GET `{host}/api/v1/level/{b1}/discussions`  
+- GET `{host}/api/v1/level/{b1}/discussions/{discussionId}`  
 
 ---
 
-### Discussion Endpoints
+#### Word Endpoints
 
-- **POST `{host}/api/v1/level/{b1}/discussions`**  
-  Create a new discussion under the specified level `{b1}`.
+- POST `{host}/api/v1/level/{b1}/words`  
+- PUT `{host}/api/v1/level/{b1}/words/{wordId}`  
+- DELETE `{host}/api/v1/level/{b1}/words/{wordId}`  
+- GET `{host}/api/v1/level/{b1}/words`  
+- GET `{host}/api/v1/level/{b1}/words/{wordId}`  
+---
 
-- **PUT `{host}/api/v1/level/{b1}/discussions/{discussionId}`**  
-  Update an existing discussion by `discussionId` under the specified level `{b1}`.
+#### Question Endpoints
 
-- **DELETE `{host}/api/v1/level/{b1}/discussions/{discussionId}`**  
-  Delete the discussion by `discussionId` under the specified level `{b1}`.
+- POST `{host}/api/v1/level/{b1}/questions`  
+- PUT `{host}/api/v1/level/{b1}/questions/{questionId}`  
+- DELETE `{host}/api/v1/level/{b1}/questions/{questionId}`  
+- GET `{host}/api/v1/level/{b1}/questions`  
+- GET `{host}/api/v1/level/{b1}/questions/{questionId}`  
+---
 
-- **GET `{host}/api/v1/level/{b1}/discussions`**  
-  Retrieve all discussions available for the specified level `{b1}`.
+#### Dictation Endpoints
 
-- **GET `{host}/api/v1/level/{b1}/discussions/{discussionId}`**  
-  Retrieve details of a specific discussion by `discussionId` under the specified level `{b1}`.
+- POST `{host}/api/v1/level/{b1}/dictations`  
+- PUT `{host}/api/v1/level/{b1}/dictations/{dictationId}`  
+- DELETE `{host}/api/v1/level/{b1}/dictations/{dictationId}`  
+- GET `{host}/api/v1/level/{b1}/dictations`  
+- GET `{host}/api/v1/level/{b1}/dictations/{dictationId}`  
+---
+
+#### Roleplay Endpoints
+
+- POST `{host}/api/v1/level/{b1}/roleplays`  
+- PUT `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`  
+- DELETE `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`  
+- GET `{host}/api/v1/level/{b1}/roleplays`  
+- GET `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`  
+---
+
+#### Podcast Endpoints
+
+- POST `{host}/api/v1/level/{b1}/podcasts`  
+- PUT `{host}/api/v1/level/{b1}/podcasts/{podcastId}`  
+- DELETE `{host}/api/v1/level/{b1}/podcasts/{podcastId}`  
+- GET `{host}/api/v1/level/{b1}/podcasts`  
+- GET `{host}/api/v1/level/{b1}/podcasts/{podcastId}`  
 
 ---
 
-### Word Endpoints
+#### Essay Endpoints
 
-- **POST `{host}/api/v1/level/{b1}/words`**  
-  Create a new word entry under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/words/{wordId}`**  
-  Update an existing word entry by `wordId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/words/{wordId}`**  
-  Delete the word entry by `wordId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/words`**  
-  Retrieve all word entries available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/words/{wordId}`**  
-  Retrieve details of a specific word entry by `wordId` under the specified level `{b1}`.
-
+- POST `{host}/api/v1/level/{b1}/conversation/essays`  
+- PUT `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`  
+- DELETE `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`  
+- GET `{host}/api/v1/level/{b1}/conversation/essays`  
+- GET `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`  
+  
 ---
 
-### Question Endpoints
+#### Grammar Topic Endpoints
 
-- **POST `{host}/api/v1/level/{b1}/questions`**  
-  Create a new question under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/questions/{questionId}`**  
-  Update an existing question by `questionId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/questions/{questionId}`**  
-  Delete the question by `questionId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/questions`**  
-  Retrieve all questions available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/questions/{questionId}`**  
-  Retrieve details of a specific question by `questionId` under the specified level `{b1}`.
-
+- POST `{host}/api/v1/level/{b1}/grammars/topics`  
+- PUT `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`  
+- DELETE `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`  
+- GET `{host}/api/v1/level/{b1}/grammars/topics`  
+- GET `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`  
+  
 ---
 
-### Dictation Endpoints
+#### Grammar Rule Endpoints
 
-- **POST `{host}/api/v1/level/{b1}/dictations`**  
-  Create a new dictation under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/dictations/{dictationId}`**  
-  Update an existing dictation by `dictationId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/dictations/{dictationId}`**  
-  Delete the dictation by `dictationId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/dictations`**  
-  Retrieve all dictations available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/dictations/{dictationId}`**  
-  Retrieve details of a specific dictation by `dictationId` under the specified level `{b1}`.
-
+- POST `{host}/api/v1/level/{b1}/grammars/rules`  
+- PUT `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`  
+- DELETE `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`  
+- GET `{host}/api/v1/level/{b1}/grammars/rules`  
+- GET `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`  
 ---
 
-### Roleplay Endpoints
+#### Subjunction Endpoints
 
-- **POST `{host}/api/v1/level/{b1}/roleplays`**  
-  Create a new roleplay under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`**  
-  Update an existing roleplay by `roleplayId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`**  
-  Delete the roleplay by `roleplayId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/roleplays`**  
-  Retrieve all roleplays available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`**  
-  Retrieve details of a specific roleplay by `roleplayId` under the specified level `{b1}`.
-
+- GET `{host}/api/v1/level/{b1}/subjunctions`  
 ---
 
-### Podcast Endpoints
-
-- **POST `{host}/api/v1/level/{b1}/podcasts`**  
-  Create a new podcast entry under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/podcasts/{podcastId}`**  
-  Update an existing podcast entry by `podcastId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/podcasts/{podcastId}`**  
-  Delete the podcast entry by `podcastId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/podcasts`**  
-  Retrieve all podcast entries available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/podcasts/{podcastId}`**  
-  Retrieve details of a specific podcast entry by `podcastId` under the specified level `{b1}`.
-
----
-
-### Essay Endpoints
-
-- **POST `{host}/api/v1/level/{b1}/conversation/essays`**  
-  Create a new essay under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`**  
-  Update an existing essay by `essayId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`**  
-  Delete the essay by `essayId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/conversation/essays`**  
-  Retrieve all essays available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`**  
-  Retrieve details of a specific essay by `essayId` under the specified level `{b1}`.
-
----
-
-### Grammar Topic Endpoints
-
-- **POST `{host}/api/v1/level/{b1}/grammars/topics`**  
-  Create a new grammar topic under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`**  
-  Update an existing grammar topic by `topicId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`**  
-  Delete the grammar topic by `topicId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/grammars/topics`**  
-  Retrieve all grammar topics available for the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`**  
-  Retrieve details of a specific grammar topic by `topicId` under the specified level `{b1}`.
-
----
-
-### Grammar Rule Endpoints
-
-- **POST `{host}/api/v1/level/{b1}/grammars/rules`**  
-  Create a new grammar rule under the specified level `{b1}`.
-
-- **PUT `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`**  
-  Update an existing grammar rule by `ruleId` under the specified level `{b1}`.
-
-- **DELETE `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`**  
-  Delete the grammar rule by `ruleId` under the specified level `{b1}`.
-
-- **GET `{host}/api/v1/level/{b1}/grammars/rules`**  
-  Retrieve all grammar rules available for the specified level `{b
-
-1}`.
-
-- **GET `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`**  
-  Retrieve details of a specific grammar rule by `ruleId` under the specified level `{b1}`.
-
----
-
-### Subjunction Endpoints
-
-- **GET `{host}/api/v1/level/{b1}/subjunctions`**  
-  Retrieve a list of subjunctions categorized by type such as time, cause, condition, and contrast for the specified level `{b1}`.
-
----
-
-These are the main endpoints for the Norsk learning platform, grouped by type. They cover common CRUD (Create, Read, Update, Delete) actions and allow you to manage quizzes, discussions, words, questions, dictations, roleplays, podcasts, essays, grammar topics, grammar rules, and subjunctions.
