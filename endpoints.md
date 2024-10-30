@@ -3,6 +3,7 @@
 ## Table of contents
 
 - [Setup](#setup)
+- [LocalExpressions](#localexpressions)
 - [Quiz](#quiz)
 - [Discussion](#discussion)
 - [Word](#word)
@@ -15,6 +16,29 @@
 - [Subjunction](#subjunction)
 - [Grammar Rules](#grammar-rules)
 - [Tasks](#tasks)
+
+![Norsk API Aggregate](norskapi.png)
+
+## LocalExpressions
+
+### POST PUT DELETE GET `{host}/api/v1/localexpressions`
+
+### GET `{host}/api/v1/localexpressions/{localexpressionId}`
+
+```json
+[
+  {
+    "id": "430c537b-3f63-439e-a7b2-acaf5e1ce836",
+    "label": "Totam minus dolores deserunt quod iste sapiente?",
+    "description": "fugiat illum et",
+    "meaningInNorsk": "quis dolorem impedit",
+    "meaningInEnglish":  "totam consequuntur est",
+    "type": "PHASES_IDIOMS", // enum "EVERYDAY_PHRASE" OR "YOUTH_SLANG" OR "PROFESSIONAL" OR "PHASES_IDIOMS" OR "URBAN_SLANG"
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+  }
+]
+```
 
 ## Quiz
 
