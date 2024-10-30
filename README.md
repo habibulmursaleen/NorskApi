@@ -10,10 +10,11 @@ A comprehensive backend api for norsk learning application.
     - [Architecture Overview](#architecture-overview)
     - [Setup](#setup)
       - [Step 1: Clone the Repository](#step-1-clone-the-repository)
-      - [Step 2: Set Up Database](#step-2-set-up-database)
+      - [Step 2: Restore NuGet Packages](#step-2-restore-nuget-packages)
+      - [Step 3: Set Up Docker and Database](#step-3-set-up-docker-and-database)
       - [Step 3: Apply Migrations](#step-3-apply-migrations)
-      - [Step 4: Run the Application](#step-4-run-the-application)
-      - [Other Commands](#other-commands)
+      - [Step 4: Build and Run the Application](#step-4-build-and-run-the-application)
+      - [Test](#test)
   - [Endpoints](#endpoints)
       - [LocalExpressions Endpoints](#localexpressions-endpoints)
       - [Quiz Endpoints](#quiz-endpoints)
@@ -56,38 +57,63 @@ git clone https://github.com/habibulmursaleen/NorskApi
 cd NorskApi
 ```
 
-####  Step 2: Set Up Database
-Ensure your SQL Server is running. Update the connection string in appsettings.Development.json located in the WebApi project:
+####  Step 2: Restore NuGet Packages
+Run the following command to restore the necessary NuGet packages:
+
+```bash
+dotnet restore
+```
+
+####  Step 3: Set Up Docker and Database
+Ensure your SQL Server is running. Update the connection string in appsettings.Development.json located in the Api project:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=MyDatabase;User Id=your-username;Password=your-password;"
+    "DefaultConnection": "Server=localhost;Database=norskapi;User Id=your_userId;Password=your_password;Pooling=true;Min Pool Size=10;Max Pool Size=200;Connection Lifetime=180;Connection Timeout=30;Encrypt=false;"
   }
 }
+```
+Go to the root of the folder and run - (if you already setup the Docker in your pc, you can skip this)
 
+```bash
+docker network create mssqlnetwork 
+docker compose up
 ```
 
 ####  Step 3: Apply Migrations
 Navigate to the Infrastructure layer where the DbContext is located and run the following commands to apply migrations:
 ```bash
-dotnet ef migrations add InitialCreate --project src/Infrastructure --startup-project src/WebApi
-dotnet ef database update --project src/Infrastructure --startup-project src/WebApi
+dotnet ef migrations add Init -p src/NorskApi.Infrastructure -s src/NorskApi.Api; 
 ```
 
-####  Step 4: Run the Application
+To add a new migration, run the following command:
+
+```bash
+dotnet ef migrations add MigrationName -p src/NorskApi.Infrastructure -s src/NorskApi.Api; 
+```
+
+Use the following command to apply the existing migrations and update the database:
+
+```bash
+dotnet ef database update -p src/NorskApi.Infrastructure -s src/NorskApi.Api;
+```
+To remove the last migration, use:
+
+```bash
+dotnet ef migrations remove -p src/NorskApi.Infrastructure -s src/NorskApi.Api;
+```
+
+####  Step 4: Build and Run the Application
 Navigate to the WebApi project directory and start the API:
 
 ```bash
-cd src/NorskApi.Api
-dotnet run
+dotnet build
+dotnet watch run --project src/NorskApi.Api   
 ```
-#### Other Commands
+#### Test
 
 ```
 dotnet test
-dotnet watch
-dotnet run
-dotnet build
 ```
 ## Endpoints 
 
@@ -95,105 +121,67 @@ These are the main endpoints for the Norsk learning platform, grouped by type. T
 
 #### LocalExpressions Endpoints
 
-- POST `{host}/api/v1/localexpressions` 
-- PUT `{host}/api/v1/localexpressions/{localexpressionId}`  
-- DELETE `{host}/api/v1/localexpressions/{localexpressionId}`  
-- GET `{host}/api/v1/localexpressions`  
-- GET `{host}/api/v1/localexpressions/{localexpressionId}`  
+- GET - POST `{host}/api/v1/localexpressions` 
+- GET - PUT - DELETE `{host}/api/v1/localexpressions/{id}`  
 ---
-
 #### Quiz Endpoints
 
-- POST `{host}/api/v1/level/{b1}/quizes`  
-- PUT `{host}/api/v1/level/{b1}/quizes/{quizId}` 
-- DELETE `{host}/api/v1/level/{b1}/quizes/{quizId}`  
-- GET `{host}/api/v1/level/{b1}/quizes`  
-- GET `{host}/api/v1/level/{b1}/quizes/{quizId}` 
+- GET - POST `{host}/api/v1/level/{b1}/quizes`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/quizes/{id}`
 ---
 
 #### Discussion Endpoints
 
-- POST `{host}/api/v1/level/{b1}/discussions`  
-- PUT `{host}/api/v1/level/{b1}/discussions/{discussionId}`  
-- DELETE `{host}/api/v1/level/{b1}/discussions/{discussionId}`  
-- GET `{host}/api/v1/level/{b1}/discussions`  
-- GET `{host}/api/v1/level/{b1}/discussions/{discussionId}`  
-
+- GET - POST `{host}/api/v1/level/{b1}/discussions`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/discussions/{id}`
 ---
 
 #### Word Endpoints
 
-- POST `{host}/api/v1/level/{b1}/words`  
-- PUT `{host}/api/v1/level/{b1}/words/{wordId}`  
-- DELETE `{host}/api/v1/level/{b1}/words/{wordId}`  
-- GET `{host}/api/v1/level/{b1}/words`  
-- GET `{host}/api/v1/level/{b1}/words/{wordId}`  
+- GET - POST `{host}/api/v1/level/{b1}/words`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/words/{id}`
 ---
 
 #### Question Endpoints
 
-- POST `{host}/api/v1/level/{b1}/questions`  
-- PUT `{host}/api/v1/level/{b1}/questions/{questionId}`  
-- DELETE `{host}/api/v1/level/{b1}/questions/{questionId}`  
-- GET `{host}/api/v1/level/{b1}/questions`  
-- GET `{host}/api/v1/level/{b1}/questions/{questionId}`  
+- GET - POST `{host}/api/v1/level/{b1}/questions`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/questions/{id}`
 ---
 
 #### Dictation Endpoints
 
-- POST `{host}/api/v1/level/{b1}/dictations`  
-- PUT `{host}/api/v1/level/{b1}/dictations/{dictationId}`  
-- DELETE `{host}/api/v1/level/{b1}/dictations/{dictationId}`  
-- GET `{host}/api/v1/level/{b1}/dictations`  
-- GET `{host}/api/v1/level/{b1}/dictations/{dictationId}`  
+- GET - POST `{host}/api/v1/level/{b1}/dictations`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/dictations/{id}`
 ---
 
 #### Roleplay Endpoints
 
-- POST `{host}/api/v1/level/{b1}/roleplays`  
-- PUT `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`  
-- DELETE `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`  
-- GET `{host}/api/v1/level/{b1}/roleplays`  
-- GET `{host}/api/v1/level/{b1}/roleplays/{roleplayId}`  
+- GET - POST `{host}/api/v1/level/{b1}/roleplays`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/roleplays/{id}`
 ---
 
 #### Podcast Endpoints
 
-- POST `{host}/api/v1/level/{b1}/podcasts`  
-- PUT `{host}/api/v1/level/{b1}/podcasts/{podcastId}`  
-- DELETE `{host}/api/v1/level/{b1}/podcasts/{podcastId}`  
-- GET `{host}/api/v1/level/{b1}/podcasts`  
-- GET `{host}/api/v1/level/{b1}/podcasts/{podcastId}`  
-
+- GET - POST `{host}/api/v1/level/{b1}/podcasts`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/podcasts/{id}`
 ---
 
 #### Essay Endpoints
 
-- POST `{host}/api/v1/level/{b1}/conversation/essays`  
-- PUT `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`  
-- DELETE `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`  
-- GET `{host}/api/v1/level/{b1}/conversation/essays`  
-- GET `{host}/api/v1/level/{b1}/conversation/essays/{essayId}`  
-  
+- GET - POST `{host}/api/v1/level/{b1}/conversation/essays`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/conversation/essays/{id}`
 ---
 
 #### Grammar Topic Endpoints
 
-- POST `{host}/api/v1/level/{b1}/grammars/topics`  
-- PUT `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`  
-- DELETE `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`  
-- GET `{host}/api/v1/level/{b1}/grammars/topics`  
-- GET `{host}/api/v1/level/{b1}/grammars/topics/{topicId}`  
-  
+- GET - POST `{host}/api/v1/level/{b1}/grammars/topics`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/grammars/topics/{id}`
 ---
 
 #### Grammar Rule Endpoints
 
-- POST `{host}/api/v1/level/{b1}/grammars/rules`  
-- PUT `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`  
-- DELETE `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`  
-- GET `{host}/api/v1/level/{b1}/grammars/rules`  
-- GET `{host}/api/v1/level/{b1}/grammars/rules/{ruleId}`  
+- GET - POST `{host}/api/v1/level/{b1}/grammars/rules`
+- GET - PUT - DELETE `{host}/api/v1/level/{b1}/grammars/rules/{id}`
 ---
 
 #### Subjunction Endpoints

@@ -8,12 +8,10 @@ namespace NorskApi.Domain.LocalExpressionAggregate;
 public sealed class LocalExpression : AggregateRoot<LocalExpressionId, Guid>
 {
     public string Label { get; set; }
-    public string? Description { get; set; }
-    public string? MeaningInNorsk { get; set; }
-    public string? MeaningInEnglish { get; set; }
+    public string Description { get; set; } = string.Empty;
+    public string MeaningInNorsk { get; set; } = string.Empty;
+    public string MeaningInEnglish { get; set; } = string.Empty;
     public LocalExpressionType LocalExpressionType { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private LocalExpression() { }
@@ -25,18 +23,14 @@ public sealed class LocalExpression : AggregateRoot<LocalExpressionId, Guid>
         string? description,
         string? meaningInNorsk,
         string? meaningInEnglish,
-        LocalExpressionType localExpressionType,
-        DateTime createdAt,
-        DateTime updatedAt
+        LocalExpressionType localExpressionType
     ) : base(localExpressionId)
     {
         this.Label = label;
-        this.Description = description;
-        this.MeaningInNorsk = meaningInNorsk;
-        this.MeaningInEnglish = meaningInEnglish;
+        this.Description = description ?? string.Empty;
+        this.MeaningInNorsk = meaningInNorsk ?? string.Empty;
+        this.MeaningInEnglish = meaningInEnglish ?? string.Empty;
         this.LocalExpressionType = localExpressionType;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
     }
 
     public static LocalExpression Create(
@@ -44,9 +38,7 @@ public sealed class LocalExpression : AggregateRoot<LocalExpressionId, Guid>
         string? description,
         string? meaningInNorsk,
         string? meaningInEnglish,
-        LocalExpressionType localExpressionType,
-        DateTime createdAt,
-        DateTime updatedAt
+        LocalExpressionType localExpressionType
     )
     {
         LocalExpression localExpression = new LocalExpression(
@@ -55,9 +47,7 @@ public sealed class LocalExpression : AggregateRoot<LocalExpressionId, Guid>
             description,
             meaningInNorsk,
             meaningInEnglish,
-            LocalExpressionType.EVERYDAY_PHRASE,
-            createdAt,
-            updatedAt
+            localExpressionType
         );
 
         localExpression.AddDomainEvent(new LocalExpressionCreatedDomainEvent(localExpression));
@@ -66,22 +56,18 @@ public sealed class LocalExpression : AggregateRoot<LocalExpressionId, Guid>
     }
 
     public void Update(
-         LocalExpressionId localExpressionId,
         string label,
         string? description,
         string? meaningInNorsk,
         string? meaningInEnglish,
-        LocalExpressionType localExpressionType,
-        DateTime updatedAt
+        LocalExpressionType localExpressionType
     )
     {
-        this.Id = localExpressionId;
         this.Label = label;
-        this.Description = description;
-        this.MeaningInNorsk = meaningInNorsk;
-        this.MeaningInEnglish = meaningInEnglish;
+        this.Description = description ?? string.Empty;
+        this.MeaningInNorsk = meaningInNorsk ?? string.Empty;
+        this.MeaningInEnglish = meaningInEnglish ?? string.Empty;
         this.LocalExpressionType = localExpressionType;
-        this.UpdatedAt = updatedAt;
 
         this.AddDomainEvent(new LocalExpressionUpdatedDomainEvent(this));
     }
