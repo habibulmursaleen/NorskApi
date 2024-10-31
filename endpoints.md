@@ -1,6 +1,6 @@
 # Norsk API
 
-## Table of contents
+## List of Endpoints
 
 - [LocalExpressions](#localexpressions)
 - [Quiz](#quiz)
@@ -15,6 +15,7 @@
 - [Subjunction](#subjunction)
 - [Grammar Rules](#grammar-rules)
 - [Tasks](#tasks)
+- [Subjunction](#subjunction)
 
 ![Norsk API Aggregate](norskapi.png)
 
