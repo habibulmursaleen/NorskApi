@@ -1,6 +1,6 @@
 # Norsk API
 
-A comprehensive backend api for norsk learning application. 
+A very comprehensive backend api for norsk learning application. 
 
 ## Table of contents
 
