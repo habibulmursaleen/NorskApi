@@ -1,4 +1,4 @@
-namespace NorskApi.Domain.Common.Enums;
+namespace NorskApi.Domain.WordAggregate.Enums;
 public enum PartOfSpeechTag
 {
     NOUN,

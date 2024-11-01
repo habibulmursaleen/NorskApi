@@ -23,7 +23,7 @@
 
 ### POST PUT DELETE GET `{host}/api/v1/localexpressions`
 
-### GET `{host}/api/v1/localexpressions/{localexpressionId}`
+### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
 
 ```json
 [
@@ -40,11 +40,119 @@
 ]
 ```
 
+## Discussion
+
+### POST GET `{host}/api/v1/essays/{essayId}/discussions`
+### GET `{host}/api/v1/essays/all/discussions`
+
+### GET PUT DELETE `{host}/api/v1/essays/{essayId}/discussions/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+
+```json
+[
+  {
+    "id": "1609915b-b62c-4e63-bd44-2427905dbab6",
+    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
+    "title": "culpa rerum quasi",
+    "discussionEssays": "Id rerum rerum eum architecto aut et vel. Suscipit iure qui ut voluptatum nesciunt laboriosam.",
+    "isCompleted": true,
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "note": "", //user input
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
+## Question
+
+### POST GET `{host}/api/v1/questions`
+
+### GET PUT DELETE `{host}/api/v1/questions/{id}`
+
+```json
+[
+  {
+    "id": "388dcd8d-24f3-4d2a-bb46-4604169a155e",
+    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
+    "question": "Dolores voluptate rerum quisquam ipsam animi voluptatem fugiat rem id?",
+    "answer": "Id vitae veniam qui omnis omnis labore est voluptatem.",
+    "isCompleted": true,
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
+## Dictation
+
+### POST PUT DELETE GET `{host}/api/v1/dictations`
+
+### GET PUT DELETE `{host}/api/v1/dictations/{id}`
+
+```json
+[
+  {
+    "id": "a750259a-d8b0-4dae-9a2d-3d850f715bec",
+    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
+    "content": "Optio fuga voluptatem aut omnis. Numquam odio harum deleniti praesentium repudiandae dolores.",
+    "answer": "Sit repellat velit accusamus harum est. Nostrum ratione sequi. Rinventore odio tempore laudantium.",
+    "isCompleted": false,
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
+## Roleplays
+
+### POST GET `{host}/api/v1/roleplays`
+
+### GET PUT DELETE `{host}/api/v1/roleplays/{id}`
+
+```json
+[
+  {
+    "id": "27ed959e-6240-4039-b83c-a93368d948e9",
+    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
+    "content": "Rerum et numquam possimus assumenda. Quas delectus ut dolorem quia. Quis et odio commodi aut.",
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
+## Podcasts
+
+### POST GET `{host}/api/v1/podcasts`
+
+### GET PUT DELETE `{host}/api/v1/podcasts/{id}`
+```json
+[
+  {
+    "id": "8d634e39-bf18-4a4b-8d90-b85a9ccb1ab7",
+    "essayId": "015f1628-10b5-4bb2-836c-6ae873de4739",
+    "lebel": "sint",
+    "descriptions": "voluptatem hic alias", 
+    "logo": "http://placeimg.com/640/480/technics",
+    "link": "http://placeimg.com/640/480/technics", 
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
 ## Quiz
 
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/quizes`
+### POST GET `{host}/api/v1/quizes`
 
-### GET `{host}/api/v1/level/{b1}/quizes/{essayId}`
+### GET PUT DELETE `{host}/api/v1/quizes/{id}`
 
 ```json
 [
@@ -74,33 +182,11 @@
 ]
 ```
 
-## Discussion
-
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/discussions`
-
-### GET `{host}/api/v1/level/{b1}/discussions/{essayId}`
-
-```json
-[
-  {
-    "id": "1609915b-b62c-4e63-bd44-2427905dbab6",
-    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
-    "title": "culpa rerum quasi",
-    "discussionEssays": "Id rerum rerum eum architecto aut et vel. Suscipit iure qui ut voluptatum nesciunt laboriosam.",
-    "isCompleted": true,
-    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "note": "", //user input
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
 ## Word
 
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/words`
+### POST GET `{host}/api/v1/words`
 
-### GET `{host}/api/v1/level/{b1}/words/{essayId}`
+### GET PUT DELETE `{host}/api/v1/words/{id}`
 
 ```json
 [
@@ -162,91 +248,9 @@
 ]
 ```
 
-## Question
-
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/questions`
-
-### GET `{host}/api/v1/level/{b1}/questions/{essayId}`
-
-```json
-[
-  {
-    "id": "388dcd8d-24f3-4d2a-bb46-4604169a155e",
-    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
-    "question": "Dolores voluptate rerum quisquam ipsam animi voluptatem fugiat rem id?",
-    "answer": "Id vitae veniam qui omnis omnis labore est voluptatem.",
-    "isCompleted": true,
-    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
-## Dictation
-
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/dictations`
-
-### GET `{host}/api/v1/level/{b1}/dictations/{essayId}`
-
-```json
-[
-  {
-    "id": "a750259a-d8b0-4dae-9a2d-3d850f715bec",
-    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
-    "content": "Optio fuga voluptatem aut omnis. Numquam odio harum deleniti praesentium repudiandae dolores.",
-    "answer": "Sit repellat velit accusamus harum est. Nostrum ratione sequi. Rinventore odio tempore laudantium.",
-    "isCompleted": false,
-    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
-## Roleplays
-
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/roleplays`
-
-### GET `{host}/api/v1/level/{b1}/roleplays/{essayId}`
-
-```json
-[
-  {
-    "id": "27ed959e-6240-4039-b83c-a93368d948e9",
-    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",
-    "content": "Rerum et numquam possimus assumenda. Quas delectus ut dolorem quia. Quis et odio commodi aut.",
-    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
-## Podcasts
-
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/podcasts`
-
-### GET `{host}/api/v1/level/{b1}/podcasts/{essayId}`
-```json
-[
-  {
-    "id": "8d634e39-bf18-4a4b-8d90-b85a9ccb1ab7",
-    "essayId": "015f1628-10b5-4bb2-836c-6ae873de4739",
-    "lebel": "sint",
-    "descriptions": "voluptatem hic alias", 
-    "logo": "http://placeimg.com/640/480/technics",
-    "link": "http://placeimg.com/640/480/technics", 
-    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
 ## Essay
 
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/conversation/essays`
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
 
 ```json
 [
@@ -268,7 +272,7 @@
 ]
 ```
 
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/conversation/essays/{id}`
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
 
 ```json
 {
@@ -309,7 +313,7 @@
 
 ## Grammars
 
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/grammars/topics`
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
 
 ```json
 [
@@ -331,7 +335,7 @@
 ]
 ```
 
-### GET `{host}/api/v1/level/{b1}/grammars/topics/{id}`
+### GET `{host}/api/v1/grammars/topics/{id}`
 
 ```json
 [
@@ -351,33 +355,20 @@
     "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
   }
 ]
-```
-
-## Subjunction
-<!-- seeding -->
-### GET `{host}/api/v1/subjunction`
-
-```json
-{
-  "time": ["quae", "voluptatem", "eum"],
-  "arsak": ["officiis", "atque", "est"],
-  "henslikt": ["est", "modi", "reprehenderit"],
-  "betingelse": ["minus", "explicabo", "recusandae"],
-  "motsetning": ["veritatis", "ab", "beatae"]
-}
 ```
 
 ## Grammmar Rules
 
-### POST PUT DELETE GET `{host}/api/v1/level/{b1}/grammars/rules`
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/rules`
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics/all/rules`
 
-### GET `{host}/api/v1/level/{b1}/grammars/rules/{topicId}`
+### GET `{host}/api/v1/grammars/topics/{topicId}/rules/{id}`
 
 ```json
 [
   {
     "id": "6d737c85-35fa-4e1b-b341-ac883ef751d4",
-    "grammarRuleId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
+    "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
     "label": "Quia illo aliquid consequuntur.",
     "description": "Sed et qui iusto omnis sed et modi.",
     "explanatoryNotes": "animi consequatur suscipit",
@@ -399,7 +390,7 @@
     "exampleOfRule": [
       {
         "id": "84dd4e04-5b9b-49c6-b5ee-cadb6fc2c21b",
-        "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
+        "grammarRuleId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
         "subjunction": "dignissimos",
         "subject": "Hun",
         "adverbial": "in",
@@ -430,9 +421,9 @@
 
 ## Tasks
 
-### POST PUT DELETE GET `{host}/api/v1/tasks`
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
 
-### GET `{host}/api/v1/tasks/{topicId}`
+### GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
 
 ```json
 [
@@ -452,6 +443,20 @@
 ]
 ```
 
+## Subjunction
+<!-- seeding -->
+### GET `{host}/api/v1/subjunction`
+
+```json
+{
+  "time": ["quae", "voluptatem", "eum"],
+  "arsak": ["officiis", "atque", "est"],
+  "henslikt": ["est", "modi", "reprehenderit"],
+  "betingelse": ["minus", "explicabo", "recusandae"],
+  "motsetning": ["veritatis", "ab", "beatae"]
+}
+```
+
 ## Search and Pagination
 
-### `GET {host}/api/v1/level/{b1}/search?type=words&keyword=modi&difficultyLevel=B1&isCompleted=true`
+### `GET {host}/api/v1/search?type=words&keyword=modi&difficultyLevel=B1&isCompleted=true`

@@ -1,4 +1,4 @@
-namespace NorskApi.Domain.Common.Enums;
+namespace NorskApi.Domain.QuizAggregate.Enums;
 
 public enum QuizType
 {

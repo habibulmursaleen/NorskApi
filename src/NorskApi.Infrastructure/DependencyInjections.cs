@@ -24,6 +24,7 @@ namespace NorskApi.Infrastructure
             services.AddScoped<PublishDomainEventsInterceptor>();
 
             services.AddScoped<ILocalExpressionRepository, LocalExpressionRepository>();
+            services.AddScoped<IDiscussionRepository, DiscussionRepository>();
 
             return services;
         }
