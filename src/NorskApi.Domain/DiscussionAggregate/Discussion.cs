@@ -7,14 +7,13 @@ using NorskApi.Domain.EssayAggregate.ValueObjects;
 namespace NorskApi.Domain.DiscussionAggregate;
 public sealed class Discussion : AggregateRoot<DiscussionId, Guid>
 {
-    public EssayId? EssayId { get; set; }
+    public EssayId EssayId { get; set; }
     public string Title { get; set; }
     public string DiscussionEssays { get; set; }
     public bool IsCompleted { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
-    public string? Note { get; set; } // User input
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public string Note { get; set; } = string.Empty; // User input
+
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Discussion() { }
@@ -22,35 +21,29 @@ public sealed class Discussion : AggregateRoot<DiscussionId, Guid>
 
     private Discussion(
         DiscussionId discussionId,
-        EssayId? essayId,
+        EssayId essayId,
         string title,
         string discussionEssays,
+        string note,
         bool isCompleted,
-        DifficultyLevel difficultyLevel,
-        string? note,
-        DateTime createdAt,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     ) : base(discussionId)
     {
         this.EssayId = essayId;
         this.Title = title;
         this.DiscussionEssays = discussionEssays;
+        this.Note = note;
         this.IsCompleted = isCompleted;
         this.DifficultyLevel = difficultyLevel;
-        this.Note = note;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
     }
 
     public static Discussion Create(
-        EssayId? essayId,
+        EssayId essayId,
         string title,
         string discussionEssays,
+        string note,
         bool isCompleted,
-        DifficultyLevel difficultyLevel,
-        string? note,
-        DateTime createdAt,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
     {
         Discussion discussion = new Discussion(
@@ -58,11 +51,9 @@ public sealed class Discussion : AggregateRoot<DiscussionId, Guid>
             essayId,
             title,
             discussionEssays,
-            isCompleted,
-            DifficultyLevel.A1,
             note,
-            createdAt,
-            updatedAt
+            isCompleted,
+            difficultyLevel
         );
 
         discussion.AddDomainEvent(new DiscussionCreatedDomainEvent(discussion));
@@ -71,22 +62,20 @@ public sealed class Discussion : AggregateRoot<DiscussionId, Guid>
     }
 
     public void Update(
-        EssayId? essayId,
+        EssayId essayId,
         string title,
         string discussionEssays,
+        string note,
         bool isCompleted,
-        DifficultyLevel difficultyLevel,
-        string? note,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
     {
         this.EssayId = essayId;
         this.Title = title;
         this.DiscussionEssays = discussionEssays;
+        this.Note = note;
         this.IsCompleted = isCompleted;
         this.DifficultyLevel = difficultyLevel;
-        this.Note = note;
-        this.UpdatedAt = updatedAt;
 
         this.AddDomainEvent(new DiscussionUpdatedDomainEvent(this));
     }
