@@ -42,9 +42,13 @@
 
 ## Discussion
 
-### POST GET `{host}/api/v1/discussions`
+### POST GET `{host}/api/v1/essays/{essayId}/discussions`
+### GET `{host}/api/v1/essays/all/discussions`
 
-### GET PUT DELETE `{host}/api/v1/discussions/{id}`
+### GET PUT DELETE `{host}/api/v1/essays/{essayId}/discussions/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
 
 ```json
 [

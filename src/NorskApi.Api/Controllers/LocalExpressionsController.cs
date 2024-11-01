@@ -18,7 +18,6 @@ using NorskApi.Contracts.LocalExpressions.Request;
 using NorskApi.Contracts.LocalExpressions.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[ApiController]
 [Route("api/v1/localexpressions")]
 public class LocalExpressionsController : ApiController
 {

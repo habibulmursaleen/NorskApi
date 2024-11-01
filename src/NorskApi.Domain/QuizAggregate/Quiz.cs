@@ -2,6 +2,7 @@ using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.Entities.QuizAggregate.Events.DomainEvent;
 using NorskApi.Domain.QuizAggregate.Entites;
+using NorskApi.Domain.QuizAggregate.Enums;
 using NorskApi.Domain.QuizAggregate.Events.DomainEvent.Quiz;
 using NorskApi.Domain.QuizAggregate.ValueObjects;
 
