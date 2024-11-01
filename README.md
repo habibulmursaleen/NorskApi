@@ -16,18 +16,19 @@ A very comprehensive backend api for norsk learning application.
       - [Step 4: Build and Run the Application](#step-4-build-and-run-the-application)
       - [Test](#test)
   - [Endpoints](#endpoints)
-      - [LocalExpressions Endpoints](#localexpressions-endpoints)
-      - [Quiz Endpoints](#quiz-endpoints)
-      - [Discussion Endpoints](#discussion-endpoints)
-      - [Word Endpoints](#word-endpoints)
-      - [Question Endpoints](#question-endpoints)
-      - [Dictation Endpoints](#dictation-endpoints)
-      - [Roleplay Endpoints](#roleplay-endpoints)
-      - [Podcast Endpoints](#podcast-endpoints)
-      - [Essay Endpoints](#essay-endpoints)
-      - [Grammar Topic Endpoints](#grammar-topic-endpoints)
-      - [Grammar Rule Endpoints](#grammar-rule-endpoints)
-      - [Subjunction Endpoints](#subjunction-endpoints)
+      - [LocalExpressions Endpoint](#localexpressions-endpoint)
+      - [Dictation Endpoint](#dictation-endpoint)
+      - [Podcast Endpoint](#podcast-endpoint)
+      - [Discussion Endpoint](#discussion-endpoint)
+      - [Question Endpoint](#question-endpoint)
+      - [Roleplay Endpoint](#roleplay-endpoint)
+      - [Quiz Endpoint](#quiz-endpoint)
+      - [Word Endpoint](#word-endpoint)
+      - [Essay Endpoint](#essay-endpoint)
+      - [Grammar Topic Endpoint](#grammar-topic-endpoint)
+      - [Grammar Rule Endpoint](#grammar-rule-endpoint)
+      - [Tasks Endpoint](#tasks-endpoint)
+      - [Subjunction Endpoint](#subjunction-endpoint)
 
 ![Norsk API Aggregate](norskapi.png)
 
@@ -115,77 +116,93 @@ dotnet watch run --project src/NorskApi.Api
 ```
 dotnet test
 ```
+
 ## Endpoints 
 
 These are the main endpoints for the Norsk learning platform, grouped by type. They cover common CRUD (Create, Read, Update, Delete) actions and allow you to manage, localExpressions, quizzes, discussions, words, questions, dictations, roleplays, podcasts, essays, grammar topics, grammar rules, and subjunctions.
 
-#### LocalExpressions Endpoints
+#### LocalExpressions Endpoint
 
 - GET - POST `{host}/api/v1/localexpressions` 
 - GET - PUT - DELETE `{host}/api/v1/localexpressions/{id}`  
 ---
-#### Quiz Endpoints
 
-- GET - POST `{host}/api/v1/level/{b1}/quizes`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/quizes/{id}`
+#### Dictation Endpoint
+
+- POST GET `{host}/api/v1/dictations`
+- GET PUT DELETE `{host}/api/v1/dictations/{id}`
+- Query params `Filters by difficultyLevel & essayId`
 ---
 
-#### Discussion Endpoints
-
-- GET - POST `{host}/api/v1/level/{b1}/discussions`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/discussions/{id}`
+#### Podcast Endpoint
+- POST GET `{host}/api/v1/podcasts`
+- GET PUT DELETE `{host}/api/v1/podcasts/{id}`
+- Query params `Filters by by difficultyLevel & essayId`
 ---
 
-#### Word Endpoints
+#### Discussion Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/words`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/words/{id}`
+- POST GET `{host}/api/v1/essays/{essayId}/discussions`
+- GET `{host}/api/v1/essays/all/discussions`
+- GET PUT DELETE `{host}/api/v1/essays/{essayId}/discussions/{id}`
+- Query params `Filters by difficultyLevel`
 ---
 
-#### Question Endpoints
+#### Question Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/questions`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/questions/{id}`
+- POST GET `{host}/api/v1/essays/{essayId}/questions`
+- GET `{host}/api/v1/essays/all/questions`
+- GET PUT DELETE `{host}/api/v1/essays/{essayId}/questions/{id}`
+- Query params `Filters by difficultyLevel`
 ---
 
-#### Dictation Endpoints
+#### Roleplay Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/dictations`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/dictations/{id}`
+- POST GET `{host}/api/v1/essays/{essayId}/roleplays`
+- GET `{host}/api/v1/essays/all/roleplays`
+- GET PUT DELETE `{host}/api/v1/essays/{essayId}/roleplays/{id}`
+- Query params `Filters by difficultyLevel`
 ---
 
-#### Roleplay Endpoints
+#### Quiz Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/roleplays`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/roleplays/{id}`
+- GET - POST `{host}/api/v1/quizes`
+- GET - PUT - DELETE `{host}/api/v1/quizes/{id}`
+- Query params `difficultyLevel & essayId & topicId`
 ---
 
-#### Podcast Endpoints
+#### Word Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/podcasts`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/podcasts/{id}`
+- GET - POST `{host}/api/v1/words`
+- GET - PUT - DELETE `{host}/api/v1/words/{id}`
+- Query params `difficultyLevel & essayId`
 ---
 
-#### Essay Endpoints
+#### Essay Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/conversation/essays`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/conversation/essays/{id}`
+- GET - POST `{host}/api/v1/conversation/essays`
+- GET - PUT - DELETE `{host}/api/v1/conversation/essays/{id}`
 ---
 
-#### Grammar Topic Endpoints
+#### Grammar Topic Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/grammars/topics`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/grammars/topics/{id}`
+- GET - POST `{host}/api/v1/grammars/topics`
+- GET - PUT - DELETE `{host}/api/v1/grammars/topics/{id}`
 ---
 
-#### Grammar Rule Endpoints
+#### Grammar Rule Endpoint
 
-- GET - POST `{host}/api/v1/level/{b1}/grammars/rules`
-- GET - PUT - DELETE `{host}/api/v1/level/{b1}/grammars/rules/{id}`
+- POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/rules`
+- POST PUT DELETE GET `{host}/api/v1/grammars/topics/all/rules`
+- GET `{host}/api/v1/grammars/topics/{topicId}/rules/{id}`
 ---
 
-#### Subjunction Endpoints
+#### Tasks Endpoint
+- POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
+- GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
 
-- GET `{host}/api/v1/level/{b1}/subjunctions`  
+#### Subjunction Endpoint
+
+- GET `{host}/api/v1/subjunctions`  
 ---
 

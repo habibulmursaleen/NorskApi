@@ -1,6 +1,8 @@
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.Entities.QuizAggregate.Events.DomainEvent;
+using NorskApi.Domain.EssayAggregate.ValueObjects;
+using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.QuizAggregate.Entites;
 using NorskApi.Domain.QuizAggregate.Enums;
 using NorskApi.Domain.QuizAggregate.Events.DomainEvent.Quiz;
@@ -10,7 +12,8 @@ namespace NorskApi.Domain.QuizAggregate;
 
 public sealed class Quiz : AggregateRoot<QuizId, Guid>
 {
-    public Guid EssayId { get; set; }
+    public EssayId EssayId { get; set; }
+    public TopicId TopicId { get; set; }
     public string? Question { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
     public QuizType Type { get; set; } // Enum: MULTIPLE_CHOICE, BOOLEAN, STRING
@@ -19,21 +22,26 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     public DateTime UpdatedAt { get; set; }
     public IReadOnlyCollection<QuizOption> QuizOption => this.QuizOption;
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Quiz() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     private Quiz(
         QuizId id,
-        Guid essayId,
+        EssayId essayId,
+        TopicId topicId,
         string question,
         DifficultyLevel difficultyLevel,
         QuizType type,
         List<QuizOption> options,
         DateTime createdAt,
         DateTime updatedAt
-    ) : base(id)
+    )
+        : base(id)
     {
         this.Id = id;
         this.EssayId = essayId;
+        this.TopicId = topicId;
         this.Question = question;
         this.DifficultyLevel = difficultyLevel;
         this.Type = type;
@@ -43,7 +51,8 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     }
 
     public static Quiz Create(
-        Guid essayId,
+        EssayId essayId,
+        TopicId topicId,
         string question,
         DifficultyLevel difficultyLevel,
         QuizType type,
@@ -53,6 +62,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
         Quiz quiz = new Quiz(
             QuizId.CreateUnique(),
             essayId,
+            topicId,
             question,
             DifficultyLevel.A1,
             type,
@@ -67,12 +77,16 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     }
 
     public void Update(
+        EssayId essayId,
+        TopicId topicId,
         string question,
         DifficultyLevel difficultyLevel,
         QuizType type,
         List<QuizOption> options
     )
     {
+        this.EssayId = essayId;
+        this.TopicId = topicId;
         this.Question = question;
         this.DifficultyLevel = difficultyLevel;
         this.Type = type;
