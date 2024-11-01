@@ -1,8 +1,10 @@
+
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.Entities.WordAggregate.Events.DomainEvent;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.WordAggregate.Entites;
+using NorskApi.Domain.WordAggregate.Enums;
 using NorskApi.Domain.WordAggregate.ValueObjects;
 
 namespace NorskApi.Domain.WordAggregate;
