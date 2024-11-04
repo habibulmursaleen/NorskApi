@@ -5,7 +5,7 @@ namespace NorskApi.Domain.Common.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum DifficultyLevel
 {
-    All,
+    ALL,
     A1,
     A2,
     B1,

@@ -1,14 +1,15 @@
 using ErrorOr;
 using MediatR;
 using NorskApi.Application.Common.Interfaces.Persistance;
+using NorskApi.Application.Common.QueryParams;
 using NorskApi.Application.Discussions.Models;
-using NorskApi.Application.Discussions.Queries.GetAllDiscussions;
 using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 
 namespace NorskApi.Application.Discussions.Queries.GetAllDiscussions;
 
-public class GetAllDiscussionsQueryHandler : IRequestHandler<GetAllDiscussionsQuery, ErrorOr<List<DiscussionResult>>>
+public class GetAllDiscussionsQueryHandler
+    : IRequestHandler<GetAllDiscussionsQuery, ErrorOr<List<DiscussionResult>>>
 {
     private readonly IDiscussionRepository discussionRepository;
 
@@ -17,17 +18,26 @@ public class GetAllDiscussionsQueryHandler : IRequestHandler<GetAllDiscussionsQu
         this.discussionRepository = discussionRepository;
     }
 
-    public async Task<ErrorOr<List<DiscussionResult>>> Handle(GetAllDiscussionsQuery query, CancellationToken cancellationToken)
+    public async Task<ErrorOr<List<DiscussionResult>>> Handle(
+        GetAllDiscussionsQuery query,
+        CancellationToken cancellationToken
+    )
     {
-        List<Discussion> discussions = [];
+        List<Discussion> discussions = new List<Discussion>();
+        GetAllDiscussionsFiltersQuery? filters = query.Filters;
+
         if (query.EssayId == Guid.Empty)
         {
-            discussions = await this.discussionRepository.GetAll(cancellationToken);
+            discussions = await this.discussionRepository.GetAll(filters, cancellationToken);
         }
         else
         {
-            var essayId = EssayId.Create(query.EssayId);
-            discussions = await this.discussionRepository.GetAllByEssayId(essayId, cancellationToken);
+            var essayId = EssayId.Create(query.EssayId ?? Guid.Empty);
+            discussions = await this.discussionRepository.GetAllByEssayId(
+                essayId,
+                filters,
+                cancellationToken
+            );
         }
 
         List<DiscussionResult> discussionsResults = discussions

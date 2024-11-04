@@ -34,16 +34,6 @@
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
         }
       },
-      "MediatR.Extensions.Microsoft.DependencyInjection": {
-        "type": "Direct",
-        "requested": "[11.1.0, )",
-        "resolved": "11.1.0",
-        "contentHash": "RW3etRuy6Xp63cgqfC0r/ITOtUT0f9ymJl1+1XZdzsYUsfv7WBPC2kXGOP8IYpY/6c4Q6805vbIW/88DopUs3w==",
-        "dependencies": {
-          "MediatR": "[11.0.0, 12.0.0)",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0"
-        }
-      },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Direct",
         "requested": "[8.0.1, )",

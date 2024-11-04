@@ -24,6 +24,7 @@
 ### POST PUT DELETE GET `{host}/api/v1/localexpressions`
 
 ### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
+### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
 
 ```json
 [
@@ -268,6 +269,7 @@
 ## Essay
 
 ### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
 
 ```json
 [
@@ -289,6 +291,7 @@
 ]
 ```
 
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
 ### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
 
 ```json
@@ -331,6 +334,7 @@
 ## Grammars
 
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
 
 ```json
 [
@@ -352,6 +356,7 @@
 ]
 ```
 
+### GET `{host}/api/v1/grammars/topics/{id}`
 ### GET `{host}/api/v1/grammars/topics/{id}`
 
 ```json
@@ -472,6 +477,21 @@
 }
 ```
 
+## Subjunction
+<!-- seeding -->
+### GET `{host}/api/v1/subjunction`
+
+```json
+{
+  "time": ["quae", "voluptatem", "eum"],
+  "arsak": ["officiis", "atque", "est"],
+  "henslikt": ["est", "modi", "reprehenderit"],
+  "betingelse": ["minus", "explicabo", "recusandae"],
+  "motsetning": ["veritatis", "ab", "beatae"]
+}
+```
+
 ## Search and Pagination
 
+### `GET {host}/api/v1/search?type=words&keyword=modi&difficultyLevel=B1&isCompleted=true`
 ### `GET {host}/api/v1/search?type=words&keyword=modi&difficultyLevel=B1&isCompleted=true`
