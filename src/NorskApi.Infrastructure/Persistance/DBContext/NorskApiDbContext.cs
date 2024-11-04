@@ -1,9 +1,10 @@
-using NorskApi.Domain.LocalExpressionAggregate;
 using Microsoft.EntityFrameworkCore;
-using NorskApi.Infrastructure.Persistance.Interceptors;
-using NorskApi.Domain.Common.Models;
 using Microsoft.Extensions.Configuration;
+using NorskApi.Domain.Common.Models;
+using NorskApi.Domain.DictationAggregate;
 using NorskApi.Domain.DiscussionAggregate;
+using NorskApi.Domain.LocalExpressionAggregate;
+using NorskApi.Infrastructure.Persistance.Interceptors;
 
 namespace NorskApi.Infrastructure.Persistance.DBContext;
 
@@ -14,11 +15,21 @@ public sealed class NorskApiDbContext : DbContext
 
     public DbSet<LocalExpression> LocalExpressions { get; set; } = null!;
     public DbSet<Discussion> Discussions { get; set; } = null!;
+    public DbSet<Dictation> Dictations { get; set; } = null!;
 
-    public NorskApiDbContext(DbContextOptions<NorskApiDbContext> options, PublishDomainEventsInterceptor publishDomainEventsInterceptor, IConfiguration configuration) : base(options)
+    public NorskApiDbContext(
+        DbContextOptions<NorskApiDbContext> options,
+        PublishDomainEventsInterceptor publishDomainEventsInterceptor,
+        IConfiguration configuration
+    )
+        : base(options)
     {
         this.publishDomainEventsInterceptor = publishDomainEventsInterceptor;
-        this.connectionString = configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        this.connectionString =
+            configuration.GetConnectionString("DefaultConnection")
+            ?? throw new InvalidOperationException(
+                "Connection string 'DefaultConnection' not found."
+            );
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -68,6 +79,4 @@ public sealed class NorskApiDbContext : DbContext
             entity.UpdatedDateTime = DateTime.UtcNow;
         }
     }
-
-
 }
