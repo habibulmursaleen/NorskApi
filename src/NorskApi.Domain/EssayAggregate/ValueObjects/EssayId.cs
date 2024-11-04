@@ -1,11 +1,10 @@
 using NorskApi.Domain.Common.Models;
 
 namespace NorskApi.Domain.EssayAggregate.ValueObjects;
+
 public sealed class EssayId : AggregateRootId<Guid>
 {
-    private EssayId()
-    {
-    }
+    private EssayId() { }
 
     private EssayId(Guid value)
     {

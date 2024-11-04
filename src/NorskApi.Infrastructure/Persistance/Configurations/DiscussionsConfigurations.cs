@@ -19,45 +19,28 @@ public class DiscussionsConfigurations : IEntityTypeConfiguration<Discussion>
 
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Id)
+        builder
+            .Property(x => x.Id)
             .ValueGeneratedNever()
-            .HasConversion(
-                x => x.Value,
-                value => DiscussionId.Create(value)
-            );
+            .HasConversion(x => x.Value, value => DiscussionId.Create(value));
 
-        builder.Property(x => x.EssayId)
-            .IsRequired(false)
-            .HasConversion(
-                x => x!.Value,
-                value => EssayId.Create(value)
-            );
+        builder
+            .Property(x => x.EssayId)
+            .IsRequired(true)
+            .HasConversion(x => x!.Value, value => EssayId.Create(value));
 
-        builder.Property(x => x.Title)
-            .IsRequired()
-            .HasMaxLength(255);
+        builder.Property(x => x.Title).IsRequired().HasMaxLength(255);
 
-        builder.Property(x => x.DiscussionEssays)
-            .IsRequired()
-            .HasMaxLength(500);
+        builder.Property(x => x.DiscussionEssays).IsRequired().HasMaxLength(500);
 
-        builder.Property(x => x.Note)
-            .IsRequired()
-            .HasMaxLength(500);
+        builder.Property(x => x.Note).IsRequired().HasMaxLength(500);
 
+        builder.Property(x => x.DifficultyLevel).IsRequired().HasConversion<string>();
 
-        builder.Property(x => x.DifficultyLevel)
-            .IsRequired()
-            .HasConversion<string>();
+        builder.Property(x => x.IsCompleted).IsRequired();
 
-        builder.Property(x => x.IsCompleted)
-            .IsRequired();
+        builder.Property(x => x.CreatedDateTime).IsRequired();
 
-        builder.Property(x => x.CreatedDateTime)
-            .IsRequired();
-
-        builder.Property(x => x.UpdatedDateTime)
-            .IsRequired();
-
+        builder.Property(x => x.UpdatedDateTime).IsRequired();
     }
 }

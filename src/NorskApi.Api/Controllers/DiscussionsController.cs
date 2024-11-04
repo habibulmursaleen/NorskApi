@@ -3,6 +3,7 @@ using ErrorOr;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Application.Discussions.Commands.CreateDiscussion;
 using NorskApi.Application.Discussions.Commands.DeleteDiscussion;
 using NorskApi.Application.Discussions.Commands.UpdateDiscussion;
@@ -49,7 +50,7 @@ public class DiscussionsController : ApiController
     [ProducesResponseType(typeof(List<DiscussionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("essays/all/discussions")]
-    public async Task<IActionResult> GetDiscussions([FromQuery] GetDiscussionsFilters filters)
+    public async Task<IActionResult> GetDiscussions([FromQuery] QueryParamsBaseFilters filters)
     {
         GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>(
             (Guid.Empty, filters)
@@ -67,7 +68,7 @@ public class DiscussionsController : ApiController
     [HttpGet("essays/{essayId:guid}/discussions")]
     public async Task<IActionResult> GetDiscussionsByEssayId(
         [FromRoute] Guid essayId,
-        [FromQuery] GetDiscussionsFilters filters
+        [FromQuery] QueryParamsBaseFilters filters
     )
     {
         GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>((essayId, filters));

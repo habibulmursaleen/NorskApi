@@ -12,10 +12,10 @@ public sealed class Podcast : AggregateRoot<PodcastId, Guid>
     public string Label { get; set; }
     public string? Descriptions { get; set; }
     public string Logo { get; set; }
-    public string Link { get; set; }
+    public string Url { get; set; }
+    public bool IsCompleted { get; set; }
+    public bool IsFeatured { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Podcast() { }
@@ -27,20 +27,21 @@ public sealed class Podcast : AggregateRoot<PodcastId, Guid>
         string label,
         string? descriptions,
         string logo,
-        string link,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
-    ) : base(podcastId)
+        string url,
+        bool isCompleted,
+        bool isFeatured,
+        DifficultyLevel difficultyLevel
+    )
+        : base(podcastId)
     {
         this.EssayId = essayId;
         this.Label = label;
         this.Descriptions = descriptions;
         this.Logo = logo;
-        this.Link = link;
+        this.Url = url;
+        this.IsCompleted = isCompleted;
+        this.IsFeatured = isFeatured;
         this.DifficultyLevel = difficultyLevel;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
     }
 
     public static Podcast Create(
@@ -48,10 +49,10 @@ public sealed class Podcast : AggregateRoot<PodcastId, Guid>
         string label,
         string? descriptions,
         string logo,
-        string link,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
+        string url,
+        bool isCompleted,
+        bool isFeatured,
+        DifficultyLevel difficultyLevel
     )
     {
         Podcast podcast = new Podcast(
@@ -60,10 +61,10 @@ public sealed class Podcast : AggregateRoot<PodcastId, Guid>
             label,
             descriptions,
             logo,
-            link,
-            DifficultyLevel.A1,
-            createdAt,
-            updatedAt
+            url,
+            isCompleted,
+            isFeatured,
+            difficultyLevel
         );
 
         podcast.AddDomainEvent(new PodcastCreatedDomainEvent(podcast));
@@ -76,18 +77,20 @@ public sealed class Podcast : AggregateRoot<PodcastId, Guid>
         string label,
         string? descriptions,
         string logo,
-        string link,
-        DifficultyLevel difficultyLevel,
-        DateTime updatedAt
+        string url,
+        bool isCompleted,
+        bool isFeatured,
+        DifficultyLevel difficultyLevel
     )
     {
         this.EssayId = essayId;
         this.Label = label;
         this.Descriptions = descriptions;
         this.Logo = logo;
-        this.Link = link;
+        this.Url = url;
+        this.IsCompleted = isCompleted;
+        this.IsFeatured = isFeatured;
         this.DifficultyLevel = difficultyLevel;
-        this.UpdatedAt = updatedAt;
 
         this.AddDomainEvent(new PodcastUpdatedDomainEvent(this));
     }
@@ -96,5 +99,4 @@ public sealed class Podcast : AggregateRoot<PodcastId, Guid>
     {
         this.AddDomainEvent(new PodcastDeletedDomainEvent(this));
     }
-
 }

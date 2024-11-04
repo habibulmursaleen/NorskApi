@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 using NorskApi.Application.Common.Interfaces.Persistance;
-using NorskApi.Application.Common.QueryParams;
+using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Application.Discussions.Models;
 using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
@@ -24,7 +24,7 @@ public class GetAllDiscussionsQueryHandler
     )
     {
         List<Discussion> discussions = new List<Discussion>();
-        GetAllDiscussionsFiltersQuery? filters = query.Filters;
+        QueryParamsBaseFilters? filters = query.Filters;
 
         if (query.EssayId == Guid.Empty)
         {

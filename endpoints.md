@@ -22,8 +22,6 @@
 ## LocalExpressions
 
 ### POST PUT DELETE GET `{host}/api/v1/localexpressions`
-
-### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
 ### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
 
 ```json
@@ -55,6 +53,7 @@
   {
     "id": "a750259a-d8b0-4dae-9a2d-3d850f715bec",
     "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af", // just Id, no relation
+    "label": "odio nulla perferendis",
     "content": "Optio fuga voluptatem aut omnis. Numquam odio harum deleniti praesentium repudiandae dolores.",
     "answer": "Sit repellat velit accusamus harum est. Nostrum ratione sequi. Rinventore odio tempore laudantium.",
     "isCompleted": false,
@@ -68,8 +67,12 @@
 ## Podcasts
 
 ### POST GET `{host}/api/v1/podcasts`
-
 ### GET PUT DELETE `{host}/api/v1/podcasts/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        essayId
+
 ```json
 [
   {
@@ -78,7 +81,9 @@
     "lebel": "sint",
     "descriptions": "voluptatem hic alias", 
     "logo": "http://placeimg.com/640/480/technics",
-    "link": "http://placeimg.com/640/480/technics", 
+    "url": "http://placeimg.com/640/480/technics", 
+    "isCompleted": true,
+    "isFeatured": true,
     "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
     "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
     "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
@@ -125,7 +130,7 @@
   {
     "id": "388dcd8d-24f3-4d2a-bb46-4604169a155e",
     "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",  // child of Essay aggregate
-    "question": "Dolores voluptate rerum quisquam ipsam animi voluptatem fugiat rem id?",
+    "label": "Dolores voluptate rerum quisquam ipsam animi voluptatem fugiat rem id?",
     "answer": "Id vitae veniam qui omnis omnis labore est voluptatem.",
     "isCompleted": true,
     "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
@@ -134,8 +139,6 @@
   }
 ]
 ```
-
-
 
 ## Roleplays
 
@@ -159,7 +162,61 @@
 ]
 ```
 
+## Tasks
 
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
+### GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        topicId
+        
+```json
+[
+  {
+    "id": "2b772cd8-4f73-402d-b658-391e6af61d5e",
+    "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543", // child of Topic aggregate
+    "logo": "http://placeimg.com/640/480/abstract",
+    "label": "Quis minus sit.",
+    "taskPointer": "Iste ut incidunt.",
+    "isCompleted": true,
+    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
+    "answer": "Odio quod omnis quo expedita dolores aut esse suscipit.", // user input
+    "comments": "Sequi dolor nam eos consectetur sed fugit ex.",
+    "additionalInfo": "In sed alias dignissimos numquam impedit.",
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
+## Grammars
+
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
+### GET `{host}/api/v1/grammars/topics/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+
+```json
+[
+  {
+    "id": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
+    "label": "Foo Grammar",
+    "description": "Foo Grammar description",
+    "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE"
+    "chapter": 1,
+    "moduleCount": 3,
+    "progress": 75,
+    "isCompleted": false,
+    "isSaved": true,
+    "tags": ["odit", "officiis"],
+    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
 
 ## Quiz
 
@@ -273,6 +330,9 @@
 
 ### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
 ### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
+### Query params 
+    Filters:
+        difficultyLevel
 
 ```json
 [
@@ -334,59 +394,17 @@
 }
 ```
 
-## Grammars
 
-### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
-### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
-
-```json
-[
-  {
-    "id": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
-    "label": "Foo Grammar",
-    "description": "Foo Grammar description",
-    "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE"
-    "chapter": 1,
-    "moduleCount": 3,
-    "progress": 75,
-    "isCompleted": false,
-    "isSaved": true,
-    "tags": ["odit", "officiis"],
-    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
-### GET `{host}/api/v1/grammars/topics/{id}`
-### GET `{host}/api/v1/grammars/topics/{id}`
-
-```json
-[
-  {
-    "id": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543",
-    "label": "Foo Grammar",
-    "description": "Foo Grammar description",
-    "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE"
-    "chapter": 1,
-    "moduleCount": 3,
-    "progress": 75,
-    "isCompleted": false,
-    "isSaved": true,
-    "tags": ["odit", "officiis"],
-    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
 
 ## Grammmar Rules
 
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/rules`
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics/all/rules`
 ### GET `{host}/api/v1/grammars/topics/{topicId}/rules/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        topicId
 
 ```json
 [
@@ -443,29 +461,6 @@
 ]
 ```
 
-## Tasks
-
-### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
-### GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
-
-```json
-[
-  {
-    "id": "2b772cd8-4f73-402d-b658-391e6af61d5e",
-    "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543", // child of Topic aggregate
-    "logo": "http://placeimg.com/640/480/abstract",
-    "label": "Quis minus sit.",
-    "taskPointer": "Iste ut incidunt.",
-    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
-    "answer": "Odio quod omnis quo expedita dolores aut esse suscipit.", // user input
-    "comments": "Sequi dolor nam eos consectetur sed fugit ex.",
-    "additionalInfo": "In sed alias dignissimos numquam impedit.",
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
 ## Subjunction
 <!-- seeding -->
 ### GET `{host}/api/v1/subjunction`
@@ -479,22 +474,3 @@
   "motsetning": ["veritatis", "ab", "beatae"]
 }
 ```
-
-## Subjunction
-<!-- seeding -->
-### GET `{host}/api/v1/subjunction`
-
-```json
-{
-  "time": ["quae", "voluptatem", "eum"],
-  "arsak": ["officiis", "atque", "est"],
-  "henslikt": ["est", "modi", "reprehenderit"],
-  "betingelse": ["minus", "explicabo", "recusandae"],
-  "motsetning": ["veritatis", "ab", "beatae"]
-}
-```
-
-## Search and Pagination
-
-### `GET {host}/api/v1/search?type=words&keyword=modi&difficultyLevel=B1&isCompleted=true`
-### `GET {host}/api/v1/search?type=words&keyword=modi&difficultyLevel=B1&isCompleted=true`

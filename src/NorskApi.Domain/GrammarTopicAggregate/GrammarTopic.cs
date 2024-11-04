@@ -5,22 +5,18 @@ using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 
 namespace NorskApi.Domain.GrammarTopicAggregate;
 
-
 public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
 {
     public string Label { get; set; }
     public string? Description { get; set; }
     public Status Status { get; set; } // Enum: ACTIVE, INACTIVE
-    public int Chapter { get; set; }
-    public int ModuleCount { get; set; }
-    public int Progress { get; set; }
+    public double Chapter { get; set; }
+    public double ModuleCount { get; set; }
+    public double Progress { get; set; }
     public bool IsCompleted { get; set; }
     public bool IsSaved { get; set; }
     public List<string>? Tags { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private GrammarTopic() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -30,16 +26,15 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         string label,
         string? description,
         Status status,
-        int chapter,
-        int moduleCount,
-        int progress,
+        double chapter,
+        double moduleCount,
+        double progress,
         bool isCompleted,
         bool isSaved,
         List<string>? tags,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
-    ) : base(topicId)
+        DifficultyLevel difficultyLevel
+    )
+        : base(topicId)
     {
         this.Label = label;
         this.Description = description;
@@ -51,23 +46,19 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         this.IsSaved = isSaved;
         this.Tags = tags;
         this.DifficultyLevel = difficultyLevel;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
     }
 
     public static GrammarTopic Create(
         string label,
         string? description,
         Status status,
-        int chapter,
-        int moduleCount,
-        int progress,
+        double chapter,
+        double moduleCount,
+        double progress,
         bool isCompleted,
         bool isSaved,
         List<string>? tags,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
     {
         GrammarTopic grammarTopic = new GrammarTopic(
@@ -81,9 +72,7 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
             isCompleted,
             isSaved,
             tags,
-            DifficultyLevel.A1,
-            createdAt,
-            updatedAt
+            difficultyLevel
         );
 
         grammarTopic.AddDomainEvent(new GrammarTopicCreatedDomainEvent(grammarTopic));
@@ -95,16 +84,14 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         string label,
         string? description,
         Status status,
-        int chapter,
-        int moduleCount,
-        int progress,
+        double chapter,
+        double moduleCount,
+        double progress,
         bool isCompleted,
         bool isSaved,
         List<string>? tags,
-        DifficultyLevel difficultyLevel,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
-
     {
         this.Label = label;
         this.Description = description;
@@ -116,7 +103,6 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         this.IsSaved = isSaved;
         this.Tags = tags;
         this.DifficultyLevel = difficultyLevel;
-        this.UpdatedAt = updatedAt;
 
         this.AddDomainEvent(new GrammarTopicUpdatedDomainEvent(this));
     }
@@ -126,4 +112,3 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         this.AddDomainEvent(new GrammarTopicDeletedDomainEvent(this));
     }
 }
-
