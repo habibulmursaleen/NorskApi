@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using NorskApi.Application.Common.Interfaces.Persistance;
-using NorskApi.Application.Common.QueryParams;
+using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.DiscussionAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
@@ -13,20 +13,24 @@ namespace NorskApi.Infrastructure.Persistance.Repositories;
 public class DiscussionRepository : IDiscussionRepository
 {
     private readonly NorskApiDbContext dbContext;
-    private readonly IQueryParamsBuilder queryParamsBuilder;
+    private readonly IQueryParamsBaseBuilder queryParamsBaseBuilder;
 
-    public DiscussionRepository(NorskApiDbContext dbContext, IQueryParamsBuilder queryParamsBuilder)
+    public DiscussionRepository(
+        NorskApiDbContext dbContext,
+        IQueryParamsBaseBuilder queryParamsBaseBuilder
+    )
     {
         this.dbContext = dbContext;
-        this.queryParamsBuilder = queryParamsBuilder;
+        this.queryParamsBaseBuilder = queryParamsBaseBuilder;
     }
 
     public async Task<List<Discussion>> GetAll(
-        GetAllDiscussionsFiltersQuery? filters,
+        QueryParamsBaseFilters? filters,
         CancellationToken cancellationToken
     )
     {
-        var query = filters != null ? queryParamsBuilder.BuildQueries<Discussion>(filters) : null;
+        var query =
+            filters != null ? queryParamsBaseBuilder.BuildQueries<Discussion>(filters) : null;
         if (query == null)
         {
             return await this.dbContext.Discussions.ToListAsync();
@@ -36,11 +40,11 @@ public class DiscussionRepository : IDiscussionRepository
 
     public async Task<List<Discussion>> GetAllByEssayId(
         EssayId essayId,
-        GetAllDiscussionsFiltersQuery filters,
+        QueryParamsBaseFilters filters,
         CancellationToken cancellationToken
     )
     {
-        var query = queryParamsBuilder.BuildQueries<Discussion>(filters);
+        var query = queryParamsBaseBuilder.BuildQueries<Discussion>(filters);
         query = query?.Where(x => x.EssayId == essayId);
         if (query == null)
         {

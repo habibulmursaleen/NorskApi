@@ -9,6 +9,7 @@ namespace NorskApi.Domain.DictationAggregate;
 public sealed class Dictation : AggregateRoot<DictationId, Guid>
 {
     public EssayId? EssayId { get; set; }
+    public string Label { get; set; }
     public string Content { get; set; }
     public string? Answer { get; set; }
     public bool IsCompleted { get; set; }
@@ -20,6 +21,7 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
     private Dictation(
         DictationId DictationId,
         EssayId? essayId,
+        string label,
         string content,
         string? answer,
         bool isCompleted,
@@ -28,6 +30,7 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
         : base(DictationId)
     {
         this.EssayId = essayId;
+        this.Label = label;
         this.Content = content;
         this.Answer = answer;
         this.IsCompleted = isCompleted;
@@ -36,6 +39,7 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
 
     public static Dictation Create(
         EssayId? essayId,
+        string label,
         string content,
         string? answer,
         bool isCompleted,
@@ -45,6 +49,7 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
         Dictation dictation = new Dictation(
             DictationId.CreateUnique(),
             essayId,
+            label,
             content,
             answer,
             isCompleted,
@@ -58,6 +63,7 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
 
     public void Update(
         EssayId? essayId,
+        string label,
         string content,
         string? answer,
         bool isCompleted,
@@ -65,6 +71,7 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
     )
     {
         this.EssayId = essayId;
+        this.Label = label;
         this.Content = content;
         this.Answer = answer;
         this.IsCompleted = isCompleted;

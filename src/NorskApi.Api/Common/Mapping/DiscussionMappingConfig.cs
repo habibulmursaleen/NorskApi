@@ -1,7 +1,7 @@
 namespace NorskApi.Api.Common.Mapping;
 
 using Mapster;
-using NorskApi.Application.Common.QueryParams;
+using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Application.Discussions.Commands.CreateDiscussion;
 using NorskApi.Application.Discussions.Commands.DeleteDiscussion;
 using NorskApi.Application.Discussions.Commands.UpdateDiscussion;
@@ -39,18 +39,14 @@ public class DiscussionMappingConfig : IRegister
         config.NewConfig<Guid, DeleteDiscussionCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<(Guid essayId, GetDiscussionsFilters filters), GetAllDiscussionsQuery>()
+            .NewConfig<(Guid essayId, QueryParamsBaseFilters filters), GetAllDiscussionsQuery>()
             .Map(dest => dest.EssayId, src => src.essayId)
             .Map(dest => dest.Filters, src => src.filters);
 
         // Map Filter Request to Filter Query
         config
-            .NewConfig<GetDiscussionsFilters, GetAllDiscussionsFiltersQuery>()
+            .NewConfig<QueryParamsBaseFilters, QueryParamsBaseFilters>()
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
-            .Map(dest => dest.FromDate, src => src.FromDate)
-            .Map(dest => dest.ToDate, src => src.ToDate)
-            .Map(dest => dest.Skip, src => src.Skip)
-            .Map(dest => dest.Count, src => src.Count)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)
             .Map(dest => dest.SortBy, src => src.SortBy);
