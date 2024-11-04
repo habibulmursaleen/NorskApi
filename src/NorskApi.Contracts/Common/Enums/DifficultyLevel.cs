@@ -5,6 +5,7 @@ namespace NorskApi.Contracts.Common.Enums;
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum DifficultyLevel
 {
+    ALL,
     A1,
     A2,
     B1,

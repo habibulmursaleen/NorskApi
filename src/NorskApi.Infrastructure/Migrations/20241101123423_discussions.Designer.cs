@@ -13,7 +13,7 @@ namespace NorskApi.Infrastructure.Migrations
 {
     [DbContext(typeof(NorskApiDbContext))]
     [Migration("20241101123423_discussions")]
-    partial class discussions
+    partial class Discussions
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
