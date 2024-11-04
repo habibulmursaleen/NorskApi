@@ -44,8 +44,11 @@
 ## Dictation
 
 ### POST PUT DELETE GET `{host}/api/v1/dictations`
-
 ### GET PUT DELETE `{host}/api/v1/dictations/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        essayId
 
 ```json
 [
