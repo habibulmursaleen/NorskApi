@@ -121,15 +121,6 @@
         "resolved": "2.0.1",
         "contentHash": "FYv95bNT4UwcNA+G/J1oX5OpRiSUxteXaUt2BJbRSdRNiIUNbggJF69wy6mnk2wYToaanpdXZdCwVylt96MpwQ=="
       },
-      "MediatR.Extensions.Microsoft.DependencyInjection": {
-        "type": "Transitive",
-        "resolved": "11.1.0",
-        "contentHash": "RW3etRuy6Xp63cgqfC0r/ITOtUT0f9ymJl1+1XZdzsYUsfv7WBPC2kXGOP8IYpY/6c4Q6805vbIW/88DopUs3w==",
-        "dependencies": {
-          "MediatR": "[11.0.0, 12.0.0)",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0"
-        }
-      },
       "Microsoft.Bcl.AsyncInterfaces": {
         "type": "Transitive",
         "resolved": "6.0.0",
@@ -660,7 +651,6 @@
           "FluentValidation": "[11.10.0, )",
           "FluentValidation.AspNetCore": "[11.3.0, )",
           "MediatR": "[12.4.1, )",
-          "MediatR.Extensions.Microsoft.DependencyInjection": "[11.1.0, )",
           "Microsoft.Extensions.DependencyInjection": "[8.0.1, )",
           "NorskApi.Domain": "[1.0.0, )"
         }
