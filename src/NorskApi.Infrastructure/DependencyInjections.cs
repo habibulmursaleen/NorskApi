@@ -29,7 +29,10 @@ namespace NorskApi.Infrastructure
 
             services.AddScoped<ILocalExpressionRepository, LocalExpressionRepository>();
             services.AddScoped<IDiscussionRepository, DiscussionRepository>();
-            services.AddScoped<IQueryParamsBuilder, QueryParamsBuilder>();
+            services.AddScoped<IDictationRepository, DictationRepository>();
+
+            services.AddScoped<IQueryParamsBaseBuilder, DiscussionsQueryParamsBuilder>();
+            services.AddScoped<IQueryParamsWithEssayBuilder, DictationsQueryParamsBuilder>();
 
             return services;
         }

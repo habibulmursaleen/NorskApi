@@ -44,14 +44,18 @@
 ## Dictation
 
 ### POST PUT DELETE GET `{host}/api/v1/dictations`
-
 ### GET PUT DELETE `{host}/api/v1/dictations/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        essayId
 
 ```json
 [
   {
     "id": "a750259a-d8b0-4dae-9a2d-3d850f715bec",
     "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af", // just Id, no relation
+    "label": "odio nulla perferendis",
     "content": "Optio fuga voluptatem aut omnis. Numquam odio harum deleniti praesentium repudiandae dolores.",
     "answer": "Sit repellat velit accusamus harum est. Nostrum ratione sequi. Rinventore odio tempore laudantium.",
     "isCompleted": false,
@@ -65,8 +69,12 @@
 ## Podcasts
 
 ### POST GET `{host}/api/v1/podcasts`
-
 ### GET PUT DELETE `{host}/api/v1/podcasts/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        essayId
+
 ```json
 [
   {
@@ -270,6 +278,9 @@
 
 ### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
 ### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
+### Query params 
+    Filters:
+        difficultyLevel
 
 ```json
 [
@@ -335,6 +346,9 @@
 
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
+### Query params 
+    Filters:
+        difficultyLevel
 
 ```json
 [
@@ -384,6 +398,10 @@
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/rules`
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics/all/rules`
 ### GET `{host}/api/v1/grammars/topics/{topicId}/rules/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        topicId
 
 ```json
 [
@@ -444,7 +462,11 @@
 
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
 ### GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
-
+### Query params 
+    Filters:
+        difficultyLevel
+        topicId
+        
 ```json
 [
   {

@@ -9,13 +9,11 @@ namespace NorskApi.Domain.DictationAggregate;
 public sealed class Dictation : AggregateRoot<DictationId, Guid>
 {
     public EssayId? EssayId { get; set; }
+    public string Label { get; set; }
     public string Content { get; set; }
     public string? Answer { get; set; }
     public bool IsCompleted { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Dictation() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -23,42 +21,39 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
     private Dictation(
         DictationId DictationId,
         EssayId? essayId,
+        string label,
         string content,
         string? answer,
         bool isCompleted,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
-    ) : base(DictationId)
+        DifficultyLevel difficultyLevel
+    )
+        : base(DictationId)
     {
         this.EssayId = essayId;
+        this.Label = label;
         this.Content = content;
         this.Answer = answer;
         this.IsCompleted = isCompleted;
         this.DifficultyLevel = difficultyLevel;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
     }
 
     public static Dictation Create(
         EssayId? essayId,
+        string label,
         string content,
         string? answer,
         bool isCompleted,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
     {
         Dictation dictation = new Dictation(
             DictationId.CreateUnique(),
             essayId,
+            label,
             content,
             answer,
             isCompleted,
-            DifficultyLevel.A1,
-            createdAt,
-            updatedAt
+            difficultyLevel
         );
 
         dictation.AddDomainEvent(new DictationCreatedDomainEvent(dictation));
@@ -68,20 +63,19 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
 
     public void Update(
         EssayId? essayId,
+        string label,
         string content,
         string? answer,
         bool isCompleted,
-        DifficultyLevel difficultyLevel,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
     {
         this.EssayId = essayId;
+        this.Label = label;
         this.Content = content;
         this.Answer = answer;
         this.IsCompleted = isCompleted;
         this.DifficultyLevel = difficultyLevel;
-        this.UpdatedAt = updatedAt;
-
         this.AddDomainEvent(new DictationUpdatedDomainEvent(this));
     }
 
@@ -89,7 +83,4 @@ public sealed class Dictation : AggregateRoot<DictationId, Guid>
     {
         this.AddDomainEvent(new DictationDeletedDomainEvent(this));
     }
-
 }
-
-
