@@ -1,4 +1,4 @@
-using NorskApi.Application.Common.QueryParams;
+using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.DiscussionAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
@@ -8,12 +8,12 @@ namespace NorskApi.Application.Common.Interfaces.Persistance;
 public interface IDiscussionRepository
 {
     Task<List<Discussion>> GetAll(
-        GetAllDiscussionsFiltersQuery? filters,
+        QueryParamsBaseFilters? filters,
         CancellationToken cancellationToken
     );
     Task<List<Discussion>> GetAllByEssayId(
         EssayId essayId,
-        GetAllDiscussionsFiltersQuery filters,
+        QueryParamsBaseFilters filters,
         CancellationToken cancellationToken
     );
     Task<Discussion?> GetById(
