@@ -49,9 +49,11 @@ public class DiscussionsController : ApiController
     [ProducesResponseType(typeof(List<DiscussionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("essays/all/discussions")]
-    public async Task<IActionResult> GetDiscussions()
+    public async Task<IActionResult> GetDiscussions([FromQuery] GetDiscussionsFilters filters)
     {
-        GetAllDiscussionsQuery query = new(EssayId: Guid.Empty);
+        GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>(
+            (Guid.Empty, filters)
+        );
         ErrorOr<List<DiscussionResult>> result = await this.mediator.Send(query);
 
         return result.Match(
@@ -63,9 +65,13 @@ public class DiscussionsController : ApiController
     [ProducesResponseType(typeof(List<DiscussionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("essays/{essayId:guid}/discussions")]
-    public async Task<IActionResult> GetDiscussionsByEssayId([FromRoute] Guid essayId)
+    public async Task<IActionResult> GetDiscussionsByEssayId(
+        [FromRoute] Guid essayId,
+        [FromQuery] GetDiscussionsFilters filters
+    )
     {
-        GetAllDiscussionsQuery query = new(EssayId: essayId);
+        GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>((essayId, filters));
+
         ErrorOr<List<DiscussionResult>> result = await this.mediator.Send(query);
 
         return result.Match(
