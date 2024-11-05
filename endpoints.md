@@ -22,8 +22,6 @@
 ## LocalExpressions
 
 ### POST PUT DELETE GET `{host}/api/v1/localexpressions`
-
-### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
 ### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
 
 ```json
@@ -83,7 +81,9 @@
     "lebel": "sint",
     "descriptions": "voluptatem hic alias", 
     "logo": "http://placeimg.com/640/480/technics",
-    "link": "http://placeimg.com/640/480/technics", 
+    "url": "http://placeimg.com/640/480/technics", 
+    "isCompleted": true,
+    "isFeatured": true,
     "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
     "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
     "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"

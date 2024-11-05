@@ -30,7 +30,9 @@ public class DiscussionRepository : IDiscussionRepository
     )
     {
         var query =
-            filters != null ? queryParamsBaseBuilder.BuildQueries<Discussion>(filters) : null;
+            filters != null
+                ? queryParamsBaseBuilder.BuildQueriesDiscussions<Discussion>(filters)
+                : null;
         if (query == null)
         {
             return await this.dbContext.Discussions.ToListAsync();
@@ -44,7 +46,7 @@ public class DiscussionRepository : IDiscussionRepository
         CancellationToken cancellationToken
     )
     {
-        var query = queryParamsBaseBuilder.BuildQueries<Discussion>(filters);
+        var query = queryParamsBaseBuilder.BuildQueriesDiscussions<Discussion>(filters);
         query = query?.Where(x => x.EssayId == essayId);
         if (query == null)
         {
