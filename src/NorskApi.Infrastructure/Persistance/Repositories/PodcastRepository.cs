@@ -1,18 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using NorskApi.Application.Common.Interfaces.Persistance;
 using NorskApi.Application.Common.QueryParamsBuilder;
-using NorskApi.Domain.DictationAggregate;
-using NorskApi.Domain.DictationAggregate.ValueObjects;
+using NorskApi.Domain.PodcastAggregate;
+using NorskApi.Domain.PodcastAggregate.ValueObjects;
 using NorskApi.Infrastructure.Persistance.DBContext;
 
 namespace NorskApi.Infrastructure.Persistance.Repositories;
 
-public class DictationRepository : IDictationRepository
+public class PodcastRepository : IPodcastRepository
 {
     private readonly NorskApiDbContext dbContext;
     private readonly IQueryParamsWithEssayBuilder queryParamsWithEssayBuilder;
 
-    public DictationRepository(
+    public PodcastRepository(
         NorskApiDbContext dbContext,
         IQueryParamsWithEssayBuilder queryParamsWithEssayBuilder
     )
@@ -21,49 +21,46 @@ public class DictationRepository : IDictationRepository
         this.queryParamsWithEssayBuilder = queryParamsWithEssayBuilder;
     }
 
-    public async Task<List<Dictation>> GetAll(
+    public async Task<List<Podcast>> GetAll(
         QueryParamsWithEssayFilters? filters,
         CancellationToken cancellationToken
     )
     {
-        var query = dbContext.Dictations.AsQueryable();
+        var query = dbContext.Podcasts.AsQueryable();
         query =
             filters != null
-                ? queryParamsWithEssayBuilder.BuildQueriesDictations<Dictation>(filters)
+                ? queryParamsWithEssayBuilder.BuildQueriesPodcasts<Podcast>(filters)
                 : query;
         if (query == null)
         {
-            return await this.dbContext.Dictations.ToListAsync();
+            return await this.dbContext.Podcasts.ToListAsync();
         }
         return await query.AsSplitQuery().ToListAsync(cancellationToken);
     }
 
-    public async Task<Dictation?> GetById(
-        DictationId dictationId,
-        CancellationToken cancellationToken
-    )
+    public async Task<Podcast?> GetById(PodcastId podcastId, CancellationToken cancellationToken)
     {
-        return await this.dbContext.Dictations.SingleOrDefaultAsync(
-            x => x.Id == dictationId,
+        return await this.dbContext.Podcasts.SingleOrDefaultAsync(
+            x => x.Id == podcastId,
             cancellationToken
         );
     }
 
-    public async Task Add(Dictation dictation, CancellationToken cancellationToken)
+    public async Task Add(Podcast podcast, CancellationToken cancellationToken)
     {
-        await this.dbContext.AddAsync(dictation, cancellationToken);
+        await this.dbContext.AddAsync(podcast, cancellationToken);
         await this.dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Update(Dictation dictation, CancellationToken cancellationToken)
+    public async Task Update(Podcast podcast, CancellationToken cancellationToken)
     {
-        this.dbContext.Update(dictation);
+        this.dbContext.Update(podcast);
         await this.dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Delete(Dictation dictation, CancellationToken cancellationToken)
+    public async Task Delete(Podcast podcast, CancellationToken cancellationToken)
     {
-        this.dbContext.Remove(dictation);
+        this.dbContext.Remove(podcast);
 
         await this.dbContext.SaveChangesAsync(cancellationToken);
     }

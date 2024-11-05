@@ -10,6 +10,6 @@ public class GetDictationByIdQueryValidator : AbstractValidator<GetDictationById
             .NotEmpty()
             .NotNull()
             .Must(x => x != Guid.Empty)
-            .WithMessage("Local expression id is required.");
+            .WithMessage("Dictation id is required.");
     }
 }

@@ -7,16 +7,16 @@ using NorskApi.Infrastructure.Persistance.DBContext;
 
 namespace NorskApi.Infrastructure.Common;
 
-public class DiscussionsQueryParamsBuilder : IQueryParamsBaseBuilder
+public class QueryParamsBaseBuilder : IQueryParamsBaseBuilder
 {
     private readonly NorskApiDbContext dbContext;
 
-    public DiscussionsQueryParamsBuilder(NorskApiDbContext dbContext)
+    public QueryParamsBaseBuilder(NorskApiDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
 
-    public IQueryable<T>? BuildQueries<T>(QueryParamsBaseFilters filters)
+    public IQueryable<T>? BuildQueriesDiscussions<T>(QueryParamsBaseFilters filters)
     {
         var query = dbContext.Discussions.AsQueryable();
         double skip =
