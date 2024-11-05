@@ -4,6 +4,7 @@ using NorskApi.Application.Discussions.Models;
 using NorskApi.Domain.Common.Enums;
 
 namespace NorskApi.Application.Discussions.Commands.CreateDiscussion;
+
 public record CreateDiscussionCommand(
     Guid EssayId,
     string Title,

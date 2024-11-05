@@ -5,6 +5,7 @@ using NorskApi.Domain.DictationAggregate;
 using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.LocalExpressionAggregate;
 using NorskApi.Domain.PodcastAggregate;
+using NorskApi.Domain.QuestionAggregate;
 using NorskApi.Infrastructure.Persistance.Interceptors;
 
 namespace NorskApi.Infrastructure.Persistance.DBContext;
@@ -18,6 +19,7 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<Discussion> Discussions { get; set; } = null!;
     public DbSet<Dictation> Dictations { get; set; } = null!;
     public DbSet<Podcast> Podcasts { get; set; } = null!;
+    public DbSet<Question> Questions { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,
