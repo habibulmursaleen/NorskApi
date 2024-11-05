@@ -32,6 +32,7 @@ namespace NorskApi.Infrastructure
             services.AddScoped<IDictationRepository, DictationRepository>();
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IRoleplayRepository, RoleplayRepository>();
 
             services.AddScoped<IQueryParamsBaseBuilder, QueryParamsBaseBuilder>();
             services.AddScoped<IQueryParamsWithEssayBuilder, QueryParamsWithEssayBuilder>();
