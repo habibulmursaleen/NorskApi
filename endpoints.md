@@ -179,6 +179,7 @@
     "logo": "http://placeimg.com/640/480/abstract",
     "label": "Quis minus sit.",
     "taskPointer": "Iste ut incidunt.",
+    "isCompleted": true,
     "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
     "answer": "Odio quod omnis quo expedita dolores aut esse suscipit.", // user input
     "comments": "Sequi dolor nam eos consectetur sed fugit ex.",
