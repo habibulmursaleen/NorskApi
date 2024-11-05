@@ -27,19 +27,19 @@ public class DeleteDiscussionHandler
         EssayId essayId = EssayId.Create(command.EssayId);
         DiscussionId discussionId = DiscussionId.Create(command.Id);
 
-        Discussion? localExpression = await discussionRepository.GetById(
+        Discussion? discussion = await discussionRepository.GetById(
             essayId,
             discussionId,
             cancellationToken
         );
 
-        if (localExpression is null)
+        if (discussion is null)
         {
             return Errors.DiscussionErrors.DiscussionNotFound(command.Id, command.EssayId);
         }
 
-        await discussionRepository.Delete(localExpression, cancellationToken);
+        await discussionRepository.Delete(discussion, cancellationToken);
 
-        return new DeleteDiscussionResult(localExpression.Id.Value);
+        return new DeleteDiscussionResult(discussion.Id.Value);
     }
 }
