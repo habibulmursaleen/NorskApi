@@ -4,5 +4,6 @@ namespace NorskApi.Application.Common.Interfaces.Persistance;
 
 public interface IQueryParamsWithEssayBuilder
 {
-    IQueryable<T>? BuildQueries<T>(QueryParamsWithEssayFilters filters);
+    IQueryable<T>? BuildQueriesDictations<T>(QueryParamsWithEssayFilters filters);
+    IQueryable<T>? BuildQueriesPodcasts<T>(QueryParamsWithEssayFilters filters);
 }
