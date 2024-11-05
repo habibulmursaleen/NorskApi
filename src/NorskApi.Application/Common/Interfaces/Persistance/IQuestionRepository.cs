@@ -21,7 +21,7 @@ public interface IQuestionRepository
         QuestionId questionId,
         CancellationToken cancellationToken
     );
-    Task Add(Question questionId, CancellationToken cancellationToken);
-    Task Update(Question questionId, CancellationToken cancellationToken);
-    Task Delete(Question questionId, CancellationToken cancellationToken);
+    Task Add(Question question, CancellationToken cancellationToken);
+    Task Update(Question question, CancellationToken cancellationToken);
+    Task Delete(Question question, CancellationToken cancellationToken);
 }
