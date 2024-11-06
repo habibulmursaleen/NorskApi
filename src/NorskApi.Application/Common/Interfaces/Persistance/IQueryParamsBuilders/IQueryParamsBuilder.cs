@@ -7,4 +7,5 @@ public interface IQueryParamsBaseBuilder
     IQueryable<T>? BuildQueriesDiscussions<T>(QueryParamsBaseFilters filters);
     IQueryable<T>? BuildQueriesQuestions<T>(QueryParamsBaseFilters filters);
     IQueryable<T>? BuildQueriesRoleplays<T>(QueryParamsBaseFilters filters);
+    IQueryable<T>? BuildQueriesGrammarTopics<T>(QueryParamsBaseFilters filters);
 }
