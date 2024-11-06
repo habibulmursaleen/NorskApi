@@ -7,6 +7,7 @@ using NorskApi.Application.Questions.Commands.DeleteQuestion;
 using NorskApi.Application.Questions.Commands.UpdateQuestion;
 using NorskApi.Application.Questions.Models;
 using NorskApi.Application.Questions.Queries.GetAllQuestions;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Questions.Request;
 using NorskApi.Contracts.Questions.Response;
 
@@ -37,13 +38,15 @@ public class QuestionMappingConfig : IRegister
         config.NewConfig<Guid, DeleteQuestionCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<(Guid essayId, QueryParamsBaseFilters filters), GetAllQuestionsQuery>()
+            .NewConfig<
+                (Guid essayId, QueryParamsBaseFiltersRequest filters),
+                GetAllQuestionsQuery
+            >()
             .Map(dest => dest.EssayId, src => src.essayId)
             .Map(dest => dest.Filters, src => src.filters);
 
-        // Map Filter Request to Filter Query
         config
-            .NewConfig<QueryParamsBaseFilters, QueryParamsBaseFilters>()
+            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

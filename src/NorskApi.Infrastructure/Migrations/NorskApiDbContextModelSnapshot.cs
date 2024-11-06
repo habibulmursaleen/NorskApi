@@ -282,6 +282,49 @@ namespace NorskApi.Infrastructure.Migrations
                     b.ToTable("Questions", (string)null);
                 });
 
+            modelBuilder.Entity("NorskApi.Domain.QuizAggregate.Quiz", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DifficultyLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("EssayId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsRightAnswer")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("QuizType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("TopicId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Quizzes", (string)null);
+                });
+
             modelBuilder.Entity("NorskApi.Domain.RoleplayAggregate.Roleplay", b =>
                 {
                     b.Property<Guid>("Id")
@@ -362,6 +405,47 @@ namespace NorskApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TaskWorks", (string)null);
+                });
+
+            modelBuilder.Entity("NorskApi.Domain.QuizAggregate.Quiz", b =>
+                {
+                    b.OwnsMany("NorskApi.Domain.QuizAggregate.Entites.QuizOption", "QuizOptions", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("CreatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<bool>("IsCorrect")
+                                .HasColumnType("bit");
+
+                            b1.Property<bool?>("MultipleChoiceAnswer")
+                                .IsRequired()
+                                .HasColumnType("bit");
+
+                            b1.Property<Guid>("QuizId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Title")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<DateTime>("UpdatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("QuizId");
+
+                            b1.ToTable("QuizOptions", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("QuizId");
+                        });
+
+                    b.Navigation("QuizOptions");
                 });
 #pragma warning restore 612, 618
         }

@@ -12,15 +12,15 @@ namespace NorskApi.Domain.QuizAggregate;
 
 public sealed class Quiz : AggregateRoot<QuizId, Guid>
 {
-    public EssayId EssayId { get; set; }
-    public TopicId TopicId { get; set; }
-    public string? Question { get; set; }
+    private readonly List<QuizOption> options = [];
+    public EssayId? EssayId { get; set; }
+    public TopicId? TopicId { get; set; }
+    public string Question { get; set; }
+    public string? Answer { get; set; }
+    public bool IsRightAnswer { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
-    public QuizType Type { get; set; } // Enum: MULTIPLE_CHOICE, BOOLEAN, STRING
-    private readonly List<QuizOption> options = new();
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public IReadOnlyCollection<QuizOption> QuizOption => this.QuizOption;
+    public QuizType QuizType { get; set; } // Enum: MULTIPLE_CHOICE, BOOLEAN, TEXT
+    public IReadOnlyCollection<QuizOption> QuizOptions => this.options;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Quiz() { }
@@ -28,14 +28,14 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
 
     private Quiz(
         QuizId id,
-        EssayId essayId,
-        TopicId topicId,
+        EssayId? essayId,
+        TopicId? topicId,
         string question,
+        string? answer,
+        bool isRightAnswer,
         DifficultyLevel difficultyLevel,
-        QuizType type,
-        List<QuizOption> options,
-        DateTime createdAt,
-        DateTime updatedAt
+        QuizType quizType,
+        List<QuizOption> options
     )
         : base(id)
     {
@@ -43,33 +43,36 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
         this.EssayId = essayId;
         this.TopicId = topicId;
         this.Question = question;
+        this.Answer = answer;
+        this.IsRightAnswer = isRightAnswer;
         this.DifficultyLevel = difficultyLevel;
-        this.Type = type;
+        this.QuizType = quizType;
         this.options = options;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
     }
 
     public static Quiz Create(
-        EssayId essayId,
-        TopicId topicId,
+        EssayId? essayId,
+        TopicId? topicId,
         string question,
+        string? answer,
+        bool isRightAnswer,
         DifficultyLevel difficultyLevel,
-        QuizType type,
+        QuizType quizType,
         List<QuizOption> options
     )
     {
-        Quiz quiz = new Quiz(
-            QuizId.CreateUnique(),
-            essayId,
-            topicId,
-            question,
-            DifficultyLevel.A1,
-            type,
-            options,
-            DateTime.UtcNow,
-            DateTime.UtcNow
-        );
+        Quiz quiz =
+            new(
+                QuizId.CreateUnique(),
+                essayId,
+                topicId,
+                question,
+                answer,
+                isRightAnswer,
+                difficultyLevel,
+                quizType,
+                options
+            );
 
         quiz.AddDomainEvent(new QuizCreatedDomainEvent(quiz));
 
@@ -77,20 +80,23 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     }
 
     public void Update(
-        EssayId essayId,
-        TopicId topicId,
+        EssayId? essayId,
+        TopicId? topicId,
         string question,
+        string? answer,
+        bool isRightAnswer,
         DifficultyLevel difficultyLevel,
-        QuizType type,
+        QuizType quizType,
         List<QuizOption> options
     )
     {
         this.EssayId = essayId;
         this.TopicId = topicId;
         this.Question = question;
+        this.Answer = answer;
+        this.IsRightAnswer = isRightAnswer;
         this.DifficultyLevel = difficultyLevel;
-        this.Type = type;
-        this.UpdatedAt = DateTime.UtcNow;
+        this.QuizType = quizType;
 
         UpdateOptions(options);
 
@@ -106,23 +112,24 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     {
         if (newOptions is not null)
         {
-            // Update existing options or add new ones
             foreach (var newOption in newOptions)
             {
                 var existingOption = this.options.FirstOrDefault(o => o.Id == newOption.Id);
+
                 if (existingOption is not null)
                 {
-                    // Update existing option
-                    existingOption.Update(newOption.Title, newOption.IsCorrect, newOption.Answer);
+                    existingOption.Update(
+                        newOption.Title,
+                        newOption.IsCorrect,
+                        newOption.MultipleChoiceAnswer
+                    );
                 }
                 else
                 {
-                    // Add new option
                     this.options.Add(newOption);
                 }
             }
 
-            // Remove options that are no longer in the new list
             this.options.RemoveAll(o => newOptions.All(no => no.Id != o.Id));
         }
     }

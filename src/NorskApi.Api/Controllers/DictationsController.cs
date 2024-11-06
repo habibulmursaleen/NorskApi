@@ -15,6 +15,7 @@ using NorskApi.Application.Dictations.Commands.UpdateDictation;
 using NorskApi.Application.Dictations.Models;
 using NorskApi.Application.Dictations.Queries.GetAllDictations;
 using NorskApi.Application.Dictations.Queries.GetDictationById;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Dictations.Request;
 using NorskApi.Contracts.Dictations.Response;
 
@@ -49,7 +50,9 @@ public class DictationsController : ApiController
     [ProducesResponseType(typeof(List<DictationResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet]
-    public async Task<IActionResult> GetDictations([FromQuery] QueryParamsWithEssayFilters filters)
+    public async Task<IActionResult> GetDictations(
+        [FromQuery] QueryParamsWithEssayFiltersRequest filters
+    )
     {
         GetAllDictationsQuery query = this.mapper.Map<GetAllDictationsQuery>(filters);
         ErrorOr<List<DictationResult>> getDictationsResult = await this.mediator.Send(query);

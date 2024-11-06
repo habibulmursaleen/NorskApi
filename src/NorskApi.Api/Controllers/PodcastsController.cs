@@ -15,6 +15,7 @@ using NorskApi.Application.Podcasts.Commands.UpdatePodcast;
 using NorskApi.Application.Podcasts.Models;
 using NorskApi.Application.Podcasts.Queries.GetAllPodcasts;
 using NorskApi.Application.Podcasts.Queries.GetPodcastById;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Podcasts.Request;
 using NorskApi.Contracts.Podcasts.Response;
 
@@ -48,7 +49,9 @@ public class PodcastsController : ApiController
     [ProducesResponseType(typeof(List<PodcastResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet]
-    public async Task<IActionResult> GetPodcasts([FromQuery] QueryParamsWithEssayFilters filters)
+    public async Task<IActionResult> GetPodcasts(
+        [FromQuery] QueryParamsWithEssayFiltersRequest filters
+    )
     {
         GetAllPodcastsQuery query = this.mapper.Map<GetAllPodcastsQuery>(filters);
         ErrorOr<List<PodcastResult>> getPodcastsResult = await this.mediator.Send(query);
