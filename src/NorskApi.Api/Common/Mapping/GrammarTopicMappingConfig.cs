@@ -8,6 +8,7 @@ using NorskApi.Application.GrammarTopics.Commands.DeleteGrammarTopic;
 using NorskApi.Application.GrammarTopics.Commands.UpdateGrammarTopic;
 using NorskApi.Application.GrammarTopics.Models;
 using NorskApi.Application.GrammarTopics.Queries.GetAllGrammarTopics;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.GrammarTopics.Request;
 using NorskApi.Contracts.GrammarTopics.Response;
 
@@ -48,12 +49,11 @@ public class GrammarTopicMappingConfig : IRegister
         config.NewConfig<Guid, DeleteGrammarTopicCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<QueryParamsBaseFilters, GetAllGrammarTopicsQuery>()
+            .NewConfig<QueryParamsBaseFiltersRequest, GetAllGrammarTopicsQuery>()
             .Map(dest => dest.Filters, src => src);
 
-        // Map Filter Request to Filter Query
         config
-            .NewConfig<QueryParamsBaseFilters, QueryParamsBaseFilters>()
+            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

@@ -10,6 +10,7 @@ using NorskApi.Application.Discussions.Commands.UpdateDiscussion;
 using NorskApi.Application.Discussions.Models;
 using NorskApi.Application.Discussions.Queries.GetAllDiscussions;
 using NorskApi.Application.Discussions.Queries.GetDiscussionById;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Discussions.Request;
 using NorskApi.Contracts.Discussions.Response;
 
@@ -50,7 +51,9 @@ public class DiscussionsController : ApiController
     [ProducesResponseType(typeof(List<DiscussionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("essays/all/discussions")]
-    public async Task<IActionResult> GetDiscussions([FromQuery] QueryParamsBaseFilters filters)
+    public async Task<IActionResult> GetDiscussions(
+        [FromQuery] QueryParamsBaseFiltersRequest filters
+    )
     {
         GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>(
             (Guid.Empty, filters)
@@ -68,7 +71,7 @@ public class DiscussionsController : ApiController
     [HttpGet("essays/{essayId:guid}/discussions")]
     public async Task<IActionResult> GetDiscussionsByEssayId(
         [FromRoute] Guid essayId,
-        [FromQuery] QueryParamsBaseFilters filters
+        [FromQuery] QueryParamsBaseFiltersRequest filters
     )
     {
         GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>((essayId, filters));

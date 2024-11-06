@@ -7,6 +7,7 @@ using NorskApi.Application.Discussions.Commands.DeleteDiscussion;
 using NorskApi.Application.Discussions.Commands.UpdateDiscussion;
 using NorskApi.Application.Discussions.Models;
 using NorskApi.Application.Discussions.Queries.GetAllDiscussions;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Discussions.Request;
 using NorskApi.Contracts.Discussions.Response;
 
@@ -39,13 +40,15 @@ public class DiscussionMappingConfig : IRegister
         config.NewConfig<Guid, DeleteDiscussionCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<(Guid essayId, QueryParamsBaseFilters filters), GetAllDiscussionsQuery>()
+            .NewConfig<
+                (Guid essayId, QueryParamsBaseFiltersRequest filters),
+                GetAllDiscussionsQuery
+            >()
             .Map(dest => dest.EssayId, src => src.essayId)
             .Map(dest => dest.Filters, src => src.filters);
 
-        // Map Filter Request to Filter Query
         config
-            .NewConfig<QueryParamsBaseFilters, QueryParamsBaseFilters>()
+            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

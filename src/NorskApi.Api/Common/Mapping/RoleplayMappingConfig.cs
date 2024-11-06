@@ -7,6 +7,7 @@ using NorskApi.Application.Roleplays.Commands.DeleteRoleplay;
 using NorskApi.Application.Roleplays.Commands.UpdateRoleplay;
 using NorskApi.Application.Roleplays.Models;
 using NorskApi.Application.Roleplays.Queries.GetAllRoleplays;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Roleplays.Request;
 using NorskApi.Contracts.Roleplays.Response;
 
@@ -35,13 +36,15 @@ public class RoleplayMappingConfig : IRegister
         config.NewConfig<Guid, DeleteRoleplayCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<(Guid essayId, QueryParamsBaseFilters filters), GetAllRoleplaysQuery>()
+            .NewConfig<
+                (Guid essayId, QueryParamsBaseFiltersRequest filters),
+                GetAllRoleplaysQuery
+            >()
             .Map(dest => dest.EssayId, src => src.essayId)
             .Map(dest => dest.Filters, src => src.filters);
 
-        // Map Filter Request to Filter Query
         config
-            .NewConfig<QueryParamsBaseFilters, QueryParamsBaseFilters>()
+            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)
