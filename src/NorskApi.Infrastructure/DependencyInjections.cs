@@ -34,6 +34,7 @@ namespace NorskApi.Infrastructure
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IRoleplayRepository, RoleplayRepository>();
             services.AddScoped<ITaskWorkRepository, TaskWorkRepository>();
+            services.AddScoped<IGrammarTopicRepository, GrammarTopicRepository>();
 
             services.AddScoped<IQueryParamsBaseBuilder, QueryParamsBaseBuilder>();
             services.AddScoped<IQueryParamsWithEssayBuilder, QueryParamsWithEssayBuilder>();

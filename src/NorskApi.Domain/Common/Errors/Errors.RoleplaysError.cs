@@ -8,7 +8,7 @@ public static partial class Errors
     {
         public static Error RoleplayNotFound(Guid RoleplayId, Guid EssayId) =>
             Error.NotFound(
-                code: "Roleplay.NotFound",
+                code: "404",
                 description: $"Roleplay with id {RoleplayId} or essayId {EssayId} not found."
             );
     }
