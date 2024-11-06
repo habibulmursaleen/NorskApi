@@ -7,6 +7,7 @@ using NorskApi.Domain.GrammarTopicAggregate;
 using NorskApi.Domain.LocalExpressionAggregate;
 using NorskApi.Domain.PodcastAggregate;
 using NorskApi.Domain.QuestionAggregate;
+using NorskApi.Domain.QuizAggregate;
 using NorskApi.Domain.RoleplayAggregate;
 using NorskApi.Domain.TaskWorkAggregate;
 using NorskApi.Infrastructure.Persistance.Interceptors;
@@ -26,6 +27,7 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<Roleplay> Roleplays { get; set; } = null!;
     public DbSet<TaskWork> TaskWorks { get; set; } = null!;
     public DbSet<GrammarTopic> GrammarTopics { get; set; } = null!;
+    public DbSet<Quiz> Quizes { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,

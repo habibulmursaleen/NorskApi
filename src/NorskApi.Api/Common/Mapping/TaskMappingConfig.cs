@@ -7,6 +7,7 @@ using NorskApi.Application.TaskWorks.Commands.DeleteTaskWork;
 using NorskApi.Application.TaskWorks.Commands.UpdateTaskWork;
 using NorskApi.Application.TaskWorks.Models;
 using NorskApi.Application.TaskWorks.Queries.GetAllTaskWorks;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.TaskWorks.Request;
 using NorskApi.Contracts.TaskWorks.Response;
 
@@ -45,13 +46,16 @@ public class TaskMappingConfig : IRegister
         config.NewConfig<Guid, DeleteTaskWorkCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<(Guid topicId, QueryParamsBaseFilters filters), GetAllTaskWorksQuery>()
+            .NewConfig<
+                (Guid topicId, QueryParamsWithTopicFiltersRequest filters),
+                GetAllTaskWorksQuery
+            >()
             .Map(dest => dest.TopicId, src => src.topicId)
             .Map(dest => dest.Filters, src => src.filters);
 
-        // Map Filter Request to Filter Query
         config
-            .NewConfig<QueryParamsWithTopicFilters, QueryParamsWithTopicFilters>()
+            .NewConfig<QueryParamsWithTopicFiltersRequest, QueryParamsWithTopicFilters>()
+            .Map(dest => dest.TopicId, src => src.TopicId)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

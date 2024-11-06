@@ -235,20 +235,16 @@
     "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af", // just Id, no relation
     "topicId": "749cd452-3398-4338-af03-d15bcdb291c7", // just Id, no relation
     "question": "Totam minus dolores deserunt quod iste sapiente?",
+    "answer": "quis neque voluptate",
+    "isRightAnswer": false,
     "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "type": "BOOLEAN", // enum "MULTIPLE_CHOICE" OR "BOOLEAN" OR "STRING"
+    "quizType": "BOOLEAN", // enum "MULTIPLE_CHOICE" OR "BOOLEAN" OR "TEXT"
     "options": [
       {
         "id": "40ed9bed-edb8-433f-9f60-b0e726a906d4",
         "title": "Impedit ut iste.",
         "isCorrect": true,
-        "answer": true // user input (both string and bool)
-      },
-      {
-        "id": "40ed9bed-edb8-433f-9f60-b0e726a906d4",
-        "title": "Impedit ut iste.",
-        "isCorrect": true,
-        "answer": "Nisi debitis error eum." // user input (both string and bool)
+        "multipleChoiceAnswer": true, // user input 
       }
     ],
     "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
@@ -257,74 +253,7 @@
 ]
 ```
 
-## Word
 
-### POST GET `{host}/api/v1/words`
-### GET PUT DELETE `{host}/api/v1/words/{id}`
-### Query params 
-    Filters:
-        difficultyLevel
-        essayId
-
-```json
-[
-  {
-    "id": "554aab40-c9a9-4e6d-8baa-3510096ac957",
-    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af", // just Id, no relation
-    "title": "odit adipisci praesentium",
-    "meaning": "architecto dolor rerum",
-    "enTranslation": "repellendus labore ut",
-    "nativeMeaning": "numquam modi adipisci",
-    "type": "INFORMAL", // enum "LOCAL", "ACADEMIC", "FORMAL", "INFORMAL", "SLANG", "PHRASE"
-    "partOfSpeechTag ": "VERB", // enum "NOUN", "PRONOUN", "ADVERB", "ADJECTIVE", "VERB", "CONJUNTION", "PREPOSITION", "ARTICLE"
-    "isCompleted": true,
-    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "synonymes": [
-      "92061233-a115-473c-9b6f-8167f061c77d",
-      "dfb18038-e5eb-4465-8747-91d7dc626855",
-      "adf61dff-b4da-41d2-8017-bc75f7496433"
-    ],
-    "antonymes": [
-      "b6fa1201-718a-4fd9-964a-ed836b6582cf",
-      "c7414f1c-c275-45a4-a5af-f563a77b6122"
-    ],
-    "wordGrammar": {
-      "id": "4fb6a24b-400b-4840-860a-9ceea493960b",
-      "wordId": "3a46496e-52fc-4b4c-9ad3-5b9e985d669b",
-      "genderMasculine": "et",
-      "genderFeminine": "aperiam",
-      "genderNeutral": "accusamus",
-      "singularDefinitiv": "totam",
-      "singularIndefinitiv": "error",
-      "pluralDefinitiv": "quisquam",
-      "pluralIndefinitiv": "saepe",
-      "infinitiv": "minus",
-      "presentTense": "temporibus",
-      "pastTense": "dicta",
-      "presentPerfectTense": "molestiae",
-      "futureTense": "ut",
-      "positive": "nisi",
-      "comparative": "quo",
-      "superlative": "ipsa",
-      "superlativeDetermined": "et",
-      "pastParticiple": "aut",
-      "presentParticiple": "deserunt",
-      "irregular": true,
-      "strongVerb": true,
-      "weakVerb": false,
-    },
-    "WordUsageExample ": {
-      "id": "9cb2a603-fa74-46b8-bf97-b23698dbe714",
-      "correctSentence": "Ducimus placeat voluptatem.",
-      "incorrectSentence": "dignissimos eos autem",
-      "englishSentence": "autem animi quia",
-      "newSentence": "Recusandae aspernatur eos esse voluptas eius impedit."
-    },
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-  }
-]
-```
 
 ## Essay
 
@@ -462,6 +391,7 @@
 ```
 
 ## Subjunction
+
 <!-- seeding -->
 ### GET `{host}/api/v1/subjunction`
 
@@ -473,4 +403,73 @@
   "betingelse": ["minus", "explicabo", "recusandae"],
   "motsetning": ["veritatis", "ab", "beatae"]
 }
+```
+
+## Word
+
+### POST GET `{host}/api/v1/words`
+### GET PUT DELETE `{host}/api/v1/words/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        essayId
+
+```json
+[
+  {
+    "id": "554aab40-c9a9-4e6d-8baa-3510096ac957",
+    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af", // just Id, no relation
+    "title": "odit adipisci praesentium",
+    "meaning": "architecto dolor rerum",
+    "enTranslation": "repellendus labore ut",
+    "nativeMeaning": "numquam modi adipisci",
+    "type": "INFORMAL", // enum "LOCAL", "ACADEMIC", "FORMAL", "INFORMAL", "SLANG", "PHRASE"
+    "partOfSpeechTag ": "VERB", // enum "NOUN", "PRONOUN", "ADVERB", "ADJECTIVE", "VERB", "CONJUNTION", "PREPOSITION", "ARTICLE"
+    "isCompleted": true,
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "synonymes": [
+      "92061233-a115-473c-9b6f-8167f061c77d",
+      "dfb18038-e5eb-4465-8747-91d7dc626855",
+      "adf61dff-b4da-41d2-8017-bc75f7496433"
+    ],
+    "antonymes": [
+      "b6fa1201-718a-4fd9-964a-ed836b6582cf",
+      "c7414f1c-c275-45a4-a5af-f563a77b6122"
+    ],
+    "wordGrammar": {
+      "id": "4fb6a24b-400b-4840-860a-9ceea493960b",
+      "wordId": "3a46496e-52fc-4b4c-9ad3-5b9e985d669b",
+      "genderMasculine": "et",
+      "genderFeminine": "aperiam",
+      "genderNeutral": "accusamus",
+      "singularDefinitiv": "totam",
+      "singularIndefinitiv": "error",
+      "pluralDefinitiv": "quisquam",
+      "pluralIndefinitiv": "saepe",
+      "infinitiv": "minus",
+      "presentTense": "temporibus",
+      "pastTense": "dicta",
+      "presentPerfectTense": "molestiae",
+      "futureTense": "ut",
+      "positive": "nisi",
+      "comparative": "quo",
+      "superlative": "ipsa",
+      "superlativeDetermined": "et",
+      "pastParticiple": "aut",
+      "presentParticiple": "deserunt",
+      "irregular": true,
+      "strongVerb": true,
+      "weakVerb": false,
+    },
+    "WordUsageExample ": {
+      "id": "9cb2a603-fa74-46b8-bf97-b23698dbe714",
+      "correctSentence": "Ducimus placeat voluptatem.",
+      "incorrectSentence": "dignissimos eos autem",
+      "englishSentence": "autem animi quia",
+      "newSentence": "Recusandae aspernatur eos esse voluptas eius impedit."
+    },
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+  }
+]
 ```

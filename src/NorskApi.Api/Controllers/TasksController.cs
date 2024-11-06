@@ -10,6 +10,7 @@ using NorskApi.Application.TaskWorks.Commands.UpdateTaskWork;
 using NorskApi.Application.TaskWorks.Models;
 using NorskApi.Application.TaskWorks.Queries.GetAllTaskWorks;
 using NorskApi.Application.TaskWorks.Queries.GetTaskById;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.TaskWorks.Request;
 using NorskApi.Contracts.TaskWorks.Response;
 
@@ -48,7 +49,9 @@ public class TasksController : ApiController
     [ProducesResponseType(typeof(List<TaskWorkResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("topics/all/tasks")]
-    public async Task<IActionResult> GetTasks([FromQuery] QueryParamsBaseFilters filters)
+    public async Task<IActionResult> GetTasks(
+        [FromQuery] QueryParamsWithTopicFiltersRequest filters
+    )
     {
         GetAllTaskWorksQuery query = this.mapper.Map<GetAllTaskWorksQuery>((Guid.Empty, filters));
         ErrorOr<List<TaskWorkResult>> result = await this.mediator.Send(query);
@@ -64,7 +67,7 @@ public class TasksController : ApiController
     [HttpGet("topics/{topicId:guid}/tasks")]
     public async Task<IActionResult> GetTasksByTopicId(
         [FromRoute] Guid topicId,
-        [FromQuery] QueryParamsBaseFilters filters
+        [FromQuery] QueryParamsWithTopicFiltersRequest filters
     )
     {
         GetAllTaskWorksQuery query = this.mapper.Map<GetAllTaskWorksQuery>((topicId, filters));
