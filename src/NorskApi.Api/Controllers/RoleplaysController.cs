@@ -10,6 +10,7 @@ using NorskApi.Application.Roleplays.Commands.UpdateRoleplay;
 using NorskApi.Application.Roleplays.Models;
 using NorskApi.Application.Roleplays.Queries.GetAllRoleplays;
 using NorskApi.Application.Roleplays.Queries.GetRoleplayById;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Roleplays.Request;
 using NorskApi.Contracts.Roleplays.Response;
 
@@ -48,7 +49,7 @@ public class RoleplaysController : ApiController
     [ProducesResponseType(typeof(List<RoleplayResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("essays/all/roleplays")]
-    public async Task<IActionResult> GetRoleplays([FromQuery] QueryParamsBaseFilters filters)
+    public async Task<IActionResult> GetRoleplays([FromQuery] QueryParamsBaseFiltersRequest filters)
     {
         GetAllRoleplaysQuery query = this.mapper.Map<GetAllRoleplaysQuery>((Guid.Empty, filters));
         ErrorOr<List<RoleplayResult>> result = await this.mediator.Send(query);
@@ -64,7 +65,7 @@ public class RoleplaysController : ApiController
     [HttpGet("essays/{essayId:guid}/roleplays")]
     public async Task<IActionResult> GetRoleplaysByEssayId(
         [FromRoute] Guid essayId,
-        [FromQuery] QueryParamsBaseFilters filters
+        [FromQuery] QueryParamsBaseFiltersRequest filters
     )
     {
         GetAllRoleplaysQuery query = this.mapper.Map<GetAllRoleplaysQuery>((essayId, filters));

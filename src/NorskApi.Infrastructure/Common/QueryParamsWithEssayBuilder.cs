@@ -31,7 +31,7 @@ public class QueryParamsWithEssayBuilder : IQueryParamsWithEssayBuilder
         }
         if (filters.EssayId != default)
         {
-            query = query.Where(x => x.EssayId == filters.EssayId);
+            query = query.Where(x => x.EssayId! == filters.EssayId);
         }
         if (!string.IsNullOrEmpty(filters.SortBy))
         {
@@ -69,7 +69,7 @@ public class QueryParamsWithEssayBuilder : IQueryParamsWithEssayBuilder
         }
         if (filters.EssayId != default)
         {
-            query = query.Where(x => x.EssayId == filters.EssayId);
+            query = query.Where(x => x.EssayId! == filters.EssayId);
         }
         if (!string.IsNullOrEmpty(filters.SortBy))
         {

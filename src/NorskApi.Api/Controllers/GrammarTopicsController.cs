@@ -15,6 +15,7 @@ using NorskApi.Application.GrammarTopics.Commands.UpdateGrammarTopic;
 using NorskApi.Application.GrammarTopics.Models;
 using NorskApi.Application.GrammarTopics.Queries.GetAllGrammarTopics;
 using NorskApi.Application.GrammarTopics.Queries.GetGrammarTopicById;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.GrammarTopics.Request;
 using NorskApi.Contracts.GrammarTopics.Response;
 
@@ -51,7 +52,9 @@ public class GrammarTopicsController : ApiController
     [ProducesResponseType(typeof(List<GrammarTopicResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet]
-    public async Task<IActionResult> GetGrammarTopics([FromQuery] QueryParamsBaseFilters filters)
+    public async Task<IActionResult> GetGrammarTopics(
+        [FromQuery] QueryParamsBaseFiltersRequest filters
+    )
     {
         GetAllGrammarTopicsQuery query = this.mapper.Map<GetAllGrammarTopicsQuery>(filters);
         ErrorOr<List<GrammarTopicResult>> getGrammarTopicsResult = await this.mediator.Send(query);

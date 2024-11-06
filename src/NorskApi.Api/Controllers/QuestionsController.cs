@@ -10,6 +10,7 @@ using NorskApi.Application.Questions.Commands.UpdateQuestion;
 using NorskApi.Application.Questions.Models;
 using NorskApi.Application.Questions.Queries.GetAllQuestions;
 using NorskApi.Application.Questions.Queries.GetQuestionById;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Questions.Request;
 using NorskApi.Contracts.Questions.Response;
 
@@ -48,7 +49,7 @@ public class QuestionsController : ApiController
     [ProducesResponseType(typeof(List<QuestionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("essays/all/questions")]
-    public async Task<IActionResult> GetQuestions([FromQuery] QueryParamsBaseFilters filters)
+    public async Task<IActionResult> GetQuestions([FromQuery] QueryParamsBaseFiltersRequest filters)
     {
         GetAllQuestionsQuery query = this.mapper.Map<GetAllQuestionsQuery>((Guid.Empty, filters));
         ErrorOr<List<QuestionResult>> result = await this.mediator.Send(query);
@@ -64,7 +65,7 @@ public class QuestionsController : ApiController
     [HttpGet("essays/{essayId:guid}/questions")]
     public async Task<IActionResult> GetQuestionsByEssayId(
         [FromRoute] Guid essayId,
-        [FromQuery] QueryParamsBaseFilters filters
+        [FromQuery] QueryParamsBaseFiltersRequest filters
     )
     {
         GetAllQuestionsQuery query = this.mapper.Map<GetAllQuestionsQuery>((essayId, filters));

@@ -7,6 +7,7 @@ using NorskApi.Application.Dictations.Commands.DeleteDictation;
 using NorskApi.Application.Dictations.Commands.UpdateDictation;
 using NorskApi.Application.Dictations.Models;
 using NorskApi.Application.Dictations.Queries.GetAllDictations;
+using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Dictations.Request;
 using NorskApi.Contracts.Dictations.Response;
 
@@ -36,11 +37,14 @@ public class DictationMappingConfig : IRegister
         config.NewConfig<Guid, DeleteDictationCommand>().Map(dest => dest.Id, src => src);
 
         // Map Filter Request to Filter Query
+
         config
-            .NewConfig<QueryParamsWithEssayFilters, GetAllDictationsQuery>()
+            .NewConfig<QueryParamsWithEssayFiltersRequest, GetAllDictationsQuery>()
             .Map(dest => dest.Filters, src => src);
+
         config
-            .NewConfig<QueryParamsWithEssayFilters, QueryParamsWithEssayFilters>()
+            .NewConfig<QueryParamsWithEssayFiltersRequest, QueryParamsWithEssayFilters>()
+            .Map(dest => dest.EssayId, src => src.EssayId)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

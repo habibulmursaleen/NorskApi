@@ -35,10 +35,12 @@ namespace NorskApi.Infrastructure
             services.AddScoped<IRoleplayRepository, RoleplayRepository>();
             services.AddScoped<ITaskWorkRepository, TaskWorkRepository>();
             services.AddScoped<IGrammarTopicRepository, GrammarTopicRepository>();
+            services.AddScoped<IQuizRepository, QuizRepository>();
 
             services.AddScoped<IQueryParamsBaseBuilder, QueryParamsBaseBuilder>();
             services.AddScoped<IQueryParamsWithEssayBuilder, QueryParamsWithEssayBuilder>();
             services.AddScoped<IQueryParamsWithTopicBuilder, QueryParamsWithTopicBuilder>();
+            services.AddScoped<IQuizQueryParamsBuilder, QuizQueryParamsBuilder>();
 
             return services;
         }
