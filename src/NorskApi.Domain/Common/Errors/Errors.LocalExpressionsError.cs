@@ -6,6 +6,10 @@ public static partial class Errors
 {
     public static class LocalExpressionErrors
     {
-        public static Error LocalExpressionNotFound(Guid LocalExpressionId) => Error.NotFound(code: "LocalExpression.NotFound", description: $"LocalExpression with id {LocalExpressionId} not found.");
+        public static Error LocalExpressionNotFound(Guid LocalExpressionId) =>
+            Error.NotFound(
+                code: "404",
+                description: $"LocalExpression with id {LocalExpressionId} not found."
+            );
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.DictationAggregate;
 using NorskApi.Domain.DiscussionAggregate;
+using NorskApi.Domain.GrammarTopicAggregate;
 using NorskApi.Domain.LocalExpressionAggregate;
 using NorskApi.Domain.PodcastAggregate;
 using NorskApi.Domain.QuestionAggregate;
@@ -24,6 +25,7 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<Question> Questions { get; set; } = null!;
     public DbSet<Roleplay> Roleplays { get; set; } = null!;
     public DbSet<TaskWork> TaskWorks { get; set; } = null!;
+    public DbSet<GrammarTopic> GrammarTopics { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,
