@@ -4,5 +4,5 @@ namespace NorskApi.Application.Common.Interfaces.Persistance;
 
 public interface IQueryParamsWithTopicBuilder
 {
-    IQueryable<T>? BuildQueries<T>(QueryParamsWithTopicFilters filters);
+    IQueryable<T>? BuildQueriesTaskWorks<T>(QueryParamsWithTopicFilters filters);
 }
