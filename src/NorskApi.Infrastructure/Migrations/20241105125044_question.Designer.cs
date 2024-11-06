@@ -2,9 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NorskApi.Infrastructure.Persistance.DBContext;
 
 #nullable disable
@@ -13,7 +11,7 @@ namespace NorskApi.Infrastructure.Migrations
 {
     [DbContext(typeof(NorskApiDbContext))]
     [Migration("20241105125044_question")]
-    partial class question
+    partial class Question
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

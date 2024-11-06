@@ -1,84 +1,79 @@
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
-using NorskApi.Domain.TaskAggregate.Events.DomainEvent;
-using NorskApi.Domain.TaskAggregate.ValueObjects;
+using NorskApi.Domain.TaskWorkAggregate.Events.DomainEvent;
+using NorskApi.Domain.TaskWorkAggregate.ValueObjects;
 
-namespace NorskApi.Domain.TaskAggregate;
+namespace NorskApi.Domain.TaskWorkAggregate;
 
-public sealed class Task : AggregateRoot<TaskId, Guid>
+public sealed class TaskWork : AggregateRoot<TaskWorkId, Guid>
 {
-    public TopicId? TopicId { get; set; }
+    public TopicId TopicId { get; set; }
     public string? Logo { get; set; }
     public string Label { get; set; }
     public string? TaskPointer { get; set; }
+    public bool IsCompleted { get; set; }
     public string? Answer { get; set; } // User input
     public string? Comments { get; set; }
     public string? AdditionalInfo { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    private Task() { }
+    private TaskWork() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-    private Task(
-        TaskId taskId,
+    private TaskWork(
+        TaskWorkId taskWorkId,
         TopicId topicId,
         string? logo,
         string label,
         string? taskPointer,
+        bool isCompleted,
         string? answer,
         string? comments,
         string? additionalInfo,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
-    ) : base(taskId)
+        DifficultyLevel difficultyLevel
+    )
+        : base(taskWorkId)
     {
         this.TopicId = topicId;
         this.Logo = logo;
         this.Label = label;
         this.TaskPointer = taskPointer;
+        this.IsCompleted = isCompleted;
         this.Answer = answer;
         this.Comments = comments;
         this.AdditionalInfo = additionalInfo;
         this.DifficultyLevel = difficultyLevel;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
     }
 
-    public static Task Create(
+    public static TaskWork Create(
         TopicId topicId,
         string? logo,
         string label,
         string? taskPointer,
+        bool isCompleted,
         string? answer,
         string? comments,
         string? additionalInfo,
-        DifficultyLevel difficultyLevel,
-        DateTime createdAt,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
     {
-        Task task = new Task(
-            TaskId.CreateUnique(),
+        TaskWork taskWork = new TaskWork(
+            TaskWorkId.CreateUnique(),
             topicId,
             logo,
             label,
             taskPointer,
+            isCompleted,
             answer,
             comments,
             additionalInfo,
-            difficultyLevel,
-            createdAt,
-            updatedAt
+            difficultyLevel
         );
 
-        task.AddDomainEvent(new TaskCreatedDomainEvent(task));
+        taskWork.AddDomainEvent(new TaskWorkCreatedDomainEvent(taskWork));
 
-        return task;
+        return taskWork;
     }
 
     public void Update(
@@ -86,28 +81,28 @@ public sealed class Task : AggregateRoot<TaskId, Guid>
         string? logo,
         string label,
         string? taskPointer,
+        bool isCompleted,
         string? answer,
         string? comments,
         string? additionalInfo,
-        DifficultyLevel difficultyLevel,
-        DateTime updatedAt
+        DifficultyLevel difficultyLevel
     )
     {
         this.TopicId = topicId;
         this.Logo = logo;
         this.Label = label;
         this.TaskPointer = taskPointer;
+        this.IsCompleted = isCompleted;
         this.Answer = answer;
         this.Comments = comments;
         this.AdditionalInfo = additionalInfo;
         this.DifficultyLevel = difficultyLevel;
-        this.UpdatedAt = updatedAt;
 
-        this.AddDomainEvent(new TaskUpdatedDomainEvent(this));
+        this.AddDomainEvent(new TaskWorkUpdatedDomainEvent(this));
     }
 
     public void Delete()
     {
-        this.AddDomainEvent(new TaskDeletedDomainEvent(this));
+        this.AddDomainEvent(new TaskWorkDeletedDomainEvent(this));
     }
 }

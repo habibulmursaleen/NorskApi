@@ -1,5 +1,3 @@
-using System.Linq.Expressions;
-using Microsoft.AspNetCore.Mvc.Filters;
 using NorskApi.Application.Common.Interfaces.Persistance;
 using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Domain.Common.Enums;
@@ -16,9 +14,9 @@ public class QueryParamsWithTopicBuilder : IQueryParamsWithTopicBuilder
         this.dbContext = dbContext;
     }
 
-    public IQueryable<T>? BuildQueries<T>(QueryParamsWithTopicFilters filters)
+    public IQueryable<T>? BuildQueriesTaskWorks<T>(QueryParamsWithTopicFilters filters)
     {
-        var query = dbContext.Dictations.AsQueryable();
+        var query = dbContext.TaskWorks.AsQueryable();
         double skip =
             (filters.Page > 0 && filters.Size > 0) ? (filters.Page - 1) * (int)filters.Size : 0;
         double take = filters.Size > 0 ? (int)filters.Size : 25;
@@ -30,6 +28,10 @@ public class QueryParamsWithTopicBuilder : IQueryParamsWithTopicBuilder
         )
         {
             query = query.Where(x => x.DifficultyLevel == filters.DifficultyLevel);
+        }
+        if (filters.TopicId != default)
+        {
+            query = query.Where(x => x.TopicId == filters.TopicId);
         }
         if (!string.IsNullOrEmpty(filters.SortBy))
         {
