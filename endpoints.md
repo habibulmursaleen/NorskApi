@@ -302,24 +302,17 @@
   "difficultyLevel": "A1", // enum "A1", "A2", "B1", "B2" , "C1"
   "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
   "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-  "paraghraphs": [
+  "paragraphs": [
     {
       "id": "3e81b2a6-417d-470c-a537-17a2896728c1",
       "title": "nostrum nemo rerum",
       "content": "Nihil quod eveniet architecto quia neque facere. Ea accusantium repellendus inventore rerum minus quo.",
+      "contentType": "RELATED", //Enum "RELATED" & "ADDITIONAL"
       "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
       "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
     }
   ],
-  "additional": [
-    {
-      "id": "5bd27ae8-4ddf-4a89-9798-eccaaa67676e",
-      "content": "Ipsum similique quos consectetur. Assumenda quam tenetur porro omnis blanditiis necessitatibus quae.",
-      "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-      "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-    }
-  ],
-  "relatedGrammersTopics": ["1ea2629c-c4cd-43ee-87b6-eed68d1ab543"]
+  "relatedGrammarTopicIds": ["1ea2629c-c4cd-43ee-87b6-eed68d1ab543"]
 }
 ```
 

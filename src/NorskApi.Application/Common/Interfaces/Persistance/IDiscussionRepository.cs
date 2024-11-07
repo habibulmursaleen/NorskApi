@@ -21,7 +21,7 @@ public interface IDiscussionRepository
         DiscussionId discussionId,
         CancellationToken cancellationToken
     );
-    Task Add(Discussion discussionId, CancellationToken cancellationToken);
-    Task Update(Discussion discussionId, CancellationToken cancellationToken);
-    Task Delete(Discussion discussionId, CancellationToken cancellationToken);
+    Task Add(Discussion discussion, CancellationToken cancellationToken);
+    Task Update(Discussion discussion, CancellationToken cancellationToken);
+    Task Delete(Discussion discussion, CancellationToken cancellationToken);
 }

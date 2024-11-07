@@ -10,7 +10,7 @@ public interface IDictationRepository
         QueryParamsWithEssayFilters? filters,
         CancellationToken cancellationToken
     );
-    Task<Dictation?> GetById(DictationId DictationId, CancellationToken cancellationToken);
+    Task<Dictation?> GetById(DictationId dictationId, CancellationToken cancellationToken);
     Task Add(Dictation dictation, CancellationToken cancellationToken);
     Task Update(Dictation dictation, CancellationToken cancellationToken);
     Task Delete(Dictation dictation, CancellationToken cancellationToken);

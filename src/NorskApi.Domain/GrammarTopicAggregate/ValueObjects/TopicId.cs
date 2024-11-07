@@ -1,13 +1,13 @@
+using System.Text.Json.Serialization;
 using NorskApi.Domain.Common.Models;
 
 namespace NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 
 public sealed class TopicId : AggregateRootId<Guid>
 {
-    private TopicId()
-    {
-    }
+    private TopicId() { }
 
+    [JsonConstructor]
     private TopicId(Guid value)
     {
         this.Value = value;

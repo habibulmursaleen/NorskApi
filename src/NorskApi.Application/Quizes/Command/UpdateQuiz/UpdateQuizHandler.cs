@@ -74,7 +74,9 @@ public class UpdateQuizHandler : IRequestHandler<UpdateQuizCommand, ErrorOr<Quiz
             )
             .ToList();
 
-        optionsToUpdate = optionsToUpdate.Except(optionsToRemove).ToList();
+        optionsToUpdate = optionsToUpdate
+            .Where(option => !optionsToRemove.Contains(option))
+            .ToList();
 
         quiz.Update(
             essayId,

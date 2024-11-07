@@ -36,6 +36,13 @@ public class QuizMappingConfig : IRegister
             .Map(dest => dest.QuizType, src => src.request.QuizType)
             .Map(dest => dest.Options, src => src.request.Options);
 
+        config
+            .NewConfig<UpdateQuizOptionRequest, UpdateQuizOptionCommand>()
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest.Title, src => src.Title)
+            .Map(dest => dest.IsCorrect, src => src.IsCorrect)
+            .Map(dest => dest.MultipleChoiceAnswer, src => src.MultipleChoiceAnswer);
+
         config.NewConfig<Guid, DeleteQuizCommand>().Map(dest => dest.Id, src => src);
 
         // Map Filter Request to Filter Query
@@ -53,7 +60,7 @@ public class QuizMappingConfig : IRegister
             .Map(dest => dest.SortBy, src => src.SortBy);
 
         config
-            .NewConfig<QuizOptionRequest, CreateQuizOptionCommand>()
+            .NewConfig<CreateQuizOptionRequest, CreateQuizOptionCommand>()
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.IsCorrect, src => src.IsCorrect)
             .Map(dest => dest.MultipleChoiceAnswer, src => src.MultipleChoiceAnswer);
