@@ -1,52 +1,35 @@
 using NorskApi.Domain.Common.Models;
+using NorskApi.Domain.EssayAggregate.Enums;
 using NorskApi.Domain.EssayAggregate.Events.DomainEvent.Paragraph;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 
 namespace NorskApi.Domain.EssayAggregate.Entities;
+
 public sealed class Paragraph : AggregateRoot<ParagraphId, Guid>
 {
-    public EssayId? EssayId { get; set; }
     public string? Title { get; set; }
     public string Content { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-
+    public ContentType ContentType { get; set; } // Enum: RELATED, ADDITIONAL
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Paragraph() { }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-    private Paragraph(
-        ParagraphId id,
-        EssayId? essayId,
-        string? title,
-        string content,
-        DateTime createdAt,
-        DateTime updatedAt
-    ) : base(id)
+    private Paragraph(ParagraphId id, string? title, string content, ContentType contentType)
+        : base(id)
     {
         this.Id = id;
-        this.EssayId = essayId;
         this.Title = title;
         this.Content = content;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
+        this.ContentType = contentType;
     }
 
-    public static Paragraph Create(
-        EssayId? essayId,
-        string? title,
-        string content,
-        DateTime createdAt,
-        DateTime updatedAt
-    )
+    public static Paragraph Create(string? title, string content, ContentType contentType)
     {
         Paragraph paragraph = new Paragraph(
             ParagraphId.CreateUnique(),
-            essayId,
             title,
             content,
-            createdAt,
-            updatedAt
+            contentType
         );
 
         paragraph.AddDomainEvent(new ParagraphCreatedDomainEvent(paragraph));
@@ -54,17 +37,11 @@ public sealed class Paragraph : AggregateRoot<ParagraphId, Guid>
         return paragraph;
     }
 
-    public void Update(
-        EssayId? essayId,
-        string? title,
-        string content,
-        DateTime updatedAt
-    )
+    public void Update(string? title, string content, ContentType contentType)
     {
-        this.EssayId = essayId;
         this.Title = title;
         this.Content = content;
-        this.UpdatedAt = updatedAt;
+        this.ContentType = contentType;
 
         this.AddDomainEvent(new ParagraphUpdatedDomainEvent(this));
     }
@@ -73,6 +50,4 @@ public sealed class Paragraph : AggregateRoot<ParagraphId, Guid>
     {
         this.AddDomainEvent(new ParagraphDeletedDomainEvent(this));
     }
-
-
 }

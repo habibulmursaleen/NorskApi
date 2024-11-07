@@ -2,7 +2,6 @@ using ErrorOr;
 using MediatR;
 using NorskApi.Application.Quizes.Models;
 using NorskApi.Domain.Common.Enums;
-using NorskApi.Domain.QuizAggregate.Entites;
 using NorskApi.Domain.QuizAggregate.Enums;
 
 namespace NorskApi.Application.Quizes.Command.CreateQuiz;
