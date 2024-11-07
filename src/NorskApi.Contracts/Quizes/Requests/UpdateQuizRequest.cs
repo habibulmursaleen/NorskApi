@@ -11,5 +11,5 @@ public record UpdateQuizRequest(
     bool IsRightAnswer,
     DifficultyLevel DifficultyLevel,
     QuizType QuizType,
-    List<QuizOptionRequest> Options
+    List<UpdateQuizOptionRequest> Options
 );

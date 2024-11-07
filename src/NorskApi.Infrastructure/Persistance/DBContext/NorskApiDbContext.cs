@@ -28,6 +28,7 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<TaskWork> TaskWorks { get; set; } = null!;
     public DbSet<GrammarTopic> GrammarTopics { get; set; } = null!;
     public DbSet<Quiz> Quizes { get; set; } = null!;
+    public DbSet<Essay> Essays { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,
