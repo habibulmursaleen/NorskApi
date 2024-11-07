@@ -11,5 +11,5 @@ public record CreateQuizRequest(
     bool IsRightAnswer,
     DifficultyLevel DifficultyLevel,
     QuizType QuizType,
-    List<QuizOptionRequest> Options
+    List<CreateQuizOptionRequest> Options
 );
