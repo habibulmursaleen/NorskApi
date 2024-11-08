@@ -469,7 +469,7 @@ namespace NorskApi.Infrastructure.Migrations
 
             modelBuilder.Entity("Essay", b =>
                 {
-                    b.OwnsMany("NorskApi.Domain.EssayAggregate.Entities.Paragraph", "Paragraphs", b1 =>
+                    b.OwnsMany("Essay.Paragraphs#NorskApi.Domain.EssayAggregate.Entities.Paragraph", "Paragraphs", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uniqueidentifier");
@@ -511,7 +511,7 @@ namespace NorskApi.Infrastructure.Migrations
 
             modelBuilder.Entity("NorskApi.Domain.QuizAggregate.Quiz", b =>
                 {
-                    b.OwnsMany("NorskApi.Domain.QuizAggregate.Entites.QuizOption", "QuizOptions", b1 =>
+                    b.OwnsMany("NorskApi.Domain.QuizAggregate.Quiz.QuizOptions#NorskApi.Domain.QuizAggregate.Entites.QuizOption", "QuizOptions", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uniqueidentifier");

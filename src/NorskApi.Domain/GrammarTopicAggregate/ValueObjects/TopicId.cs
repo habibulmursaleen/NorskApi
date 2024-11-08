@@ -7,8 +7,8 @@ public sealed class TopicId : AggregateRootId<Guid>
 {
     private TopicId() { }
 
-    [JsonConstructor]
-    private TopicId(Guid value)
+    // [JsonConstructor]
+    public TopicId(Guid value)
     {
         this.Value = value;
     }

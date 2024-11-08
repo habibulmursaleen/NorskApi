@@ -66,16 +66,21 @@ public class EssaysConfigurations : IEntityTypeConfiguration<Essay>
 
         builder
             .Property(x => x.RelatedGrammarTopicIds)
+            .IsRequired(false)
             .HasConversion(
-                v => JsonSerializer.Serialize(v, new JsonSerializerOptions()),
-                v => JsonSerializer.Deserialize<List<TopicId>>(v, new JsonSerializerOptions())
+                x =>
+                    JsonSerializer.Serialize(
+                        x,
+                        new JsonSerializerOptions { WriteIndented = false }
+                    ), // Serialize List<Guid>
+                value => JsonSerializer.Deserialize<List<Guid>>(value, new JsonSerializerOptions()) // Deserialize as List<Guid>
             )
             .Metadata.SetValueComparer(
-                new ValueComparer<List<TopicId>>(
-                    (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
-                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                new ValueComparer<List<Guid>>(
+                    (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2), // Compare elements in the collection
+                    c => c.Aggregate(0, (a, v) => a ^ v.GetHashCode()), // Generate a hash code for the collection
                     c => c.ToList()
-                )
+                ) // Create a new list instance when copying
             );
     }
 }
