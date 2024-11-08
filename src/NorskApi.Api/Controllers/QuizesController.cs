@@ -72,18 +72,6 @@ public class QuizzesController : ApiController
         );
     }
 
-    [ProducesResponseType(typeof(QuizResponse), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteQuiz([FromRoute] Guid id)
-    {
-        ErrorOr<DeleteQuizResult> deleteQuizResult = await this.mediator.Send(
-            new DeleteQuizCommand(id)
-        );
-
-        return deleteQuizResult.Match(_ => this.NoContent(), errors => this.Problem(errors));
-    }
-
     [ProducesResponseType(typeof(QuizResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPut("{id:guid}")]
@@ -99,5 +87,17 @@ public class QuizzesController : ApiController
             updateQuizResult => this.Ok(this.mapper.Map<QuizResponse>(updateQuizResult)),
             errors => this.Problem(errors)
         );
+    }
+
+    [ProducesResponseType(typeof(QuizResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteQuiz([FromRoute] Guid id)
+    {
+        ErrorOr<DeleteQuizResult> deleteQuizResult = await this.mediator.Send(
+            new DeleteQuizCommand(id)
+        );
+
+        return deleteQuizResult.Match(_ => this.NoContent(), errors => this.Problem(errors));
     }
 }

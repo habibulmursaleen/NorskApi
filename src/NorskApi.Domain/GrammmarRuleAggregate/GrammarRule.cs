@@ -10,19 +10,19 @@ namespace NorskApi.Domain.GrammmarRuleAggregate;
 
 public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
 {
-    public GrammarRuleId? GrammarRuleId { get; set; }
+    public TopicId TopicId { get; set; }
     public string Label { get; set; }
     public string? Description { get; set; }
     public string? ExplanatoryNotes { get; set; }
-    public string? RuleType { get; set; }
-    public string? AdditionalInformation { get; set; }
-    public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, etc.
     public List<string>? SentenceStructure { get; set; }
+    public string? RuleType { get; set; }
+    public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, etc.
     public List<string>? Tags { get; set; }
+    public string? AdditionalInformation { get; set; }
     public List<string>? Comments { get; set; }
-    public List<GrammarRuleId>? RelatedRuleIds { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
+    public List<Guid>? RelatedRuleIds { get; set; }
+
+    public List<Guid> GetRuleIds() => RelatedRuleIds?.ToList() ?? new List<Guid>();
 
     public List<Exception> exceptions = new();
     public List<ExampleOfRule> exampleOfRules = new();
@@ -35,7 +35,7 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
 
     private GrammarRule(
         GrammarRuleId id,
-        GrammarRuleId? grammarRuleId,
+        TopicId topicId,
         string label,
         string? description,
         string? explanatoryNotes,
@@ -46,14 +46,13 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         List<string>? tags,
         List<string>? comments,
         List<GrammarRuleId>? relatedRuleIds,
-        DateTime createdAt,
-        DateTime updatedAt,
         List<Exception> exceptions,
         List<ExampleOfRule> exampleOfRules
-    ) : base(id)
+    )
+        : base(id)
     {
         this.Id = id;
-        this.GrammarRuleId = grammarRuleId;
+        this.TopicId = topicId;
         this.Label = label;
         this.Description = description;
         this.ExplanatoryNotes = explanatoryNotes;
@@ -63,34 +62,30 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         this.SentenceStructure = sentenceStructure;
         this.Tags = tags;
         this.Comments = comments;
-        this.RelatedRuleIds = relatedRuleIds;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
+        this.RelatedRuleIds = relatedRuleIds?.Select(t => t.Value).ToList();
         this.exceptions = exceptions;
         this.exampleOfRules = exampleOfRules;
     }
 
     public static GrammarRule Create(
-        GrammarRuleId? grammarRuleId,
+        TopicId topicId,
         string label,
         string? description,
         string? explanatoryNotes,
-        string? ruleType,
-        string? additionalInformation,
-        DifficultyLevel difficultyLevel,
         List<string>? sentenceStructure,
+        string? ruleType,
+        DifficultyLevel difficultyLevel,
         List<string>? tags,
+        string? additionalInformation,
         List<string>? comments,
         List<GrammarRuleId>? relatedRuleIds,
-        DateTime createdAt,
-        DateTime updatedAt,
         List<Exception> exceptions,
         List<ExampleOfRule> exampleOfRules
     )
     {
         GrammarRule grammarRule = new GrammarRule(
             GrammarRuleId.CreateUnique(),
-            grammarRuleId,
+            topicId,
             label,
             description,
             explanatoryNotes,
@@ -101,8 +96,6 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
             tags,
             comments,
             relatedRuleIds,
-            createdAt,
-            updatedAt,
             exceptions,
             exampleOfRules
         );
@@ -113,23 +106,22 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
     }
 
     public void Update(
-        GrammarRuleId? grammarRuleId,
+        TopicId topicId,
         string label,
         string? description,
         string? explanatoryNotes,
-        string? ruleType,
-        string? additionalInformation,
-        DifficultyLevel difficultyLevel,
         List<string>? sentenceStructure,
+        string? ruleType,
+        DifficultyLevel difficultyLevel,
         List<string>? tags,
+        string? additionalInformation,
         List<string>? comments,
         List<GrammarRuleId>? relatedRuleIds,
-        DateTime updatedAt,
         List<Exception> exceptions,
         List<ExampleOfRule> exampleOfRules
     )
     {
-        this.GrammarRuleId = grammarRuleId;
+        this.TopicId = topicId;
         this.Label = label;
         this.Description = description;
         this.ExplanatoryNotes = explanatoryNotes;
@@ -139,8 +131,7 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         this.SentenceStructure = sentenceStructure;
         this.Tags = tags;
         this.Comments = comments;
-        this.RelatedRuleIds = relatedRuleIds;
-        this.UpdatedAt = updatedAt;
+        this.RelatedRuleIds = relatedRuleIds?.Select(t => t.Value).ToList();
 
         UpdateExceptions(exceptions);
         UpdateExampleOfRules(exampleOfRules);
@@ -160,11 +151,20 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
             // Update existing exceptions or add new ones
             foreach (var newException in newExceptions)
             {
-                var existingException = this.exceptions?.FirstOrDefault(e => e.Id == newException.Id);
+                var existingException = this.exceptions?.FirstOrDefault(e =>
+                    e.Id == newException.Id
+                );
                 if (existingException is not null)
                 {
                     // Update existing exception
-                    existingException.Update(newException.GrammarRuleId, newException.Title, newException.Description, newException.Comments, newException.ExampleSentence);
+                    existingException.Update(
+                        newException.GrammarRuleId_FK,
+                        newException.Title,
+                        newException.Description,
+                        newException.Comments,
+                        newException.CorrectSentence,
+                        newException.IncorrectSentence
+                    );
                 }
                 else
                 {
@@ -188,12 +188,14 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
             // Update existing exampleOfRules or add new ones
             foreach (var newExampleOfRule in newExampleOfRules)
             {
-                var existingExampleOfRule = this.exampleOfRules?.FirstOrDefault(e => e.Id == newExampleOfRule.Id);
+                var existingExampleOfRule = this.exampleOfRules?.FirstOrDefault(e =>
+                    e.Id == newExampleOfRule.Id
+                );
                 if (existingExampleOfRule is not null)
                 {
                     // Update existing exampleOfRule
                     existingExampleOfRule.Update(
-                        newExampleOfRule.GrammarRuleId,
+                        newExampleOfRule.GrammarRuleId_FK,
                         newExampleOfRule.Subjunction,
                         newExampleOfRule.Subject,
                         newExampleOfRule.Adverbial,
@@ -222,4 +224,19 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         }
     }
 
+    public void AddExceptions(List<Exception> exceptions)
+    {
+        if (exceptions is not null)
+        {
+            this.exceptions.AddRange(exceptions);
+        }
+    }
+
+    public void AddExampleOfRules(List<ExampleOfRule> exampleOfRules)
+    {
+        if (exampleOfRules is not null)
+        {
+            this.exampleOfRules.AddRange(exampleOfRules);
+        }
+    }
 }

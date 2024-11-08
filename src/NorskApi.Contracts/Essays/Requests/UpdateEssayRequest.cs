@@ -1,6 +1,6 @@
 using NorskApi.Contracts.Common.Enums;
 
-namespace NorskApi.Contracts.Essay.Requests;
+namespace NorskApi.Contracts.Essays.Requests;
 
 public record UpdateEssayRequest(
     string? Logo,

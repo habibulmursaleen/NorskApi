@@ -1,6 +1,6 @@
-using NorskApi.Contracts.Essay.Common.Enums;
+using NorskApi.Contracts.Essays.Common.Enums;
 
-namespace NorskApi.Contracts.Essay.Requests;
+namespace NorskApi.Contracts.Essays.Requests;
 
 public record UpdateParagraphRequest(
     Guid Id,

@@ -1,7 +1,7 @@
 using NorskApi.Contracts.Common.Enums;
-using NorskApi.Contracts.Essay.Common.Enums;
+using NorskApi.Contracts.Essays.Common.Enums;
 
-namespace NorskApi.Contracts.Essay.Response;
+namespace NorskApi.Contracts.Essays.Response;
 
 public record EssayResponse(
     Guid Id,

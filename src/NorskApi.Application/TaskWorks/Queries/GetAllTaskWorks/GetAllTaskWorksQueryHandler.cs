@@ -23,7 +23,7 @@ public class GetAllTasksQueryHandler
         CancellationToken cancellationToken
     )
     {
-        List<TaskWork> taskWorks = new List<TaskWork>();
+        List<TaskWork> taskWorks = [];
         QueryParamsWithTopicFilters? filters = query.Filters;
 
         if (query.TopicId == Guid.Empty)
