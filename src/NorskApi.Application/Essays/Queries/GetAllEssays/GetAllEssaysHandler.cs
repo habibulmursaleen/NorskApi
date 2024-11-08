@@ -6,14 +6,14 @@ using NorskApi.Application.Essays.Models;
 using NorskApi.Application.Essays.Queries.GetAllEssays;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 
-namespace NorskApi.Application.Essayes.Queries.GetAllEssayes;
+namespace NorskApi.Application.Essays.Queries.GetAllEssays;
 
-public class GetAllEssayesQueryHandler
+public class GetAllEssaysQueryHandler
     : IRequestHandler<GetAllEssaysQuery, ErrorOr<List<EssayResult>>>
 {
     private readonly IEssayRepository essayRepository;
 
-    public GetAllEssayesQueryHandler(IEssayRepository essayRepository)
+    public GetAllEssaysQueryHandler(IEssayRepository essayRepository)
     {
         this.essayRepository = essayRepository;
     }

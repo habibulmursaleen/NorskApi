@@ -1,10 +1,8 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
-using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 
 namespace NorskApi.Infrastructure.Persistance.Configurations;
 

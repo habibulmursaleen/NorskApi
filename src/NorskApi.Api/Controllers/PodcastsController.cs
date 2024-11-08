@@ -77,18 +77,6 @@ public class PodcastsController : ApiController
         );
     }
 
-    [ProducesResponseType(typeof(PodcastResponse), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeletePodcast([FromRoute] Guid id)
-    {
-        ErrorOr<DeletePodcastResult> deletePodcastResult = await this.mediator.Send(
-            new DeletePodcastCommand(id)
-        );
-
-        return deletePodcastResult.Match(_ => this.NoContent(), errors => this.Problem(errors));
-    }
-
     [ProducesResponseType(typeof(PodcastResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPut("{id:guid}")]
@@ -104,5 +92,17 @@ public class PodcastsController : ApiController
             updatePodcastResult => this.Ok(this.mapper.Map<PodcastResponse>(updatePodcastResult)),
             errors => this.Problem(errors)
         );
+    }
+
+    [ProducesResponseType(typeof(PodcastResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeletePodcast([FromRoute] Guid id)
+    {
+        ErrorOr<DeletePodcastResult> deletePodcastResult = await this.mediator.Send(
+            new DeletePodcastCommand(id)
+        );
+
+        return deletePodcastResult.Match(_ => this.NoContent(), errors => this.Problem(errors));
     }
 }

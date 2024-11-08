@@ -6,45 +6,53 @@ namespace NorskApi.Domain.GrammmarRuleAggregate.Entites;
 
 public sealed class Exception : Entity<ExceptionId>
 {
-    public GrammarRuleId? GrammarRuleId { get; set; }
+    public GrammarRuleId GrammarRuleId_FK { get; set; }
     public string? Title { get; set; }
     public string? Description { get; set; }
     public string? Comments { get; set; }
-    public string? ExampleSentence { get; set; }
+    public string? CorrectSentence { get; set; }
+    public string? IncorrectSentence { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Exception() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     private Exception(
         ExceptionId id,
-        GrammarRuleId? grammarRuleId,
+        GrammarRuleId grammarRuleId_FK,
         string? title,
         string? description,
         string? comments,
-        string? exampleSentence
-    ) : base(id)
+        string? correctSentence,
+        string? incorrectSentence
+    )
+        : base(id)
     {
-        this.GrammarRuleId = grammarRuleId;
+        this.GrammarRuleId_FK = grammarRuleId_FK;
         this.Title = title;
         this.Description = description;
         this.Comments = comments;
-        this.ExampleSentence = exampleSentence;
+        this.CorrectSentence = correctSentence;
+        this.IncorrectSentence = incorrectSentence;
     }
 
     public static Exception Create(
-        GrammarRuleId? grammarRuleId,
+        GrammarRuleId grammarRuleId_FK,
         string? title,
         string? description,
         string? comments,
-        string? exampleSentence
+        string? correctSentence,
+        string? incorrectSentence
     )
     {
         Exception exception = new Exception(
             ExceptionId.CreateUnique(),
-            grammarRuleId,
+            grammarRuleId_FK,
             title,
             description,
             comments,
-            exampleSentence
+            correctSentence,
+            incorrectSentence
         );
 
         exception.AddDomainEvent(new ExceptionCreatedDomainEvent(exception));
@@ -53,18 +61,20 @@ public sealed class Exception : Entity<ExceptionId>
     }
 
     public void Update(
-        GrammarRuleId? grammarRuleId,
+        GrammarRuleId grammarRuleId_FK,
         string? title,
         string? description,
         string? comments,
-        string? exampleSentence
+        string? correctSentence,
+        string? incorrectSentence
     )
     {
-        this.GrammarRuleId = grammarRuleId;
+        this.GrammarRuleId_FK = grammarRuleId_FK;
         this.Title = title;
         this.Description = description;
         this.Comments = comments;
-        this.ExampleSentence = exampleSentence;
+        this.CorrectSentence = correctSentence;
+        this.IncorrectSentence = incorrectSentence;
 
         AddDomainEvent(new ExceptionUpdatedDomainEvent(this));
     }
@@ -73,5 +83,4 @@ public sealed class Exception : Entity<ExceptionId>
     {
         AddDomainEvent(new ExceptionDeletedDomainEvent(this));
     }
-
 }

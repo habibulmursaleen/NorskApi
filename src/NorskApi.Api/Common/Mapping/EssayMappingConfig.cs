@@ -7,7 +7,7 @@ using NorskApi.Application.Essays.Command.DeleteEssay;
 using NorskApi.Application.Essays.Command.UpdateEssay;
 using NorskApi.Application.Essays.Queries.GetAllEssays;
 using NorskApi.Contracts.Common.QueryParamsRequest;
-using NorskApi.Contracts.Essay.Requests;
+using NorskApi.Contracts.Essays.Requests;
 
 public class EssayMappingConfig : IRegister
 {

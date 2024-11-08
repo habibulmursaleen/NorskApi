@@ -8,7 +8,7 @@ using NorskApi.Domain.EssayAggregate.Entities;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 
-namespace NorskApi.Application.Essayes.Command.UpdateEssay;
+namespace NorskApi.Application.Essays.Command.UpdateEssay;
 
 public class UpdateEssayHandler : IRequestHandler<UpdateEssayCommand, ErrorOr<EssayResult>>
 {
