@@ -6,6 +6,7 @@ using NorskApi.Application.Essays.Queries.GetEssayById;
 using NorskApi.Domain.Common.Errors;
 using NorskApi.Domain.EssayAggregate.Entities;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
+using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 
 namespace NorskApi.Application.Essays.Queries.GetEssayById;
 
@@ -61,7 +62,7 @@ public record GetEssayByIdQueryHandler : IRequestHandler<GetEssayByIdQuery, Erro
             essay.IsSaved,
             essay.Tags,
             essay.DifficultyLevel,
-            essay.RelatedGrammarTopicIds,
+            essay.RelatedGrammarTopicIds?.Select(id => TopicId.Create(id)).ToList(),
             paragraphs,
             essay.CreatedDateTime,
             essay.UpdatedDateTime
