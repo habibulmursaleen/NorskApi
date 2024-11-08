@@ -78,18 +78,6 @@ public class DictationsController : ApiController
         );
     }
 
-    [ProducesResponseType(typeof(DictationResponse), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteDictation([FromRoute] Guid id)
-    {
-        ErrorOr<DeleteDictationResult> deleteDictationResult = await this.mediator.Send(
-            new DeleteDictationCommand(id)
-        );
-
-        return deleteDictationResult.Match(_ => this.NoContent(), errors => this.Problem(errors));
-    }
-
     [ProducesResponseType(typeof(DictationResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPut("{id:guid}")]
@@ -106,5 +94,17 @@ public class DictationsController : ApiController
                 this.Ok(this.mapper.Map<DictationResponse>(updateDictationResult)),
             errors => this.Problem(errors)
         );
+    }
+
+    [ProducesResponseType(typeof(DictationResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteDictation([FromRoute] Guid id)
+    {
+        ErrorOr<DeleteDictationResult> deleteDictationResult = await this.mediator.Send(
+            new DeleteDictationCommand(id)
+        );
+
+        return deleteDictationResult.Match(_ => this.NoContent(), errors => this.Problem(errors));
     }
 }

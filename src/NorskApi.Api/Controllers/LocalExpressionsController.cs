@@ -33,13 +33,20 @@ public class LocalExpressionsController : ApiController
     [ProducesResponseType(typeof(LocalExpressionResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost]
-    public async Task<IActionResult> CreateLocalExpression([FromBody] CreateLocalExpressionRequest request)
+    public async Task<IActionResult> CreateLocalExpression(
+        [FromBody] CreateLocalExpressionRequest request
+    )
     {
-        CreateLocalExpressionCommand command = this.mapper.Map<CreateLocalExpressionCommand>(request);
-        ErrorOr<LocalExpressionResult> createLocalExpressionResult = await this.mediator.Send(command);
+        CreateLocalExpressionCommand command = this.mapper.Map<CreateLocalExpressionCommand>(
+            request
+        );
+        ErrorOr<LocalExpressionResult> createLocalExpressionResult = await this.mediator.Send(
+            command
+        );
 
         return createLocalExpressionResult.Match(
-            createLocalExpressionResult => this.Ok(this.mapper.Map<LocalExpressionResponse>(createLocalExpressionResult)),
+            createLocalExpressionResult =>
+                this.Ok(this.mapper.Map<LocalExpressionResponse>(createLocalExpressionResult)),
             errors => this.Problem(errors)
         );
     }
@@ -49,24 +56,51 @@ public class LocalExpressionsController : ApiController
     [HttpGet]
     public async Task<IActionResult> GetLocalExpressions()
     {
-        ErrorOr<List<LocalExpressionResult>> getLocalExpressionsResult = await this.mediator.Send(new GetAllLocalExpressionsQuery());
+        ErrorOr<List<LocalExpressionResult>> getLocalExpressionsResult = await this.mediator.Send(
+            new GetAllLocalExpressionsQuery()
+        );
 
         return getLocalExpressionsResult.Match(
-            localExpressions => this.Ok(this.mapper.Map<List<LocalExpressionResponse>>(localExpressions)),
+            localExpressions =>
+                this.Ok(this.mapper.Map<List<LocalExpressionResponse>>(localExpressions)),
             errors => this.Problem(errors)
         );
     }
-
 
     [ProducesResponseType(typeof(LocalExpressionResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetLocalExpression([FromRoute] Guid id)
     {
-        ErrorOr<LocalExpressionResult> getLocalExpressionResult = await this.mediator.Send(new GetLocalExpressionByIdQuery(id));
+        ErrorOr<LocalExpressionResult> getLocalExpressionResult = await this.mediator.Send(
+            new GetLocalExpressionByIdQuery(id)
+        );
 
         return getLocalExpressionResult.Match(
-            getLocalExpressionResult => this.Ok(this.mapper.Map<LocalExpressionResponse>(getLocalExpressionResult)),
+            getLocalExpressionResult =>
+                this.Ok(this.mapper.Map<LocalExpressionResponse>(getLocalExpressionResult)),
+            errors => this.Problem(errors)
+        );
+    }
+
+    [ProducesResponseType(typeof(LocalExpressionResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> UpdateLocalExpression(
+        [FromRoute] Guid id,
+        [FromBody] UpdateLocalExpressionRequest request
+    )
+    {
+        UpdateLocalExpressionCommand command = this.mapper.Map<UpdateLocalExpressionCommand>(
+            (id, request)
+        );
+        ErrorOr<LocalExpressionResult> updateLocalExpressionResult = await this.mediator.Send(
+            command
+        );
+
+        return updateLocalExpressionResult.Match(
+            updateLocalExpressionResult =>
+                this.Ok(this.mapper.Map<LocalExpressionResponse>(updateLocalExpressionResult)),
             errors => this.Problem(errors)
         );
     }
@@ -76,24 +110,12 @@ public class LocalExpressionsController : ApiController
     [HttpDelete("{id:guid}")]
     public async Task<IActionResult> DeleteLocalExpression([FromRoute] Guid id)
     {
-        ErrorOr<DeleteLocalExpressionResult> deleteLocalExpressionResult = await this.mediator.Send(new DeleteLocalExpressionCommand(id));
+        ErrorOr<DeleteLocalExpressionResult> deleteLocalExpressionResult = await this.mediator.Send(
+            new DeleteLocalExpressionCommand(id)
+        );
 
         return deleteLocalExpressionResult.Match(
             _ => this.NoContent(),
-            errors => this.Problem(errors)
-        );
-    }
-
-    [ProducesResponseType(typeof(LocalExpressionResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> UpdateLocalExpression([FromRoute] Guid id, [FromBody] UpdateLocalExpressionRequest request)
-    {
-        UpdateLocalExpressionCommand command = this.mapper.Map<UpdateLocalExpressionCommand>((id, request));
-        ErrorOr<LocalExpressionResult> updateLocalExpressionResult = await this.mediator.Send(command);
-
-        return updateLocalExpressionResult.Match(
-            updateLocalExpressionResult => this.Ok(this.mapper.Map<LocalExpressionResponse>(updateLocalExpressionResult)),
             errors => this.Problem(errors)
         );
     }

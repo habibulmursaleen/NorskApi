@@ -1,9 +1,8 @@
-namespace NorskApi.Application.Essayes.Command.DeleteEssay;
+namespace NorskApi.Application.Essays.Command.DeleteEssay;
 
 using ErrorOr;
 using MediatR;
 using NorskApi.Application.Common.Interfaces.Persistance;
-using NorskApi.Application.Essays.Command.DeleteEssay;
 using NorskApi.Domain.Common.Errors;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 

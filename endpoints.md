@@ -3,19 +3,19 @@
 ## List of Endpoints
 
 - [LocalExpressions](#localexpressions)
-- [Quiz](#quiz)
-- [Discussion](#discussion)
-- [Word](#word)
-- [Question](#question)
 - [Dictation](#dictation)
-- [Roleplays](#roleplays)
 - [Podcasts](#podcasts)
-- [Essay](#essay)
-- [Grammars](#grammars)
-- [Subjunction](#subjunction)
-- [Grammar Rules](#grammar-rules)
+- [Discussion](#discussion)
+- [Question](#question)
+- [Roleplays](#roleplays)
 - [Tasks](#tasks)
+- [Grammars](#grammars)
+- [Quiz](#quiz)
+- [Essay](#essay)
+- [Grammar Rules](#grammar-rules)
 - [Subjunction](#subjunction)
+- [Word](#word)
+
 
 ![Norsk API Aggregate](norskapi.png)
 
@@ -340,7 +340,7 @@
     "ruleType": "perspiciatis",
     "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
     "tags": ["Word Order", "SVO", "Verb", "Subject"],
-      "additionalInformation": "Ipsa aut in vel a.",
+    "additionalInformation": "Ipsa aut in vel a.",
     "exceptions": [
       {
         "id": "1a1d6cd8-d652-4491-8765-fc0b6f216782",
@@ -348,7 +348,8 @@
         "title": "dignissimos",
         "description": "Hun",
         "comments": "in",
-        "exampleSentence": "spiser"
+        "correctSentence": "spiser",
+        "incorrectSentence": "spiser"
       }
     ],
     "exampleOfRule": [

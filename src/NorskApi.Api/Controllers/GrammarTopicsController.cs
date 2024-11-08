@@ -81,21 +81,6 @@ public class GrammarTopicsController : ApiController
         );
     }
 
-    [ProducesResponseType(typeof(GrammarTopicResponse), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpDelete("{id:guid}")]
-    public async Task<IActionResult> DeleteGrammarTopic([FromRoute] Guid id)
-    {
-        ErrorOr<DeleteGrammarTopicResult> deleteGrammarTopicResult = await this.mediator.Send(
-            new DeleteGrammarTopicCommand(id)
-        );
-
-        return deleteGrammarTopicResult.Match(
-            _ => this.NoContent(),
-            errors => this.Problem(errors)
-        );
-    }
-
     [ProducesResponseType(typeof(GrammarTopicResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPut("{id:guid}")]
@@ -112,6 +97,21 @@ public class GrammarTopicsController : ApiController
         return updateGrammarTopicResult.Match(
             updateGrammarTopicResult =>
                 this.Ok(this.mapper.Map<GrammarTopicResponse>(updateGrammarTopicResult)),
+            errors => this.Problem(errors)
+        );
+    }
+
+    [ProducesResponseType(typeof(GrammarTopicResponse), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteGrammarTopic([FromRoute] Guid id)
+    {
+        ErrorOr<DeleteGrammarTopicResult> deleteGrammarTopicResult = await this.mediator.Send(
+            new DeleteGrammarTopicCommand(id)
+        );
+
+        return deleteGrammarTopicResult.Match(
+            _ => this.NoContent(),
             errors => this.Problem(errors)
         );
     }

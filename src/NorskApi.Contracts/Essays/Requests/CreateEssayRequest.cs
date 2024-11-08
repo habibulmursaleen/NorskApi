@@ -1,7 +1,7 @@
 using NorskApi.Contracts.Common.Enums;
 using NorskApi.Contracts.Quizes.Common.Enums;
 
-namespace NorskApi.Contracts.Essay.Requests;
+namespace NorskApi.Contracts.Essays.Requests;
 
 public record CreateEssayRequest(
     string? Logo,

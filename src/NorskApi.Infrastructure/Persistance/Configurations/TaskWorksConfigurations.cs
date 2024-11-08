@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.TaskWorkAggregate;
 using NorskApi.Domain.TaskWorkAggregate.ValueObjects;

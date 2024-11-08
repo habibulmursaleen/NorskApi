@@ -75,6 +75,30 @@ namespace NorskApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "GrammarRules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Label = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    ExplanatoryNotes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SentenceStructure = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RuleType = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    DifficultyLevel = table.Column<int>(type: "int", nullable: false),
+                    Tags = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AdditionalInformation = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Comments = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RelatedRuleIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GrammarRules", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GrammarTopics",
                 columns: table => new
                 {
@@ -237,6 +261,64 @@ namespace NorskApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExampleOfRules",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GrammarRuleId_FK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Subjunction = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Adverbial = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Verb = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Object = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Rest = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    CorrectSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    EnglishSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    IncorrectSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    TransformationFrom = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    TransformationTo = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    GrammarRuleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExampleOfRules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExampleOfRules_GrammarRules_GrammarRuleId",
+                        column: x => x.GrammarRuleId,
+                        principalTable: "GrammarRules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Exceptions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    GrammarRuleId_FK = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Comments = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    CorrectSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    IncorrectSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    GrammarRuleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Exceptions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Exceptions_GrammarRules_GrammarRuleId",
+                        column: x => x.GrammarRuleId,
+                        principalTable: "GrammarRules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "QuizOptions",
                 columns: table => new
                 {
@@ -260,6 +342,16 @@ namespace NorskApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ExampleOfRules_GrammarRuleId",
+                table: "ExampleOfRules",
+                column: "GrammarRuleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Exceptions_GrammarRuleId",
+                table: "Exceptions",
+                column: "GrammarRuleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Paragraphs_EssayId",
                 table: "Paragraphs",
                 column: "EssayId");
@@ -278,6 +370,12 @@ namespace NorskApi.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Discussions");
+
+            migrationBuilder.DropTable(
+                name: "ExampleOfRules");
+
+            migrationBuilder.DropTable(
+                name: "Exceptions");
 
             migrationBuilder.DropTable(
                 name: "GrammarTopics");
@@ -302,6 +400,9 @@ namespace NorskApi.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "TaskWorks");
+
+            migrationBuilder.DropTable(
+                name: "GrammarRules");
 
             migrationBuilder.DropTable(
                 name: "Essays");
