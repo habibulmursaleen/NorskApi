@@ -217,6 +217,64 @@ namespace NorskApi.Infrastructure.Migrations
                     b.ToTable("GrammarTopics", (string)null);
                 });
 
+            modelBuilder.Entity("NorskApi.Domain.GrammmarRuleAggregate.GrammarRule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdditionalInformation")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("DifficultyLevel")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ExplanatoryNotes")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("RelatedRuleIds")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RuleType")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("SentenceStructure")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("TopicId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GrammarRules", (string)null);
+                });
+
             modelBuilder.Entity("NorskApi.Domain.LocalExpressionAggregate.LocalExpression", b =>
                 {
                     b.Property<Guid>("Id")
@@ -469,7 +527,7 @@ namespace NorskApi.Infrastructure.Migrations
 
             modelBuilder.Entity("Essay", b =>
                 {
-                    b.OwnsMany("Essay.Paragraphs#NorskApi.Domain.EssayAggregate.Entities.Paragraph", "Paragraphs", b1 =>
+                    b.OwnsMany("NorskApi.Domain.EssayAggregate.Entities.Paragraph", "Paragraphs", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uniqueidentifier");
@@ -509,9 +567,134 @@ namespace NorskApi.Infrastructure.Migrations
                     b.Navigation("Paragraphs");
                 });
 
+            modelBuilder.Entity("NorskApi.Domain.GrammmarRuleAggregate.GrammarRule", b =>
+                {
+                    b.OwnsMany("NorskApi.Domain.GrammmarRuleAggregate.Entites.ExampleOfRule", "ExampleOfRules", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Adverbial")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("CorrectSentence")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<DateTime>("CreatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("EnglishSentence")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<Guid>("GrammarRuleId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("GrammarRuleId_FK")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("IncorrectSentence")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("Object")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("Rest")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("Subject")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("Subjunction")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("TransformationFrom")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("TransformationTo")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<DateTime>("UpdatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Verb")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("GrammarRuleId");
+
+                            b1.ToTable("ExampleOfRules", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrammarRuleId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.GrammmarRuleAggregate.Entites.Exception", "Exceptions", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Comments")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("CorrectSentence")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<DateTime>("CreatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Description")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<Guid>("GrammarRuleId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("GrammarRuleId_FK")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("IncorrectSentence")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<string>("Title")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<DateTime>("UpdatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("GrammarRuleId");
+
+                            b1.ToTable("Exceptions", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrammarRuleId");
+                        });
+
+                    b.Navigation("ExampleOfRules");
+
+                    b.Navigation("Exceptions");
+                });
+
             modelBuilder.Entity("NorskApi.Domain.QuizAggregate.Quiz", b =>
                 {
-                    b.OwnsMany("NorskApi.Domain.QuizAggregate.Quiz.QuizOptions#NorskApi.Domain.QuizAggregate.Entites.QuizOption", "QuizOptions", b1 =>
+                    b.OwnsMany("NorskApi.Domain.QuizAggregate.Entites.QuizOption", "QuizOptions", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uniqueidentifier");

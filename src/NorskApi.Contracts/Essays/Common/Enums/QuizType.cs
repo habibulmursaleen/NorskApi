@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace NorskApi.Contracts.Essay.Common.Enums;
+namespace NorskApi.Contracts.Essays.Common.Enums;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
 public enum ContentType

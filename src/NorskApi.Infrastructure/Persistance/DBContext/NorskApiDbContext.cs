@@ -4,6 +4,7 @@ using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.DictationAggregate;
 using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.GrammarTopicAggregate;
+using NorskApi.Domain.GrammmarRuleAggregate;
 using NorskApi.Domain.LocalExpressionAggregate;
 using NorskApi.Domain.PodcastAggregate;
 using NorskApi.Domain.QuestionAggregate;
@@ -29,6 +30,7 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<GrammarTopic> GrammarTopics { get; set; } = null!;
     public DbSet<Quiz> Quizes { get; set; } = null!;
     public DbSet<Essay> Essays { get; set; } = null!;
+    public DbSet<GrammarRule> GrammarRules { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,

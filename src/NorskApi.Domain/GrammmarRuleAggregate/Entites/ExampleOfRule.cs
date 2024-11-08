@@ -6,7 +6,7 @@ namespace NorskApi.Domain.GrammmarRuleAggregate.Entites;
 
 public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
 {
-    public GrammarRuleId? GrammarRuleId { get; set; }
+    public GrammarRuleId GrammarRuleId_FK { get; set; }
     public string? Subjunction { get; set; }
     public string? Subject { get; set; }
     public string? Adverbial { get; set; }
@@ -19,11 +19,13 @@ public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
     public string? TransformationFrom { get; set; }
     public string? TransformationTo { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private ExampleOfRule() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     private ExampleOfRule(
         ExampleOfRuleId id,
-        GrammarRuleId? grammarRuleId,
+        GrammarRuleId grammarRuleId_FK,
         string? subjunction,
         string? subject,
         string? adverbial,
@@ -35,9 +37,10 @@ public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
         string? incorrectSentence,
         string? transformationFrom,
         string? transformationTo
-    ) : base(id)
+    )
+        : base(id)
     {
-        this.GrammarRuleId = grammarRuleId;
+        this.GrammarRuleId_FK = grammarRuleId_FK;
         this.Subjunction = subjunction;
         this.Subject = subject;
         this.Adverbial = adverbial;
@@ -52,7 +55,7 @@ public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
     }
 
     public static ExampleOfRule Create(
-        GrammarRuleId? grammarRuleId,
+        GrammarRuleId grammarRuleId_FK,
         string? subjunction,
         string? subject,
         string? adverbial,
@@ -68,7 +71,7 @@ public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
     {
         ExampleOfRule exampleOfRule = new ExampleOfRule(
             ExampleOfRuleId.CreateUnique(),
-            grammarRuleId,
+            grammarRuleId_FK,
             subjunction,
             subject,
             adverbial,
@@ -88,7 +91,7 @@ public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
     }
 
     public void Update(
-        GrammarRuleId? grammarRuleId,
+        GrammarRuleId grammarRuleId_FK,
         string? subjunction,
         string? subject,
         string? adverbial,
@@ -102,7 +105,7 @@ public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
         string? transformationTo
     )
     {
-        this.GrammarRuleId = grammarRuleId;
+        this.GrammarRuleId_FK = grammarRuleId_FK;
         this.Subjunction = subjunction;
         this.Subject = subject;
         this.Adverbial = adverbial;
@@ -122,5 +125,4 @@ public sealed class ExampleOfRule : Entity<ExampleOfRuleId>
     {
         AddDomainEvent(new ExmapleOfRuleDeletedDomainEvent(this));
     }
-
 }

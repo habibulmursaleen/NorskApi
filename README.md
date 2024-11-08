@@ -63,6 +63,7 @@ cd NorskApi
 Run the following command to restore the necessary NuGet packages:
 
 ```bash
+dotnet clean
 dotnet restore
 ```
 
@@ -106,12 +107,17 @@ dotnet ef migrations remove -p src/NorskApi.Infrastructure -s src/NorskApi.Api;
 ```
 
 ####  Step 4: Build and Run the Application
-Navigate to the WebApi project directory and start the API:
+Navigate to the root of project directory and start the API:
 
 ```bash
+dotnet clean
+dotnet restore
 dotnet build
-dotnet watch run --project src/NorskApi.Api   
+dotnet watch run --project src/NorskApi.Api 
 ```
+
+Open your brower and go to http://localhost:5160/swagger/index.html.
+
 #### Test
 
 ```
