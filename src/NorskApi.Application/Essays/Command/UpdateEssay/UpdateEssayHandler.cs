@@ -115,7 +115,7 @@ public class UpdateEssayHandler : IRequestHandler<UpdateEssayCommand, ErrorOr<Es
             essay.IsSaved,
             essay.Tags,
             essay.DifficultyLevel,
-            essay.RelatedGrammarTopicIds,
+            essay.RelatedGrammarTopicIds?.Select(id => TopicId.Create(id)).ToList(),
             paragraphsResult,
             essay.CreatedDateTime,
             essay.UpdatedDateTime

@@ -18,9 +18,11 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
     public bool IsSaved { get; set; }
     public List<string>? Tags { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
-    public List<TopicId>? RelatedGrammarTopicIds { get; set; }
+    public List<Guid>? RelatedGrammarTopicIds { get; set; }
     private readonly List<Paragraph> paragraphs = new List<Paragraph>();
     public IReadOnlyCollection<Paragraph> Paragraphs => this.paragraphs;
+
+    public List<Guid> GetTopicIds() => RelatedGrammarTopicIds?.ToList() ?? new List<Guid>();
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Essay() { }
@@ -57,7 +59,7 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
         this.Tags = tags;
         this.DifficultyLevel = difficultyLevel;
         this.paragraphs = paragraphs;
-        this.RelatedGrammarTopicIds = relatedGrammarTopicIds;
+        this.RelatedGrammarTopicIds = relatedGrammarTopicIds?.Select(t => t.Value).ToList();
     }
 
     public static Essay Create(
@@ -126,7 +128,7 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
         this.IsSaved = isSaved;
         this.Tags = tags;
         this.DifficultyLevel = difficultyLevel;
-        this.RelatedGrammarTopicIds = relatedGrammarTopicIds;
+        this.RelatedGrammarTopicIds = relatedGrammarTopicIds?.Select(t => t.Value).ToList();
 
         UpdateParagraphs(paragraphs);
         this.AddDomainEvent(new EssayUpdatedDomainEvent(this));

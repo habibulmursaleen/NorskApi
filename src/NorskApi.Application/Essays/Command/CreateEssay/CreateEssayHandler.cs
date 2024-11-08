@@ -57,7 +57,7 @@ public class CreateEssayHandler : IRequestHandler<CreateEssayCommand, ErrorOr<Es
             essay.IsSaved,
             essay.Tags,
             essay.DifficultyLevel,
-            essay.RelatedGrammarTopicIds,
+            essay.RelatedGrammarTopicIds?.Select(id => TopicId.Create(id)).ToList(),
             essay
                 .Paragraphs.Select(paragraph => new ParagraphResult(
                     paragraph.Id.Value,
