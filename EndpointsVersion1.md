@@ -1,6 +1,6 @@
 # Norsk API
 
-## Table of contents
+## List of Endpoints
 
 - [LocalExpressions](#localexpressions)
 - [Dictation](#dictation)
