@@ -12,6 +12,7 @@ using NorskApi.Domain.QuizAggregate;
 using NorskApi.Domain.RoleplayAggregate;
 using NorskApi.Domain.SubjunctionAgreegate;
 using NorskApi.Domain.TaskWorkAggregate;
+using NorskApi.Domain.WordAggregate;
 using NorskApi.Infrastructure.Persistance.Interceptors;
 
 namespace NorskApi.Infrastructure.Persistance.DBContext;
@@ -33,6 +34,7 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<Essay> Essays { get; set; } = null!;
     public DbSet<GrammarRule> GrammarRules { get; set; } = null!;
     public DbSet<Subjunction> Subjunctions { get; set; } = null!;
+    public DbSet<Word> Words { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,

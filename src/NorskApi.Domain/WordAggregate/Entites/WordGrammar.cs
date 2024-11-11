@@ -5,7 +5,7 @@ namespace NorskApi.Domain.WordAggregate.Entites;
 
 public sealed class WordGrammer : Entity<WordGrammarId>
 {
-    public WordId? WordId { get; set; }
+    public WordId? WordId_FK { get; set; }
     public string? GenderMasculine { get; set; }
     public string? GenderFeminine { get; set; }
     public string? GenderNeutral { get; set; }
@@ -32,7 +32,7 @@ public sealed class WordGrammer : Entity<WordGrammarId>
 
     private WordGrammer(
         WordGrammarId id,
-        WordId? wordId,
+        WordId? wordId_FK,
         string? genderMasculine,
         string? genderFeminine,
         string? genderNeutral,
@@ -54,9 +54,10 @@ public sealed class WordGrammer : Entity<WordGrammarId>
         bool? irregular,
         bool? strongVerb,
         bool? weakVerb
-    ) : base(id)
+    )
+        : base(id)
     {
-        this.WordId = wordId;
+        this.WordId_FK = wordId_FK;
         this.GenderMasculine = genderMasculine;
         this.GenderFeminine = genderFeminine;
         this.GenderNeutral = genderNeutral;
@@ -142,7 +143,6 @@ public sealed class WordGrammer : Entity<WordGrammarId>
         string? singularIndefinitiv,
         string? pluralDefinitiv,
         string? pluralIndefinitiv,
-
         string? infinitiv,
         string? presentTense,
         string? pastTense,
