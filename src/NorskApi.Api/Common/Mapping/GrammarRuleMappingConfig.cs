@@ -55,15 +55,14 @@ public class GrammarRuleMappingConfig : IRegister
         // Map Filter Request to Filter Query
         config
             .NewConfig<
-                (Guid topicId, QueryParamsWithTopicFiltersRequest filters),
+                (Guid topicId, QueryParamsBaseFiltersRequest filters),
                 GetAllGrammarRulesQuery
             >()
             .Map(dest => dest.TopicId, src => src.topicId)
             .Map(dest => dest.Filters, src => src);
 
         config
-            .NewConfig<QueryParamsWithTopicFiltersRequest, QueryParamsWithTopicFilters>()
-            .Map(dest => dest.TopicId, src => src.TopicId)
+            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)
@@ -71,7 +70,6 @@ public class GrammarRuleMappingConfig : IRegister
 
         config
             .NewConfig<CreateExceptionRequest, CreateExceptionCommand>()
-            .Map(dest => dest.GrammarRuleId, src => src.GrammarRuleId)
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.Comments, src => src.Comments)
@@ -90,7 +88,6 @@ public class GrammarRuleMappingConfig : IRegister
 
         config
             .NewConfig<CreateExampleOfRuleRequest, CreateExampleOfRuleCommand>()
-            .Map(dest => dest.GrammarRuleId, src => src.GrammarRuleId)
             .Map(dest => dest.Subjunction, src => src.Subjunction)
             .Map(dest => dest.Subject, src => src.Subject)
             .Map(dest => dest.Adverbial, src => src.Adverbial)

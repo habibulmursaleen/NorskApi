@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NorskApi.Infrastructure.Persistance.DBContext;
 
@@ -11,9 +12,11 @@ using NorskApi.Infrastructure.Persistance.DBContext;
 namespace NorskApi.Infrastructure.Migrations
 {
     [DbContext(typeof(NorskApiDbContext))]
-    partial class NorskApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241111095422_MigrationName")]
+    partial class MigrationName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -595,7 +598,7 @@ namespace NorskApi.Infrastructure.Migrations
                             b1.Property<Guid>("GrammarRuleId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<Guid?>("GrammarRuleId_FK")
+                            b1.Property<Guid>("GrammarRuleId_FK")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("IncorrectSentence")
@@ -666,7 +669,7 @@ namespace NorskApi.Infrastructure.Migrations
                             b1.Property<Guid>("GrammarRuleId")
                                 .HasColumnType("uniqueidentifier");
 
-                            b1.Property<Guid?>("GrammarRuleId_FK")
+                            b1.Property<Guid>("GrammarRuleId_FK")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("IncorrectSentence")

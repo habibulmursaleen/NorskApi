@@ -56,7 +56,7 @@ public class GrammarRulesController : ApiController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("topics/all/rules")]
     public async Task<IActionResult> GetGrammarRules(
-        [FromQuery] QueryParamsWithTopicFiltersRequest filters
+        [FromQuery] QueryParamsBaseFiltersRequest filters
     )
     {
         GetAllGrammarRulesQuery query = this.mapper.Map<GetAllGrammarRulesQuery>(
@@ -75,7 +75,7 @@ public class GrammarRulesController : ApiController
     [HttpGet("topics/{topicId:guid}/rules")]
     public async Task<IActionResult> GetGrammarRuleByTopicId(
         [FromRoute] Guid topicId,
-        [FromQuery] QueryParamsWithTopicFiltersRequest filters
+        [FromQuery] QueryParamsBaseFiltersRequest filters
     )
     {
         GetAllGrammarRulesQuery query = this.mapper.Map<GetAllGrammarRulesQuery>(

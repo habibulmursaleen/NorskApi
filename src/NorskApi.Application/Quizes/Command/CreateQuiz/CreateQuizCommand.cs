@@ -9,6 +9,7 @@ namespace NorskApi.Application.Quizes.Command.CreateQuiz;
 public record CreateQuizCommand(
     Guid? EssayId,
     Guid? TopicId,
+    Guid? DictationId,
     string Question,
     string? Answer,
     bool IsRightAnswer,

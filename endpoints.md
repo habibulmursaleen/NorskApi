@@ -15,6 +15,7 @@
 - [Grammar Rules](#grammar-rules)
 - [Subjunction](#subjunction)
 - [Word](#word)
+- [Norskprove](#norskprove)
 
 
 ![Norsk API Aggregate](norskapi.png)
@@ -169,7 +170,6 @@
 ### Query params 
     Filters:
         difficultyLevel
-        topicId
         
 ```json
 [
@@ -234,6 +234,7 @@
     "id": "2af80963-ab29-4aa2-a6a7-bf1237d96926",
     "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af", // just Id, no relation
     "topicId": "749cd452-3398-4338-af03-d15bcdb291c7", // just Id, no relation
+    "dictationId": "d3103c71-86ff-4f05-bf50-c9ad93dada17",
     "question": "Totam minus dolores deserunt quod iste sapiente?",
     "answer": "quis neque voluptate",
     "isRightAnswer": false,
@@ -326,7 +327,6 @@
 ### Query params 
     Filters:
         difficultyLevel
-        topicId
 
 ```json
 [
@@ -467,3 +467,41 @@
   }
 ]
 ```
+
+## Norskprove 
+
+### POST GET `{host}/api/v1/norskprove`
+### GET PUT DELETE `{host}/api/v1/norskprove/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+
+```json
+[
+  {
+    "id": "554aab40-c9a9-4e6d-8baa-3510096ac957",
+    "title": "odit adipisci praesentium",
+    "description": "quis porro quaerat",
+    "isCompleted": true,
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "listening": [
+      "7aae1428-e329-4ad7-90f7-cfeab203a282", //dictationId 
+      "407a8eb6-1721-42e1-a300-c93d2bc2a812" 
+    ],
+    "reading": [
+      "92061233-a115-473c-9b6f-8167f061c77d", //essayId
+      "dfb18038-e5eb-4465-8747-91d7dc626855",
+      "adf61dff-b4da-41d2-8017-bc75f7496433"
+    ],
+    "writing": [
+      "b6fa1201-718a-4fd9-964a-ed836b6582cf", // discussionId or roleplayId
+      "c7414f1c-c275-45a4-a5af-f563a77b6122"
+    ],
+    "additionalGrammarTasks": [
+      "b6fa1201-718a-4fd9-964a-ed836b6582cf", // taskId
+      "c7414f1c-c275-45a4-a5af-f563a77b6122"
+    ],
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+  }
+]

@@ -8,12 +8,12 @@ namespace NorskApi.Application.Common.Interfaces.Persistance;
 public interface ITaskWorkRepository
 {
     Task<List<TaskWork>> GetAll(
-        QueryParamsWithTopicFilters? filters,
+        QueryParamsBaseFilters? filters,
         CancellationToken cancellationToken
     );
     Task<List<TaskWork>> GetAllByTopicId(
         TopicId topicId,
-        QueryParamsWithTopicFilters filters,
+        QueryParamsBaseFilters filters,
         CancellationToken cancellationToken
     );
     Task<TaskWork?> GetById(
