@@ -38,6 +38,7 @@ namespace NorskApi.Infrastructure
             services.AddScoped<IQuizRepository, QuizRepository>();
             services.AddScoped<IEssayRepository, EssayRepository>();
             services.AddScoped<IGrammarRuleRepository, GrammarRuleRepository>();
+            services.AddScoped<ISubjunctionRepository, SubjunctionRepository>();
 
             services.AddScoped<IQueryParamsBaseBuilder, QueryParamsBaseBuilder>();
             services.AddScoped<IQueryParamsWithEssayBuilder, QueryParamsWithEssayBuilder>();
