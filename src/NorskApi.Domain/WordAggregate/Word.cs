@@ -1,4 +1,3 @@
-
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.Entities.WordAggregate.Events.DomainEvent;
@@ -15,14 +14,12 @@ public sealed class Word : AggregateRoot<WordId, Guid>
     public string? Title { get; set; }
     public string? Meaning { get; set; }
     public string? EnTranslation { get; set; }
-    public string? NativeMeaning { get; set; } // user input 
+    public string? NativeMeaning { get; set; } // user input
     public WordType Type { get; set; } // Enum: LOCAL, ACADEMIC, FORMAL, INFORMAL, SLANG, PHRASE
     public PartOfSpeechTag PartOfSpeechTag { get; set; } // Enum: NOUN, PRONOUN, ADVERB, etc.
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
     public bool IsCompleted { get; set; }
-    public DateTime CreatedAt { get; set; }
-    public DateTime UpdatedAt { get; set; }
-    public List<WordId>? synonymIds { get; set; }
+    public List<WordId>? SynonymIds { get; set; }
     public List<WordId>? AntonymIds { get; set; }
     public WordGrammer? WordGrammer { get; set; }
     public WordUsageExample? WordUsageExample { get; set; }
@@ -42,13 +39,12 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         PartOfSpeechTag partOfSpeechTag,
         DifficultyLevel difficultyLevel,
         bool isCompleted,
-        DateTime createdAt,
-        DateTime updatedAt,
         List<WordId> synonymIds,
         List<WordId> antonymIds,
-        WordGrammer wordGrammer,
-        WordUsageExample wordUsageExample
-    ) : base(wordId)
+        WordGrammer? wordGrammer = null,
+        WordUsageExample? wordUsageExample = null
+    )
+        : base(wordId)
     {
         this.EssayId = essayId;
         this.Title = title;
@@ -59,9 +55,7 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         this.PartOfSpeechTag = partOfSpeechTag;
         this.DifficultyLevel = difficultyLevel;
         this.IsCompleted = isCompleted;
-        this.CreatedAt = createdAt;
-        this.UpdatedAt = updatedAt;
-        this.synonymIds = synonymIds;
+        this.SynonymIds = synonymIds;
         this.AntonymIds = antonymIds;
         this.WordGrammer = wordGrammer;
         this.WordUsageExample = wordUsageExample;
@@ -76,10 +70,11 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         WordType type,
         PartOfSpeechTag partOfSpeechTag,
         DifficultyLevel difficultyLevel,
+        bool isCompleted,
         List<WordId> synonymIds,
         List<WordId> antonymIds,
-        WordGrammer wordGrammer,
-        WordUsageExample wordUsageExample
+        WordGrammer? wordGrammer = null,
+        WordUsageExample? wordUsageExample = null
     )
     {
         Word word = new Word(
@@ -92,13 +87,11 @@ public sealed class Word : AggregateRoot<WordId, Guid>
             type,
             partOfSpeechTag,
             difficultyLevel,
-            false,
-            DateTime.UtcNow,
-            DateTime.UtcNow,
+            isCompleted,
             synonymIds,
             antonymIds,
-            wordGrammer,
-            wordUsageExample
+            wordGrammer ?? null,
+            wordUsageExample ?? null
         );
 
         word.AddDomainEvent(new WordCreatedDomainEvent(word));
@@ -107,7 +100,7 @@ public sealed class Word : AggregateRoot<WordId, Guid>
     }
 
     public void Update(
-        EssayId essayId,
+        EssayId? essayId,
         string title,
         string meaning,
         string enTranslation,
@@ -115,11 +108,11 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         WordType type,
         PartOfSpeechTag partOfSpeechTag,
         DifficultyLevel difficultyLevel,
+        bool isCompleted,
         List<WordId> synonymIds,
         List<WordId> antonymIds,
-        WordGrammer wordGrammer,
-        WordUsageExample wordUsageExample,
-        DateTime updatedAt
+        WordGrammer? wordGrammer,
+        WordUsageExample? wordUsageExample
     )
     {
         this.EssayId = essayId;
@@ -130,12 +123,11 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         this.Type = type;
         this.PartOfSpeechTag = partOfSpeechTag;
         this.DifficultyLevel = difficultyLevel;
-        this.synonymIds = synonymIds;
+        this.IsCompleted = isCompleted;
+        this.SynonymIds = synonymIds;
         this.AntonymIds = antonymIds;
         this.WordGrammer = wordGrammer;
         this.WordUsageExample = wordUsageExample;
-        this.UpdatedAt = updatedAt;
-
         this.AddDomainEvent(new WordUpdatedDomainEvent(this));
     }
 
@@ -144,4 +136,19 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         this.AddDomainEvent(new WordDeletedDomainEvent(this));
     }
 
+    public void AddWordGrammer(WordGrammer wordGrammer)
+    {
+        if (wordGrammer is not null)
+        {
+            this.WordGrammer = wordGrammer;
+        }
+    }
+
+    public void AddWordUsageExample(WordUsageExample wordUsageExample)
+    {
+        if (wordUsageExample is not null)
+        {
+            this.WordUsageExample = wordUsageExample;
+        }
+    }
 }
