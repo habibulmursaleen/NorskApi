@@ -185,6 +185,7 @@ namespace NorskApi.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EssayId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DictationId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Question = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     Answer = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     IsRightAnswer = table.Column<bool>(type: "bit", nullable: false),
@@ -216,6 +217,24 @@ namespace NorskApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subjunctions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Time = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Arsak = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Hensikt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Betingelse = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Motsetning = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subjunctions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TaskWorks",
                 columns: table => new
                 {
@@ -235,6 +254,30 @@ namespace NorskApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TaskWorks", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Words",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EssayId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Meaning = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    EnTranslation = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    NativeMeaning = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    PartOfSpeechTag = table.Column<int>(type: "int", nullable: false),
+                    DifficultyLevel = table.Column<int>(type: "int", nullable: false),
+                    IsCompleted = table.Column<bool>(type: "bit", nullable: false),
+                    SynonymIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AntonymIds = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Words", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -341,6 +384,73 @@ namespace NorskApi.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "WordGrammer",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WordId_FK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    GenderMasculine = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    GenderFeminine = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    GenderNeutral = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SingularDefinitiv = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SingularIndefinitiv = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PluralDefinitiv = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PluralIndefinitiv = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Infinitiv = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PresentTense = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PastTense = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PresentPerfectTense = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    FutureTense = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Positive = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Comparative = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Superlative = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SuperlativeDetermined = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PastParticiple = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    PresentParticiple = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    Irregular = table.Column<bool>(type: "bit", nullable: true),
+                    StrongVerb = table.Column<bool>(type: "bit", nullable: true),
+                    WeakVerb = table.Column<bool>(type: "bit", nullable: true),
+                    WordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WordGrammer", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WordGrammer_Words_WordId",
+                        column: x => x.WordId,
+                        principalTable: "Words",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WordUsageExample",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    WordId_FK = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CorrectSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    IncorrectSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    EnglishSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    NewSentence = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    WordId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WordUsageExample", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WordUsageExample_Words_WordId",
+                        column: x => x.WordId,
+                        principalTable: "Words",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_ExampleOfRules_GrammarRuleId",
                 table: "ExampleOfRules",
@@ -360,6 +470,18 @@ namespace NorskApi.Infrastructure.Migrations
                 name: "IX_QuizOptions_QuizId",
                 table: "QuizOptions",
                 column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WordGrammer_WordId",
+                table: "WordGrammer",
+                column: "WordId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WordUsageExample_WordId",
+                table: "WordUsageExample",
+                column: "WordId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -399,7 +521,16 @@ namespace NorskApi.Infrastructure.Migrations
                 name: "Roleplays");
 
             migrationBuilder.DropTable(
+                name: "Subjunctions");
+
+            migrationBuilder.DropTable(
                 name: "TaskWorks");
+
+            migrationBuilder.DropTable(
+                name: "WordGrammer");
+
+            migrationBuilder.DropTable(
+                name: "WordUsageExample");
 
             migrationBuilder.DropTable(
                 name: "GrammarRules");
@@ -409,6 +540,9 @@ namespace NorskApi.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Quizzes");
+
+            migrationBuilder.DropTable(
+                name: "Words");
         }
     }
 }
