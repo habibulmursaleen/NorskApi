@@ -11,11 +11,11 @@ namespace NorskApi.Infrastructure.Persistance.Repositories;
 public class GrammarRuleRepository : IGrammarRuleRepository
 {
     private readonly NorskApiDbContext dbContext;
-    private readonly IQueryParamsWithTopicBuilder queryParamsWithTopicBuilder;
+    private readonly IQueryParamsBaseBuilder queryParamsWithTopicBuilder;
 
     public GrammarRuleRepository(
         NorskApiDbContext dbContext,
-        IQueryParamsWithTopicBuilder queryParamsWithTopicBuilder
+        IQueryParamsBaseBuilder queryParamsWithTopicBuilder
     )
     {
         this.dbContext = dbContext;
@@ -23,7 +23,7 @@ public class GrammarRuleRepository : IGrammarRuleRepository
     }
 
     public async Task<List<GrammarRule>> GetAll(
-        QueryParamsWithTopicFilters? filters,
+        QueryParamsBaseFilters? filters,
         CancellationToken cancellationToken
     )
     {
@@ -43,7 +43,7 @@ public class GrammarRuleRepository : IGrammarRuleRepository
 
     public async Task<List<GrammarRule>> GetAllByTopicId(
         TopicId topicId,
-        QueryParamsWithTopicFilters filters,
+        QueryParamsBaseFilters filters,
         CancellationToken cancellationToken
     )
     {

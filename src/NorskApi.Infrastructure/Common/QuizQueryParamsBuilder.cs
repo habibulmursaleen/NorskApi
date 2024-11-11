@@ -37,6 +37,10 @@ public class QuizQueryParamsBuilder : IQuizQueryParamsBuilder
         {
             query = query.Where(x => x.TopicId! == filters.TopicId);
         }
+        if (filters.DictationId != default)
+        {
+            query = query.Where(x => x.DictationId! == filters.DictationId);
+        }
         if (!string.IsNullOrEmpty(filters.SortBy))
         {
             switch (filters.SortBy.ToLower())

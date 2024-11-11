@@ -22,7 +22,6 @@ public record CreateGrammarRuleCommand(
 ) : IRequest<ErrorOr<GrammarRuleResult>>;
 
 public record CreateExceptionCommand(
-    Guid GrammarRuleId,
     string? Title,
     string? Description,
     string? Comments,
@@ -31,7 +30,6 @@ public record CreateExceptionCommand(
 );
 
 public record CreateExampleOfRuleCommand(
-    Guid GrammarRuleId,
     string? Subjunction,
     string? Subject,
     string? Adverbial,

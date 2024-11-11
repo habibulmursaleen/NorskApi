@@ -81,7 +81,6 @@ public class GrammarRulesConfigurations : IEntityTypeConfiguration<GrammarRule>
 
                 exceptionsbuilder
                     .Property(x => x.GrammarRuleId_FK)
-                    .IsRequired()
                     .HasConversion(x => x!.Value, value => GrammarRuleId.Create(value));
 
                 exceptionsbuilder.Property(x => x.Title).IsRequired(false).HasMaxLength(255);
@@ -111,7 +110,6 @@ public class GrammarRulesConfigurations : IEntityTypeConfiguration<GrammarRule>
 
                 exampleOfRulesbuilder
                     .Property(x => x.GrammarRuleId_FK)
-                    .IsRequired()
                     .HasConversion(x => x!.Value, value => GrammarRuleId.Create(value));
 
                 exampleOfRulesbuilder

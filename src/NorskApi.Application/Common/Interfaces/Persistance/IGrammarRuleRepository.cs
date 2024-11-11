@@ -8,12 +8,12 @@ namespace NorskApi.Application.Common.Interfaces.Persistance;
 public interface IGrammarRuleRepository
 {
     Task<List<GrammarRule>> GetAll(
-        QueryParamsWithTopicFilters? filters,
+        QueryParamsBaseFilters? filters,
         CancellationToken cancellationToken
     );
     Task<List<GrammarRule>> GetAllByTopicId(
         TopicId topicId,
-        QueryParamsWithTopicFilters filters,
+        QueryParamsBaseFilters filters,
         CancellationToken cancellationToken
     );
     Task<GrammarRule?> GetById(

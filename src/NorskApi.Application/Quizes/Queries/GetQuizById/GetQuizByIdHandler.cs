@@ -52,6 +52,7 @@ public record GetQuizByIdQueryHandler : IRequestHandler<GetQuizByIdQuery, ErrorO
             quiz.Id.Value,
             quiz.EssayId?.Value,
             quiz.TopicId?.Value,
+            quiz.DictationId?.Value,
             quiz.Question,
             quiz.Answer,
             quiz.IsRightAnswer,

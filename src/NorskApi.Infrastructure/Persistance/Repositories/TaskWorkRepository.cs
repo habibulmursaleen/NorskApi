@@ -11,11 +11,11 @@ namespace NorskApi.Infrastructure.Persistance.Repositories;
 public class TaskWorkRepository : ITaskWorkRepository
 {
     private readonly NorskApiDbContext dbContext;
-    private readonly IQueryParamsWithTopicBuilder queryParamsWithTopicBuilder;
+    private readonly IQueryParamsBaseBuilder queryParamsWithTopicBuilder;
 
     public TaskWorkRepository(
         NorskApiDbContext dbContext,
-        IQueryParamsWithTopicBuilder queryParamsWithTopicBuilder
+        IQueryParamsBaseBuilder queryParamsWithTopicBuilder
     )
     {
         this.dbContext = dbContext;
@@ -23,7 +23,7 @@ public class TaskWorkRepository : ITaskWorkRepository
     }
 
     public async Task<List<TaskWork>> GetAll(
-        QueryParamsWithTopicFilters? filters,
+        QueryParamsBaseFilters? filters,
         CancellationToken cancellationToken
     )
     {
@@ -40,7 +40,7 @@ public class TaskWorkRepository : ITaskWorkRepository
 
     public async Task<List<TaskWork>> GetAllByTopicId(
         TopicId topicId,
-        QueryParamsWithTopicFilters filters,
+        QueryParamsBaseFilters filters,
         CancellationToken cancellationToken
     )
     {
