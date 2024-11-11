@@ -49,10 +49,6 @@ public class CreateGrammarRuleValidator : AbstractValidator<CreateGrammarRuleCom
     {
         public CreateExceptionCommandValidator()
         {
-            RuleFor(x => x.GrammarRuleId)
-                .Must(x => x != Guid.Empty)
-                .WithMessage("GrammarRule Id must be a valid guid.");
-
             RuleFor(x => x.Title)
                 .MaximumLength(255)
                 .WithMessage("Title must not exceed 255 characters.");
@@ -79,10 +75,6 @@ public class CreateGrammarRuleValidator : AbstractValidator<CreateGrammarRuleCom
     {
         public CreateExampleOfRuleCommandValidator()
         {
-            RuleFor(x => x.GrammarRuleId)
-                .Must(x => x != Guid.Empty)
-                .WithMessage("GrammarRule Id must be a valid guid.");
-
             RuleFor(x => x.Subjunction)
                 .MaximumLength(255)
                 .WithMessage("Subjunction must not exceed 255 characters.");

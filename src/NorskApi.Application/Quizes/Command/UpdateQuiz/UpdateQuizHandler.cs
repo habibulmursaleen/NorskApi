@@ -3,6 +3,8 @@ using MediatR;
 using NorskApi.Application.Common.Interfaces.Persistance;
 using NorskApi.Application.Quizes.Models;
 using NorskApi.Domain.Common.Errors;
+using NorskApi.Domain.DictationAggregate;
+using NorskApi.Domain.DictationAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.QuizAggregate;
@@ -31,6 +33,10 @@ public class UpdateQuizHandler : IRequestHandler<UpdateQuizCommand, ErrorOr<Quiz
             : null;
         TopicId? topicId = command.TopicId is not null
             ? TopicId.Create(command.TopicId.Value)
+            : null;
+
+        DictationId? dictationId = command.DictationId is not null
+            ? DictationId.Create(command.DictationId.Value)
             : null;
 
         Quiz? quiz = await quizRepository.GetById(quizId, cancellationToken);
@@ -81,6 +87,7 @@ public class UpdateQuizHandler : IRequestHandler<UpdateQuizCommand, ErrorOr<Quiz
         quiz.Update(
             essayId,
             topicId,
+            dictationId,
             command.Question,
             command.Answer,
             command.IsRightAnswer,
@@ -106,6 +113,7 @@ public class UpdateQuizHandler : IRequestHandler<UpdateQuizCommand, ErrorOr<Quiz
             quiz.Id.Value,
             quiz.EssayId?.Value,
             quiz.TopicId?.Value,
+            quiz.DictationId?.Value,
             quiz.Question,
             quiz.Answer,
             quiz.IsRightAnswer,

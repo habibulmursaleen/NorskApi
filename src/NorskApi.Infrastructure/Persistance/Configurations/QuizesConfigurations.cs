@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NorskApi.Domain.DictationAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.QuizAggregate;
@@ -34,6 +35,11 @@ public class QuizsConfigurations : IEntityTypeConfiguration<Quiz>
             .Property(x => x.TopicId)
             .IsRequired(false)
             .HasConversion(x => x!.Value, value => TopicId.Create(value));
+
+        builder
+            .Property(x => x.DictationId)
+            .IsRequired(false)
+            .HasConversion(x => x!.Value, value => DictationId.Create(value));
 
         builder.Property(x => x.Question).IsRequired().HasMaxLength(255);
 

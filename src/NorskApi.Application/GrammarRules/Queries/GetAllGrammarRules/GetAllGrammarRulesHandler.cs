@@ -25,7 +25,7 @@ public class GetAllGrammarRulesQueryHandler
     )
     {
         List<GrammarRule> grammarRules = [];
-        QueryParamsWithTopicFilters? filters = query.Filters;
+        QueryParamsBaseFilters? filters = query.Filters;
         if (query.TopicId == Guid.Empty)
         {
             grammarRules = await this.grammarRuleRepository.GetAll(filters, cancellationToken);
