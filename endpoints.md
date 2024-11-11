@@ -40,6 +40,69 @@
 ]
 ```
 
+
+## Essay
+
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
+### Query params 
+    Filters:
+        difficultyLevel
+
+```json
+[
+  {
+    "id": "dd4d0668-7ef1-4656-bca7-78a7798211af",
+    "logo": "http://placeimg.com/640/480/nature",
+    "label": "Foo",
+    "description": "foo description",
+    "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE"
+    "progress": 75,
+    "activities": ["paragraphs", "discussions", "quizes", "words", "roleplay"],
+    "isCompleted": false,
+    "isSaved": true,
+    "tags": ["odit", "officiis"], // [{"id": "a9230259-e947-4525-85ae-275b2524fdcc", "label": "odit"}]
+    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
+### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
+
+```json
+{
+  "id": "dd4d0668-7ef1-4656-bca7-78a7798211af",
+  "logo": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/8.jpg", //or base64
+  "label": "accusantium magni optio",
+  "description": "doloremque occaecati et",
+  "progress": 75,
+  "activities": ["paraghraphs", "discussions", "quizes", "words", "roleplay"],
+  "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE",
+  "notes": "Eos aspernatur sunt in eum dicta fugiat quia. Qui distinctio alias veritatis nihil voluptas iusto ab.",
+  "isCompleted": false,
+  "isSaved": true,
+  "tags": ["odit", "officiis"],
+  "difficultyLevel": "A1", // enum "A1", "A2", "B1", "B2" , "C1"
+  "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+  "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+  "paragraphs": [
+    {
+      "id": "3e81b2a6-417d-470c-a537-17a2896728c1",
+      "title": "nostrum nemo rerum",
+      "content": "Nihil quod eveniet architecto quia neque facere. Ea accusantium repellendus inventore rerum minus quo.",
+      "contentType": "RELATED", //Enum "RELATED" & "ADDITIONAL"
+      "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+      "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+    }
+  ],
+  "relatedGrammarTopicIds": ["1ea2629c-c4cd-43ee-87b6-eed68d1ab543"]
+}
+```
+
+
 ## Dictation
 
 ### POST PUT DELETE GET `{host}/api/v1/dictations`
@@ -163,33 +226,6 @@
 ]
 ```
 
-## Tasks
-
-### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
-### GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
-### Query params 
-    Filters:
-        difficultyLevel
-        
-```json
-[
-  {
-    "id": "2b772cd8-4f73-402d-b658-391e6af61d5e",
-    "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543", // child of Topic aggregate
-    "logo": "http://placeimg.com/640/480/abstract",
-    "label": "Quis minus sit.",
-    "taskPointer": "Iste ut incidunt.",
-    "isCompleted": true,
-    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
-    "answer": "Odio quod omnis quo expedita dolores aut esse suscipit.", // user input
-    "comments": "Sequi dolor nam eos consectetur sed fugit ex.",
-    "additionalInfo": "In sed alias dignissimos numquam impedit.",
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
 ## Grammars
 
 ### POST PUT DELETE GET `{host}/api/v1/grammars/topics`
@@ -217,6 +253,35 @@
   }
 ]
 ```
+
+## Tasks
+
+### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
+### GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        
+```json
+[
+  {
+    "id": "2b772cd8-4f73-402d-b658-391e6af61d5e",
+    "topicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543", // child of Topic aggregate
+    "logo": "http://placeimg.com/640/480/abstract",
+    "label": "Quis minus sit.",
+    "taskPointer": "Iste ut incidunt.",
+    "isCompleted": true,
+    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
+    "answer": "Odio quod omnis quo expedita dolores aut esse suscipit.", // user input
+    "comments": "Sequi dolor nam eos consectetur sed fugit ex.",
+    "additionalInfo": "In sed alias dignissimos numquam impedit.",
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
+```
+
+
 
 ## Quiz
 
@@ -255,67 +320,6 @@
 ```
 
 
-
-## Essay
-
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
-### Query params 
-    Filters:
-        difficultyLevel
-
-```json
-[
-  {
-    "id": "dd4d0668-7ef1-4656-bca7-78a7798211af",
-    "logo": "http://placeimg.com/640/480/nature",
-    "label": "Foo",
-    "description": "foo description",
-    "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE"
-    "progress": 75,
-    "activities": ["paragraphs", "discussions", "quizes", "words", "roleplay"],
-    "isCompleted": false,
-    "isSaved": true,
-    "tags": ["odit", "officiis"],
-    "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
-    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-  }
-]
-```
-
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
-
-```json
-{
-  "id": "dd4d0668-7ef1-4656-bca7-78a7798211af",
-  "logo": "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/8.jpg", //or base64
-  "label": "accusantium magni optio",
-  "description": "doloremque occaecati et",
-  "progress": 75,
-  "activities": ["paraghraphs", "discussions", "quizes", "words", "roleplay"],
-  "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE",
-  "notes": "Eos aspernatur sunt in eum dicta fugiat quia. Qui distinctio alias veritatis nihil voluptas iusto ab.",
-  "isCompleted": false,
-  "isSaved": true,
-  "tags": ["odit", "officiis"],
-  "difficultyLevel": "A1", // enum "A1", "A2", "B1", "B2" , "C1"
-  "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-  "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-  "paragraphs": [
-    {
-      "id": "3e81b2a6-417d-470c-a537-17a2896728c1",
-      "title": "nostrum nemo rerum",
-      "content": "Nihil quod eveniet architecto quia neque facere. Ea accusantium repellendus inventore rerum minus quo.",
-      "contentType": "RELATED", //Enum "RELATED" & "ADDITIONAL"
-      "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-      "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-    }
-  ],
-  "relatedGrammarTopicIds": ["1ea2629c-c4cd-43ee-87b6-eed68d1ab543"]
-}
-```
 
 
 

@@ -6,4 +6,5 @@ public interface IQueryParamsWithEssayBuilder
 {
     IQueryable<T>? BuildQueriesDictations<T>(QueryParamsWithEssayFilters filters);
     IQueryable<T>? BuildQueriesPodcasts<T>(QueryParamsWithEssayFilters filters);
+    IQueryable<T>? BuildQueriesWords<T>(QueryParamsWithEssayFilters filters);
 }

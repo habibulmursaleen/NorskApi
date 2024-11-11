@@ -5,7 +5,7 @@ namespace NorskApi.Domain.WordAggregate.Entites;
 
 public sealed class WordUsageExample : Entity<WordUsageExampleId>
 {
-    public WordId? WordId { get; set; }
+    public WordId? WordId_FK { get; set; }
     public string? CorrectSentence { get; set; }
     public string? IncorrectSentence { get; set; }
     public string? EnglishSentence { get; set; }
@@ -20,9 +20,10 @@ public sealed class WordUsageExample : Entity<WordUsageExampleId>
         string? incorrectSentence,
         string? englishSentence,
         string? newSentence
-    ) : base(id)
+    )
+        : base(id)
     {
-        this.WordId = wordId;
+        this.WordId_FK = wordId;
         this.CorrectSentence = correctSentence;
         this.IncorrectSentence = incorrectSentence;
         this.EnglishSentence = englishSentence;
@@ -57,11 +58,10 @@ public sealed class WordUsageExample : Entity<WordUsageExampleId>
         string? newSentence
     )
     {
-        this.WordId = wordId;
+        this.WordId_FK = wordId;
         this.CorrectSentence = correctSentence;
         this.IncorrectSentence = incorrectSentence;
         this.EnglishSentence = englishSentence;
         this.NewSentence = newSentence;
     }
-
 }
