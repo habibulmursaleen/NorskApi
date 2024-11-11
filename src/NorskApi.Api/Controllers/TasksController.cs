@@ -49,9 +49,7 @@ public class TasksController : ApiController
     [ProducesResponseType(typeof(List<TaskWorkResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("topics/all/tasks")]
-    public async Task<IActionResult> GetTasks(
-        [FromQuery] QueryParamsWithTopicFiltersRequest filters
-    )
+    public async Task<IActionResult> GetTasks([FromQuery] QueryParamsBaseFiltersRequest filters)
     {
         GetAllTaskWorksQuery query = this.mapper.Map<GetAllTaskWorksQuery>((Guid.Empty, filters));
         ErrorOr<List<TaskWorkResult>> result = await this.mediator.Send(query);
@@ -67,7 +65,7 @@ public class TasksController : ApiController
     [HttpGet("topics/{topicId:guid}/tasks")]
     public async Task<IActionResult> GetTasksByTopicId(
         [FromRoute] Guid topicId,
-        [FromQuery] QueryParamsWithTopicFiltersRequest filters
+        [FromQuery] QueryParamsBaseFiltersRequest filters
     )
     {
         GetAllTaskWorksQuery query = this.mapper.Map<GetAllTaskWorksQuery>((topicId, filters));

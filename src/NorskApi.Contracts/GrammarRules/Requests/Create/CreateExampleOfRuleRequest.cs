@@ -4,7 +4,6 @@ using NorskApi.Contracts.Quizes.Common.Enums;
 namespace NorskApi.Contracts.GrammarRules.Requests.Create;
 
 public record CreateExampleOfRuleRequest(
-    Guid GrammarRuleId,
     string? Subjunction,
     string? Subject,
     string? Adverbial,

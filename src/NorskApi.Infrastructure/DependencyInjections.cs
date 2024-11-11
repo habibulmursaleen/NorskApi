@@ -41,7 +41,6 @@ namespace NorskApi.Infrastructure
 
             services.AddScoped<IQueryParamsBaseBuilder, QueryParamsBaseBuilder>();
             services.AddScoped<IQueryParamsWithEssayBuilder, QueryParamsWithEssayBuilder>();
-            services.AddScoped<IQueryParamsWithTopicBuilder, QueryParamsWithTopicBuilder>();
             services.AddScoped<IQuizQueryParamsBuilder, QuizQueryParamsBuilder>();
 
             return services;

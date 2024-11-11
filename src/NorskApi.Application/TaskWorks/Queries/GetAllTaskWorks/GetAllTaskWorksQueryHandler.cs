@@ -24,7 +24,7 @@ public class GetAllTasksQueryHandler
     )
     {
         List<TaskWork> taskWorks = [];
-        QueryParamsWithTopicFilters? filters = query.Filters;
+        QueryParamsBaseFilters? filters = query.Filters;
 
         if (query.TopicId == Guid.Empty)
         {

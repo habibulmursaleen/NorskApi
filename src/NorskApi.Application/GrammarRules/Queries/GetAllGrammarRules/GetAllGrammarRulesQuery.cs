@@ -5,5 +5,5 @@ using NorskApi.Application.GrammarRules.Models;
 
 namespace NorskApi.Application.GrammarRules.Queries.GetAllGrammarRules;
 
-public record GetAllGrammarRulesQuery(Guid? TopicId, QueryParamsWithTopicFilters Filters)
+public record GetAllGrammarRulesQuery(Guid? TopicId, QueryParamsBaseFilters Filters)
     : IRequest<ErrorOr<List<GrammarRuleResult>>>;

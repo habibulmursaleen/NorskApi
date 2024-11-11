@@ -1,5 +1,6 @@
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
+using NorskApi.Domain.DictationAggregate.ValueObjects;
 using NorskApi.Domain.Entities.QuizAggregate.Events.DomainEvent;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
@@ -15,6 +16,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     private readonly List<QuizOption> options = [];
     public EssayId? EssayId { get; set; }
     public TopicId? TopicId { get; set; }
+    public DictationId? DictationId { get; set; }
     public string Question { get; set; }
     public string? Answer { get; set; }
     public bool IsRightAnswer { get; set; }
@@ -30,6 +32,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
         QuizId id,
         EssayId? essayId,
         TopicId? topicId,
+        DictationId? dictationId,
         string question,
         string? answer,
         bool isRightAnswer,
@@ -42,6 +45,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
         this.Id = id;
         this.EssayId = essayId;
         this.TopicId = topicId;
+        this.DictationId = dictationId;
         this.Question = question;
         this.Answer = answer;
         this.IsRightAnswer = isRightAnswer;
@@ -53,6 +57,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     public static Quiz Create(
         EssayId? essayId,
         TopicId? topicId,
+        DictationId? dictationId,
         string question,
         string? answer,
         bool isRightAnswer,
@@ -66,6 +71,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
                 QuizId.CreateUnique(),
                 essayId,
                 topicId,
+                dictationId,
                 question,
                 answer,
                 isRightAnswer,
@@ -82,6 +88,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     public void Update(
         EssayId? essayId,
         TopicId? topicId,
+        DictationId? dictationId,
         string question,
         string? answer,
         bool isRightAnswer,
@@ -92,6 +99,7 @@ public sealed class Quiz : AggregateRoot<QuizId, Guid>
     {
         this.EssayId = essayId;
         this.TopicId = topicId;
+        this.DictationId = dictationId;
         this.Question = question;
         this.Answer = answer;
         this.IsRightAnswer = isRightAnswer;

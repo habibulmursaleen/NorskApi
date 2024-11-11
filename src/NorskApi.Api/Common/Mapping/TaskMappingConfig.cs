@@ -47,15 +47,14 @@ public class TaskMappingConfig : IRegister
 
         config
             .NewConfig<
-                (Guid topicId, QueryParamsWithTopicFiltersRequest filters),
+                (Guid topicId, QueryParamsBaseFiltersRequest filters),
                 GetAllTaskWorksQuery
             >()
             .Map(dest => dest.TopicId, src => src.topicId)
             .Map(dest => dest.Filters, src => src.filters);
 
         config
-            .NewConfig<QueryParamsWithTopicFiltersRequest, QueryParamsWithTopicFilters>()
-            .Map(dest => dest.TopicId, src => src.TopicId)
+            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

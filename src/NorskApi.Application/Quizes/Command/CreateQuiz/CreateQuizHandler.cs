@@ -2,6 +2,7 @@ using ErrorOr;
 using MediatR;
 using NorskApi.Application.Common.Interfaces.Persistance;
 using NorskApi.Application.Quizes.Models;
+using NorskApi.Domain.DictationAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.QuizAggregate;
@@ -30,9 +31,14 @@ public class CreateQuizHandler : IRequestHandler<CreateQuizCommand, ErrorOr<Quiz
             ? TopicId.Create(command.TopicId.Value)
             : null;
 
+        DictationId? dictationId = command.DictationId is not null
+            ? DictationId.Create(command.DictationId.Value)
+            : null;
+
         Quiz quiz = Quiz.Create(
             essayId,
             topicId,
+            dictationId,
             command.Question,
             command.Answer,
             command.IsRightAnswer,
@@ -51,6 +57,7 @@ public class CreateQuizHandler : IRequestHandler<CreateQuizCommand, ErrorOr<Quiz
             quiz.Id.Value,
             quiz.EssayId?.Value,
             quiz.TopicId?.Value,
+            quiz.DictationId?.Value,
             quiz.Question,
             quiz.Answer,
             quiz.IsRightAnswer,

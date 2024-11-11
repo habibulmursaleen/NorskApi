@@ -16,6 +16,10 @@ public class CreateQuizValidator : AbstractValidator<CreateQuizCommand>
             .Must(x => x == null || x != Guid.Empty)
             .WithMessage("Topic id must be a valid guid.");
 
+        RuleFor(x => x.DictationId)
+            .Must(x => x == null || x != Guid.Empty)
+            .WithMessage("Dictation id must be a valid guid.");
+
         RuleFor(x => x.Question)
             .NotEmpty()
             .WithMessage("Question is required.")
