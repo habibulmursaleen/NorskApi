@@ -12,8 +12,8 @@ using NorskApi.Infrastructure.Persistance.DBContext;
 namespace NorskApi.Infrastructure.Migrations
 {
     [DbContext(typeof(NorskApiDbContext))]
-    [Migration("20241111151734_Words")]
-    partial class Words
+    [Migration("20241111160839_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
