@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NorskApi.Application.Common.Interfaces.Persistance;
-using NorskApi.Domain.SubjunctionAgreegate;
+using NorskApi.Domain.SubjunctionAggregate;
 using NorskApi.Infrastructure.Persistance.DBContext;
 
 namespace NorskApi.Infrastructure.Persistance.Repositories;

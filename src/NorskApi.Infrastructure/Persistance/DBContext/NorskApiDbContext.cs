@@ -10,7 +10,7 @@ using NorskApi.Domain.PodcastAggregate;
 using NorskApi.Domain.QuestionAggregate;
 using NorskApi.Domain.QuizAggregate;
 using NorskApi.Domain.RoleplayAggregate;
-using NorskApi.Domain.SubjunctionAgreegate;
+using NorskApi.Domain.SubjunctionAggregate;
 using NorskApi.Domain.TaskWorkAggregate;
 using NorskApi.Domain.WordAggregate;
 using NorskApi.Infrastructure.Persistance.Interceptors;

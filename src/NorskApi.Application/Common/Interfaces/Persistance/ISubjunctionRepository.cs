@@ -1,6 +1,5 @@
 using NorskApi.Domain.SubjunctionAggregate;
 using NorskApi.Domain.SubjunctionAggregate.ValueObjects;
-using NorskApi.Domain.SubjunctionAgreegate;
 
 namespace NorskApi.Application.Common.Interfaces.Persistance;
 

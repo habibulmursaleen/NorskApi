@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using NorskApi.Domain.SubjunctionAggregate;
 using NorskApi.Domain.SubjunctionAggregate.ValueObjects;
-using NorskApi.Domain.SubjunctionAgreegate;
 
 namespace NorskApi.Infrastructure.Persistance.Configurations;
 
@@ -23,15 +23,9 @@ public class SubjunctionsConfigurations : IEntityTypeConfiguration<Subjunction>
             .ValueGeneratedNever()
             .HasConversion(x => x.Value, value => SubjunctionId.Create(value));
 
-        builder.Property(x => x.Time).IsRequired();
+        builder.Property(x => x.Label).IsRequired();
 
-        builder.Property(x => x.Arsak).IsRequired();
-
-        builder.Property(x => x.Hensikt).IsRequired();
-
-        builder.Property(x => x.Betingelse).IsRequired();
-
-        builder.Property(x => x.Motsetning).IsRequired();
+        builder.Property(x => x.SubjunctionType).IsRequired().HasConversion<string>();
 
         builder.Property(x => x.CreatedDateTime).IsRequired();
 
