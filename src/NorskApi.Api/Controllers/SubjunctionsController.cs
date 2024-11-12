@@ -12,7 +12,7 @@ using NorskApi.Application.Subjunctions.Queries.GetAllSubjunctions;
 using NorskApi.Contracts.Subjunctions.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/subjunctions")]
+[Route("api/v2/subjunctions")]
 public class SubjunctionsController : ApiController
 {
     private readonly ISender mediator;

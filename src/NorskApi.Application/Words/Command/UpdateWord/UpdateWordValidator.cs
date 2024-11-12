@@ -1,4 +1,5 @@
 using FluentValidation;
+using NorskApi.Application.Words.Command.CreateWord;
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.WordAggregate.Enums;
 
@@ -34,13 +35,11 @@ public class UpdateWordValidator : AbstractValidator<UpdateWordCommand>
 
         RuleFor(x => x.IsCompleted).NotNull().WithMessage("IsCompleted is required.");
 
-        RuleFor(x => x.SynonymIds)
-            .Must(x => x == null || x.All(id => id != Guid.Empty))
-            .WithMessage("SynonymIds must be valid guids.");
+        RuleForEach(x => x.WordSynonymIds)
+            .SetValidator(new UpdateWordSynonymeIdsCommandValidator());
 
-        RuleFor(x => x.AntonymIds)
-            .Must(x => x == null || x.All(id => id != Guid.Empty))
-            .WithMessage("SynonymIds must be valid guids.");
+        RuleForEach(x => x.WordAntonymIds)
+            .SetValidator(new UpdateWordAntonymeIdsCommandValidator());
 
         RuleFor(x => x.WordUsageExample)
             .SetValidator(
@@ -60,10 +59,6 @@ public class UpdateWordGrammerCommandValidator : AbstractValidator<UpdateWordGra
 {
     public UpdateWordGrammerCommandValidator()
     {
-        RuleFor(x => x.WordId)
-            .Must(x => x != Guid.Empty)
-            .WithMessage("Word Id must be a valid guid.");
-
         RuleFor(x => x.GenderMasculine)
             .MaximumLength(255)
             .WithMessage("GenderMasculine must not exceed 255 characters.");
@@ -149,10 +144,6 @@ public class UpdateWordUsageExampleCommandValidator
 {
     public UpdateWordUsageExampleCommandValidator()
     {
-        RuleFor(x => x.WordId)
-            .Must(x => x != Guid.Empty)
-            .WithMessage("Word Id must be a valid guid.");
-
         RuleFor(x => x.CorrectSentence)
             .MaximumLength(1000)
             .WithMessage("CorrectSentence must not exceed 1000 characters.");
@@ -168,5 +159,25 @@ public class UpdateWordUsageExampleCommandValidator
         RuleFor(x => x.NewSentence)
             .MaximumLength(255)
             .WithMessage("Rest must not exceed 255 characters.");
+    }
+}
+
+public class UpdateWordSynonymeIdsCommandValidator : AbstractValidator<WordSynonymeIdCommand>
+{
+    public UpdateWordSynonymeIdsCommandValidator()
+    {
+        RuleFor(x => x.WordId)
+            .Must(x => x != Guid.Empty)
+            .WithMessage("WordId must be a valid guid.");
+    }
+}
+
+public class UpdateWordAntonymeIdsCommandValidator : AbstractValidator<WordAntonymeIdCommand>
+{
+    public UpdateWordAntonymeIdsCommandValidator()
+    {
+        RuleFor(x => x.WordId)
+            .Must(x => x != Guid.Empty)
+            .WithMessage("WordId must be a valid guid.");
     }
 }

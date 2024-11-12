@@ -24,18 +24,13 @@ public class DeleteTaskWorkHandler
     )
     {
         // Use the Create method to create a TopicID and TaskWorkId from the Guid
-        TopicId topicId = TopicId.Create(command.TopicId);
         TaskWorkId taskWorkId = TaskWorkId.Create(command.Id);
 
-        TaskWork? taskWork = await taskWorkRepository.GetById(
-            topicId,
-            taskWorkId,
-            cancellationToken
-        );
+        TaskWork? taskWork = await taskWorkRepository.GetById(taskWorkId, cancellationToken);
 
         if (taskWork is null)
         {
-            return Errors.TaskWorkErrors.TaskWorkNotFound(command.Id, command.TopicId);
+            return Errors.TaskWorkErrors.TaskWorkNotFound(command.Id);
         }
 
         await taskWorkRepository.Delete(taskWork, cancellationToken);

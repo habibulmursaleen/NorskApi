@@ -6,10 +6,10 @@ public static partial class Errors
 {
     public static class DiscussionErrors
     {
-        public static Error DiscussionNotFound(Guid DiscussionId, Guid EssayId) =>
+        public static Error DiscussionNotFound(Guid DiscussionId) =>
             Error.NotFound(
                 code: "404",
-                description: $"Discussion with id {DiscussionId} or essayId {EssayId} not found."
+                description: $"Discussion with id {DiscussionId} not found."
             );
     }
 }

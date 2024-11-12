@@ -27,7 +27,7 @@ public class GrammarTopicMappingConfig : IRegister
             .Map(dest => dest.Progress, src => src.Progress)
             .Map(dest => dest.IsCompleted, src => src.IsCompleted)
             .Map(dest => dest.IsSaved, src => src.IsSaved)
-            .Map(dest => dest.Tags, src => src.Tags)
+            .Map(dest => dest.GrammarTopicTagIds, src => src.GrammarTopicTagIds)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel);
 
         // Map from UpdateGrammarTopicRequest to UpdateGrammarTopicCommand
@@ -42,7 +42,7 @@ public class GrammarTopicMappingConfig : IRegister
             .Map(dest => dest.Progress, src => src.request.Progress)
             .Map(dest => dest.IsCompleted, src => src.request.IsCompleted)
             .Map(dest => dest.IsSaved, src => src.request.IsSaved)
-            .Map(dest => dest.Tags, src => src.request.Tags)
+            .Map(dest => dest.GrammarTopicTagIds, src => src.request.GrammarTopicTagIds)
             .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel);
 
         // Map from Guid to DeleteGrammarTopicCommand
@@ -71,7 +71,7 @@ public class GrammarTopicMappingConfig : IRegister
             .Map(dest => dest.Progress, src => src.Progress)
             .Map(dest => dest.IsCompleted, src => src.IsCompleted)
             .Map(dest => dest.IsSaved, src => src.IsSaved)
-            .Map(dest => dest.Tags, src => src.Tags)
+            .Map(dest => dest.GrammarTopicTagIds, src => src.GrammarTopicTagIds)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.CreatedDateTime, src => src.CreatedDateTime)
             .Map(dest => dest.UpdatedDateTime, src => src.UpdatedDateTime);

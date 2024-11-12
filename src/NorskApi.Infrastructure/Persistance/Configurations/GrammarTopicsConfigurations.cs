@@ -10,6 +10,7 @@ public class GrammarTopicsConfigurations : IEntityTypeConfiguration<GrammarTopic
     public void Configure(EntityTypeBuilder<GrammarTopic> builder)
     {
         this.ConfigureGrammarTopicTable(builder);
+        this.ConfigureGrammarTopicTagIdsTable(builder);
     }
 
     private void ConfigureGrammarTopicTable(EntityTypeBuilder<GrammarTopic> builder)
@@ -39,12 +40,31 @@ public class GrammarTopicsConfigurations : IEntityTypeConfiguration<GrammarTopic
 
         builder.Property(x => x.IsSaved).IsRequired();
 
-        builder.Property(x => x.Tags).IsRequired();
-
         builder.Property(x => x.DifficultyLevel).IsRequired().HasConversion<string>();
 
         builder.Property(x => x.CreatedDateTime).IsRequired();
 
         builder.Property(x => x.UpdatedDateTime).IsRequired();
+    }
+
+    private void ConfigureGrammarTopicTagIdsTable(EntityTypeBuilder<GrammarTopic> builder)
+    {
+        builder.OwnsMany(
+            m => m.GrammarTopicTagIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("GrammarTopicTagIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("GrammarTopicId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder.Property(r => r.Value).HasColumnName("TagId").ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(GrammarTopic.GrammarTopicTagIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

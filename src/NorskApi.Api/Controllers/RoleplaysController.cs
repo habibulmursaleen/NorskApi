@@ -17,7 +17,7 @@ using NorskApi.Contracts.Roleplays.Response;
 namespace NorskApi.Api.Controllers;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1")]
+[Route("api/v2")]
 public class RoleplaysController : ApiController
 {
     private readonly ISender mediator;

@@ -16,21 +16,21 @@ A very comprehensive backend api for norsk learning application.
       - [Step 4: Build and Run the Application](#step-4-build-and-run-the-application)
       - [Test](#test)
   - [Endpoints](#endpoints)
-      - [LocalExpressions Endpoint](#localexpressions-endpoint)
+      - [Subjunction Endpoint](#subjunction-endpoint)
+      - [LocalExpression Endpoint](#localexpression-endpoint)
+      - [Tag Endpoint](#tag-endpoint)
+      - [Essay Endpoint](#essay-endpoint)
       - [Dictation Endpoint](#dictation-endpoint)
       - [Podcast Endpoint](#podcast-endpoint)
       - [Discussion Endpoint](#discussion-endpoint)
-      - [Question Endpoint](#question-endpoint)
-      - [Roleplay Endpoint](#roleplay-endpoint)
-      - [Quiz Endpoint](#quiz-endpoint)
       - [Word Endpoint](#word-endpoint)
-      - [Essay Endpoint](#essay-endpoint)
       - [Grammar Topic Endpoint](#grammar-topic-endpoint)
       - [Grammar Rule Endpoint](#grammar-rule-endpoint)
       - [Tasks Endpoint](#tasks-endpoint)
-      - [Subjunction Endpoint](#subjunction-endpoint)
+      - [Quiz Endpoint](#quiz-endpoint)
+      - [Norskprove Endpoint](#norskprove-endpoint)
 
-![Norsk API Aggregate](norskapi.png)
+![Norsk API Aggregate](norskapi-version2.png)
 
 This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .NET application.
 
@@ -39,7 +39,7 @@ This project follows Clean Architecture principles combined with Domain-Driven D
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (or any database of your choice)
 - [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (Recommended for development)
-- [Docker](https://www.docker.com/) 
+- [Docker](https://www.docker.com/) (Recommended for Database)
 
 ### Architecture Overview
 
@@ -128,88 +128,88 @@ dotnet test
 
 These are the main endpoints for the Norsk learning platform, grouped by type. They cover common CRUD (Create, Read, Update, Delete) actions and allow you to manage, localExpressions, quizzes, discussions, words, questions, dictations, roleplays, podcasts, essays, grammar topics, grammar rules, and subjunctions.
 
-#### LocalExpressions Endpoint
+#### Subjunction Endpoint
 
-- GET - POST `{host}/api/v1/localexpressions` 
-- GET - PUT - DELETE `{host}/api/v1/localexpressions/{id}`  
+- GET `{host}/api/v2/subjunctions`  
+---
+
+#### LocalExpression Endpoint
+
+- GET - POST `{host}/api/v2/localexpressions` 
+- GET - PUT - DELETE `{host}/api/v2/localexpressions/{id}`  
+---
+
+#### Tag Endpoint
+
+- POST GET `{host}/api/v2/tags`
+- GET PUT DELETE `{host}/api/v2/tags/{id}`
+- Query params `Filters by difficultyLevel`
+---
+
+#### Essay Endpoint
+
+- GET - POST `{host}/api/v2/essays`
+- GET - PUT - DELETE `{host}/api/v2/essays/{id}`
 ---
 
 #### Dictation Endpoint
 
-- POST GET `{host}/api/v1/dictations`
-- GET PUT DELETE `{host}/api/v1/dictations/{id}`
+- POST GET `{host}/api/v2/dictations`
+- GET PUT DELETE `{host}/api/v2/dictations/{id}`
 - Query params `Filters by difficultyLevel & essayId`
 ---
 
 #### Podcast Endpoint
-- POST GET `{host}/api/v1/podcasts`
-- GET PUT DELETE `{host}/api/v1/podcasts/{id}`
+- POST GET `{host}/api/v2/podcasts`
+- GET PUT DELETE `{host}/api/v2/podcasts/{id}`
 - Query params `Filters by by difficultyLevel & essayId`
 ---
 
 #### Discussion Endpoint
 
-- POST GET `{host}/api/v1/essays/{essayId}/discussions`
-- GET `{host}/api/v1/essays/all/discussions`
-- GET PUT DELETE `{host}/api/v1/essays/{essayId}/discussions/{id}`
-- Query params `Filters by difficultyLevel`
----
-
-#### Question Endpoint
-
-- POST GET `{host}/api/v1/essays/{essayId}/questions`
-- GET `{host}/api/v1/essays/all/questions`
-- GET PUT DELETE `{host}/api/v1/essays/{essayId}/questions/{id}`
-- Query params `Filters by difficultyLevel`
----
-
-#### Roleplay Endpoint
-
-- POST GET `{host}/api/v1/essays/{essayId}/roleplays`
-- GET `{host}/api/v1/essays/all/roleplays`
-- GET PUT DELETE `{host}/api/v1/essays/{essayId}/roleplays/{id}`
-- Query params `Filters by difficultyLevel`
----
-
-#### Quiz Endpoint
-
-- GET - POST `{host}/api/v1/quizes`
-- GET - PUT - DELETE `{host}/api/v1/quizes/{id}`
-- Query params `difficultyLevel & essayId & topicId`
+- POST GET `{host}/api/v2/essays/{essayId}/discussions`
+- GET `{host}/api/v2/essays/all/discussions`
+- GET PUT DELETE `{host}/api/v2/essays/{essayId}/discussions/{id}`
+- Query params `Filters by difficultyLevel & EssayId`
 ---
 
 #### Word Endpoint
 
-- GET - POST `{host}/api/v1/words`
-- GET - PUT - DELETE `{host}/api/v1/words/{id}`
+- GET - POST `{host}/api/v2/words`
+- GET - PUT - DELETE `{host}/api/v2/words/{id}`
 - Query params `difficultyLevel & essayId`
----
-
-#### Essay Endpoint
-
-- GET - POST `{host}/api/v1/conversation/essays`
-- GET - PUT - DELETE `{host}/api/v1/conversation/essays/{id}`
 ---
 
 #### Grammar Topic Endpoint
 
-- GET - POST `{host}/api/v1/grammars/topics`
-- GET - PUT - DELETE `{host}/api/v1/grammars/topics/{id}`
+- GET - POST `{host}/api/v2/grammarsTopics`
+- GET - PUT - DELETE `{host}/api/v2/grammarsTopics/{id}`
 ---
 
 #### Grammar Rule Endpoint
 
-- POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/rules`
-- POST PUT DELETE GET `{host}/api/v1/grammars/topics/all/rules`
-- GET `{host}/api/v1/grammars/topics/{topicId}/rules/{id}`
+- POST PUT DELETE GET `{host}/api/v2/grammarsTopics/{topicId}/rules`
+- POST PUT DELETE GET `{host}/api/v2/grammarsTopics/all/rules`
+- GET `{host}/api/v2/grammarsTopics/{topicId}/rules/{id}`
 ---
 
 #### Tasks Endpoint
-- POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/tasks`
-- GET `{host}/api/v1/grammars/topics/{topicId}/tasks/{id}`
-
-#### Subjunction Endpoint
-
-- GET `{host}/api/v1/subjunctions`  
+- POST PUT DELETE GET `{host}/api/v2/tasks`
+- GET `{host}/api/v2/tasks/{id}`
 ---
+
+#### Quiz Endpoint
+
+- GET - POST `{host}/api/v2/quizzes`
+- GET - PUT - DELETE `{host}/api/v2/quizzes/{id}`
+- Query params `difficultyLevel & essayId & topicId`
+---
+
+#### Norskprove Endpoint
+
+- GET - POST `{host}/api/v2/norskprove`
+- GET - PUT - DELETE `{host}/api/v2/norskprove/{id}`
+- Query params `difficultyLevel`
+---
+
 

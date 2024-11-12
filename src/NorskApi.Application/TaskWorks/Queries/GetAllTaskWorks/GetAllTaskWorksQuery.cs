@@ -5,5 +5,5 @@ using NorskApi.Application.TaskWorks.Models;
 
 namespace NorskApi.Application.TaskWorks.Queries.GetAllTaskWorks;
 
-public record GetAllTaskWorksQuery(Guid? TopicId, QueryParamsBaseFilters Filters)
+public record GetAllTaskWorksQuery(QueryParamsWithTopicFilters Filters)
     : IRequest<ErrorOr<List<TaskWorkResult>>>;

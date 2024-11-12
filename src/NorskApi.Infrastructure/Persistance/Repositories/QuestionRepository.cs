@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using NorskApi.Application.Common.Interfaces.Persistance;
+using NorskApi.Application.Common.Interfaces.Persistance.IQueryParamsBuilders;
 using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.QuestionAggregate;

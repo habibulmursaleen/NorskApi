@@ -24,18 +24,16 @@ public class DeleteDiscussionHandler
     )
     {
         // Use the Create method to create a EssayId and DiscussionId from the Guid
-        EssayId essayId = EssayId.Create(command.EssayId);
         DiscussionId discussionId = DiscussionId.Create(command.Id);
 
         Discussion? discussion = await discussionRepository.GetById(
-            essayId,
             discussionId,
             cancellationToken
         );
 
         if (discussion is null)
         {
-            return Errors.DiscussionErrors.DiscussionNotFound(command.Id, command.EssayId);
+            return Errors.DiscussionErrors.DiscussionNotFound(command.Id);
         }
 
         await discussionRepository.Delete(discussion, cancellationToken);

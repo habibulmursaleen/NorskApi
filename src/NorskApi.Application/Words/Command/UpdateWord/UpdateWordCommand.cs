@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using NorskApi.Application.Words.Command.CreateWord;
 using NorskApi.Application.Words.Models;
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.WordAggregate.Enums;
@@ -17,8 +18,8 @@ public record UpdateWordCommand(
     PartOfSpeechTag PartOfSpeechTag,
     DifficultyLevel DifficultyLevel,
     bool IsCompleted,
-    List<Guid>? SynonymIds,
-    List<Guid>? AntonymIds,
+    List<WordSynonymeIdCommand> WordSynonymIds,
+    List<WordAntonymeIdCommand> WordAntonymIds,
     UpdateWordUsageExampleCommand? WordUsageExample,
     UpdateWordGrammerCommand? WordGrammer
 ) : IRequest<ErrorOr<WordResult>>;

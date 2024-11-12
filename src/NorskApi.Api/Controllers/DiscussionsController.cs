@@ -17,7 +17,7 @@ using NorskApi.Contracts.Discussions.Response;
 namespace NorskApi.Api.Controllers;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1")]
+[Route("api/v2/discussions")]
 public class DiscussionsController : ApiController
 {
     private readonly ISender mediator;
@@ -31,15 +31,10 @@ public class DiscussionsController : ApiController
 
     [ProducesResponseType(typeof(DiscussionResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpPost("essays/{essayId:guid}/discussions")]
-    public async Task<IActionResult> CreateDiscussion(
-        [FromRoute] Guid essayId,
-        [FromBody] CreateDiscussionRequest request
-    )
+    [HttpPost]
+    public async Task<IActionResult> CreateDiscussion([FromBody] CreateDiscussionRequest request)
     {
-        CreateDiscussionCommand command = this.mapper.Map<CreateDiscussionCommand>(
-            (essayId, request)
-        );
+        CreateDiscussionCommand command = this.mapper.Map<CreateDiscussionCommand>(request);
         ErrorOr<DiscussionResult> result = await this.mediator.Send(command);
 
         return result.Match(
@@ -50,32 +45,12 @@ public class DiscussionsController : ApiController
 
     [ProducesResponseType(typeof(List<DiscussionResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("essays/all/discussions")]
+    [HttpGet]
     public async Task<IActionResult> GetDiscussions(
-        [FromQuery] QueryParamsBaseFiltersRequest filters
+        [FromQuery] QueryParamsWithEssayFiltersRequest filters
     )
     {
-        GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>(
-            (Guid.Empty, filters)
-        );
-        ErrorOr<List<DiscussionResult>> result = await this.mediator.Send(query);
-
-        return result.Match(
-            discussions => this.Ok(this.mapper.Map<List<DiscussionResponse>>(discussions)),
-            errors => this.Problem(errors)
-        );
-    }
-
-    [ProducesResponseType(typeof(List<DiscussionResponse>), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("essays/{essayId:guid}/discussions")]
-    public async Task<IActionResult> GetDiscussionsByEssayId(
-        [FromRoute] Guid essayId,
-        [FromQuery] QueryParamsBaseFiltersRequest filters
-    )
-    {
-        GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>((essayId, filters));
-
+        GetAllDiscussionsQuery query = this.mapper.Map<GetAllDiscussionsQuery>(filters);
         ErrorOr<List<DiscussionResult>> result = await this.mediator.Send(query);
 
         return result.Match(
@@ -86,10 +61,10 @@ public class DiscussionsController : ApiController
 
     [ProducesResponseType(typeof(DiscussionResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("essays/{essayId:guid}/discussions/{id:guid}")]
-    public async Task<IActionResult> GetDiscussion([FromRoute] Guid essayId, [FromRoute] Guid id)
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetDiscussion([FromRoute] Guid id)
     {
-        GetDiscussionByIdQuery query = new(essayId, id);
+        GetDiscussionByIdQuery query = new(id);
 
         ErrorOr<DiscussionResult> result = await this.mediator.Send(query);
 
@@ -101,7 +76,7 @@ public class DiscussionsController : ApiController
 
     [ProducesResponseType(typeof(DiscussionResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpPut("essays/{essayId:guid}/discussions/{id:guid}")]
+    [HttpPut("{id:guid}")]
     public async Task<IActionResult> UpdateDiscussion(
         [FromRoute] Guid essayId,
         [FromRoute] Guid id,
@@ -121,10 +96,10 @@ public class DiscussionsController : ApiController
 
     [ProducesResponseType(typeof(DiscussionResponse), StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpDelete("essays/{essayId:guid}/discussions/{id:guid}")]
-    public async Task<IActionResult> DeleteDiscussion([FromRoute] Guid essayId, [FromRoute] Guid id)
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> DeleteDiscussion([FromRoute] Guid id)
     {
-        DeleteDiscussionCommand command = new(essayId, id);
+        DeleteDiscussionCommand command = new(id);
         ErrorOr<DeleteDiscussionResult> result = await this.mediator.Send(command);
 
         return result.Match(_ => this.NoContent(), errors => this.Problem(errors));

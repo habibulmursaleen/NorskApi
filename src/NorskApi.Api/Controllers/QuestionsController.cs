@@ -17,7 +17,7 @@ using NorskApi.Contracts.Questions.Response;
 namespace NorskApi.Api.Controllers;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1")]
+[Route("api/v2")]
 public class QuestionsController : ApiController
 {
     private readonly ISender mediator;

@@ -34,13 +34,11 @@ public class CreateWordValidator : AbstractValidator<CreateWordCommand>
 
         RuleFor(x => x.IsCompleted).NotNull().WithMessage("IsCompleted is required.");
 
-        RuleFor(x => x.SynonymIds)
-            .Must(x => x == null || x.All(id => id != Guid.Empty))
-            .WithMessage("SynonymIds must be valid guids.");
+        RuleForEach(x => x.WordSynonymIds)
+            .SetValidator(new CreateWordSynonymeIdsCommandValidator());
 
-        RuleFor(x => x.AntonymIds)
-            .Must(x => x == null || x.All(id => id != Guid.Empty))
-            .WithMessage("SynonymIds must be valid guids.");
+        RuleForEach(x => x.WordAntonymIds)
+            .SetValidator(new CreateWordAntonymeIdsCommandValidator());
 
         RuleFor(x => x.WordUsageExample)
             .SetValidator(
@@ -160,5 +158,25 @@ public class CreateWordUsageExampleCommandValidator
         RuleFor(x => x.NewSentence)
             .MaximumLength(255)
             .WithMessage("Rest must not exceed 255 characters.");
+    }
+}
+
+public class CreateWordSynonymeIdsCommandValidator : AbstractValidator<WordSynonymeIdCommand>
+{
+    public CreateWordSynonymeIdsCommandValidator()
+    {
+        RuleFor(x => x.WordId)
+            .Must(x => x != Guid.Empty)
+            .WithMessage("WordId must be a valid guid.");
+    }
+}
+
+public class CreateWordAntonymeIdsCommandValidator : AbstractValidator<WordAntonymeIdCommand>
+{
+    public CreateWordAntonymeIdsCommandValidator()
+    {
+        RuleFor(x => x.WordId)
+            .Must(x => x != Guid.Empty)
+            .WithMessage("WordId must be a valid guid.");
     }
 }

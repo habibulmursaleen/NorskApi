@@ -4,6 +4,7 @@
 
 - [Subjunction](#subjunction)
 - [LocalExpressions](#localexpressions)
+- [Tags](#tags)
 - [Essay](#essay)
 - [Dictation](#dictation)
 - [Podcasts](#podcasts)
@@ -13,17 +14,15 @@
 - [Grammar Rules](#grammar-rules)
 - [Tasks](#tasks)
 - [Quiz](#quiz)
-
-
 - [Norskprove](#norskprove)
 
 
-![Norsk API Aggregate](norskapi.png)
+![Norsk API Aggregate](norskapi-version2.png)
 
 ## Subjunction
 
 <!-- seeding -->
-### GET `{host}/api/v1/subjunction`
+### GET `{host}/api/v2/subjunction`
 
 ```json
 {
@@ -37,8 +36,8 @@
 
 ## LocalExpressions
 
-### POST PUT DELETE GET `{host}/api/v1/localexpressions`
-### GET PUT DELETE `{host}/api/v1/localexpressions/{id}`
+### POST PUT DELETE GET `{host}/api/v2/localexpressions`
+### GET PUT DELETE `{host}/api/v2/localexpressions/{id}`
 
 ```json
 [
@@ -55,11 +54,30 @@
 ]
 ```
 
+## Tag
+### POST PUT DELETE GET `{host}/api/v2/tags`
+### GET PUT DELETE `{host}/api/v2/tags/{id}`
+### Query params 
+    Filters:
+        TagType
+        
+```json
+[
+  {
+    "id": "430c537b-3f63-439e-a7b2-acaf5e1ce836",
+    "label": "Totam minus dolores deserunt quod iste sapiente?",
+    "color": "#D9D9D9",
+    "type": "ESSAY", // enum "ESSAY" OR "GRAMMAR_TOPIC" OR "GRAMMAR_RULE" 
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+  }
+]
+```
 
 ## Essay
 
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays`
+### POST PUT DELETE GET `{host}/api/v2/essays`
+### POST PUT DELETE GET `{host}/api/v2/essays`
 ### Query params 
     Filters:
         difficultyLevel
@@ -81,7 +99,7 @@
     ],
     "isCompleted": false,
     "isSaved": true,
-    "tags": [
+    "essayTags": [
       {
         "id": "a9230259-e947-4525-85ae-275b2524fdcc", 
         "label": "odit"
@@ -94,8 +112,8 @@
 ]
 ```
 
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
-### POST PUT DELETE GET `{host}/api/v1/conversation/essays/{id}`
+### POST PUT DELETE GET `{host}/api/v2/essays/{id}`
+### POST PUT DELETE GET `{host}/api/v2/essays/{id}`
 
 ```json
 {
@@ -114,10 +132,10 @@
   "notes": "Eos aspernatur sunt in eum dicta fugiat quia. Qui distinctio alias veritatis nihil voluptas iusto ab.",
   "isCompleted": false,
   "isSaved": true,
-  "tags": [
+  "essayTags": [
     {
-      "id": "a9230259-e947-4525-85ae-275b2524fdcc", 
-      "label": "odit"
+      "id": "a9230259-e947-4525-85ae-275b2524fdcc",
+      "label": "quia", 
     }
   ],
   "difficultyLevel": "A1", // enum "A1", "A2", "B1", "B2" , "C1"
@@ -163,11 +181,10 @@
 }
 ```
 
-
 ## Dictation
 
-### POST PUT DELETE GET `{host}/api/v1/dictations`
-### GET PUT DELETE `{host}/api/v1/dictations/{id}`
+### POST PUT DELETE GET `{host}/api/v2/dictations`
+### GET PUT DELETE `{host}/api/v2/dictations/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -191,8 +208,8 @@
 
 ## Podcasts
 
-### POST GET `{host}/api/v1/podcasts`
-### GET PUT DELETE `{host}/api/v1/podcasts/{id}`
+### POST GET `{host}/api/v2/podcasts`
+### GET PUT DELETE `{host}/api/v2/podcasts/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -218,9 +235,9 @@
 
 ## Discussion
 
-### POST GET `{host}/api/v1/discussions`
-### GET `{host}/api/v1/discussions`
-### GET PUT DELETE `{host}/api/v1/discussions/{id}`
+### POST GET `{host}/api/v2/discussions`
+### GET `{host}/api/v2/discussions`
+### GET PUT DELETE `{host}/api/v2/discussions/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -244,8 +261,8 @@
 
 ## Word
 
-### POST GET `{host}/api/v1/words`
-### GET PUT DELETE `{host}/api/v1/words/{id}`
+### POST GET `{host}/api/v2/words`
+### GET PUT DELETE `{host}/api/v2/words/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -264,14 +281,14 @@
     "partOfSpeechTag ": "VERB", // enum "NOUN", "PRONOUN", "ADVERB", "ADJECTIVE", "VERB", "CONJUNTION", "PREPOSITION", "ARTICLE"
     "isCompleted": true,
     "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-    "synonymes": [
+    "wordSynonymeIds": [
       {
-        "wordId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
+        "synonymeId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
       }
     ],
-    "antonymes": [
+    "wordAntonymeIds": [
       {
-        "wordId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
+        "antonymeId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
       }
     ],
     "wordGrammar": {
@@ -312,10 +329,10 @@
 ]
 ```
 
-## Grammars
+## Grammar Topics
 
-### POST PUT DELETE GET `{host}/api/v1/grammarsTopics`
-### GET `{host}/api/v1/grammarsTopics/{id}`
+### POST PUT DELETE GET `{host}/api/v2/grammarsTopics`
+### GET `{host}/api/v2/grammarsTopics/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -332,11 +349,10 @@
     "progress": 75,
     "isCompleted": false,
     "isSaved": true,
-    "tags": [
+    "grammarTopicTagIds": [
       {
-        "id": "a9230259-e947-4525-85ae-275b2524fdcc", 
-        "label": "odit"
-      }
+        "grammarTopicTagId": "a9230259-e947-4525-85ae-275b2524fdcc", 
+       }
     ],
     "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
     "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
@@ -347,9 +363,9 @@
 
 ## Grammmar Rules
 
-### POST PUT DELETE GET `{host}/api/v1/grammars/topics/{topicId}/rules`
-### POST PUT DELETE GET `{host}/api/v1/grammars/topics/all/rules`
-### GET `{host}/api/v1/grammars/topics/{topicId}/rules/{id}`
+### POST PUT DELETE GET `{host}/api/v2/grammarsTopics/{topicId}/rules`
+### POST PUT DELETE GET `{host}/api/v2/grammarsTopics/all/rules`
+### GET `{host}/api/v2/grammarsTopics/{topicId}/rules/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -370,7 +386,7 @@
     ],
     "ruleType": "perspiciatis",
     "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
-    "tags": [
+    "grammarRuleTags": [
       {
         "id": "a9230259-e947-4525-85ae-275b2524fdcc", 
         "label": "odit"
@@ -405,12 +421,14 @@
         "transformationTo": "corporis consequatur praesentium",
       }
     ],
-    "comment1": "Vitae dolorem qui quibusdam quia voluptatem id.",
-    "comment2": "Vitae dolorem qui quibusdam quia voluptatem id.",
-    "comment3": "Vitae dolorem qui quibusdam quia voluptatem id.",
-    "grammarRules": [
+    "comments": [
+      "facere nemo omnis",
+      "aut nihil vel",
+      "magnam saepe excepturi"
+    ],
+    "relatedGrammarRuleIds": [
       {
-        "grammarRuleId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
+        "relatedGrammarRuleId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
       }
     ],
     "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
@@ -421,8 +439,8 @@
 
 ## Tasks
 
-### POST PUT DELETE GET `{host}/api/v1/tasks`
-### GET `{host}/api/v1/tasks/{id}`
+### POST PUT DELETE GET `{host}/api/v2/tasks`
+### GET `{host}/api/v2/tasks/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -451,8 +469,8 @@
 
 ## Quiz
 
-### POST GET `{host}/api/v1/quizes`
-### GET PUT DELETE `{host}/api/v1/quizes/{id}`
+### POST GET `{host}/api/v2/quizzes`
+### GET PUT DELETE `{host}/api/v2/quizzes/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -487,8 +505,8 @@
 
 ## Norskprove 
 
-### POST GET `{host}/api/v1/norskprove`
-### GET PUT DELETE `{host}/api/v1/norskprove/{id}`
+### POST GET `{host}/api/v2/norskprove`
+### GET PUT DELETE `{host}/api/v2/norskprove/{id}`
 ### Query params 
     Filters:
         difficultyLevel
@@ -499,8 +517,20 @@
     "id": "554aab40-c9a9-4e6d-8baa-3510096ac957",
     "title": "odit adipisci praesentium",
     "description": "quis porro quaerat",
+    "status": "ACTIVE", // Enum: ACTIVE, INACTIVE
+    "progress" : 75,
     "isCompleted": true,
+    "isSaved": true,
     "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "timeLimit": 60,
+    "estimatedCompletionTime": 45,
+    "attempts": 3,
+    "maxScore": 100,
+    "norskproveTagIds": [
+      {
+        "norskproveTagId": "a9230259-e947-4525-85ae-275b2524fdcc", 
+       }
+    ],
     "listening":[
       {
         "dictationId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"

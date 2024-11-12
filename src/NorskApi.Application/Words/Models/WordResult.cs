@@ -15,10 +15,14 @@ public record WordResult(
     PartOfSpeechTag PartOfSpeechTag,
     DifficultyLevel DifficultyLevel,
     bool IsCompleted,
-    List<Guid>? Synonyms,
-    List<Guid> Antonyms,
+    List<WordSynonymeIdsResult> WordSynonymeIds,
+    List<WordAntonymeIdsResult> WordAntonymeIds,
     WordGrammerResult WordGrammer,
     WordUsageExampleResult WordUsageExample,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
+
+public record WordSynonymeIdsResult(Guid WordId);
+
+public record WordAntonymeIdsResult(Guid WordId);

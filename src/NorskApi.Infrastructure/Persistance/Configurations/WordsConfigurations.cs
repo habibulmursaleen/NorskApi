@@ -13,6 +13,8 @@ public class WordsConfigurations : IEntityTypeConfiguration<Word>
     public void Configure(EntityTypeBuilder<Word> builder)
     {
         this.ConfigureWordTable(builder);
+        this.ConfigureSynonymesIdsTable(builder);
+        this.ConfigureAntonymesIdsTable(builder);
     }
 
     private void ConfigureWordTable(EntityTypeBuilder<Word> builder)
@@ -39,46 +41,6 @@ public class WordsConfigurations : IEntityTypeConfiguration<Word>
         builder.Property(x => x.PartOfSpeechTag).IsRequired();
         builder.Property(x => x.DifficultyLevel).IsRequired();
         builder.Property(x => x.IsCompleted).IsRequired();
-
-        builder
-            .Property(x => x.SynonymIds)
-            .IsRequired(false)
-            .HasConversion(
-                x =>
-                    JsonSerializer.Serialize(
-                        x,
-                        new JsonSerializerOptions { WriteIndented = false }
-                    ),
-                value =>
-                    JsonSerializer.Deserialize<List<WordId>>(value, new JsonSerializerOptions())
-            )
-            .Metadata.SetValueComparer(
-                new ValueComparer<List<WordId>>(
-                    (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
-                    c => c.Aggregate(0, (a, v) => a ^ v.GetHashCode()),
-                    c => c.ToList()
-                )
-            );
-
-        builder
-            .Property(x => x.AntonymIds)
-            .IsRequired(false)
-            .HasConversion(
-                x =>
-                    JsonSerializer.Serialize(
-                        x,
-                        new JsonSerializerOptions { WriteIndented = false }
-                    ),
-                value =>
-                    JsonSerializer.Deserialize<List<WordId>>(value, new JsonSerializerOptions())
-            )
-            .Metadata.SetValueComparer(
-                new ValueComparer<List<WordId>>(
-                    (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2),
-                    c => c.Aggregate(0, (a, v) => a ^ v.GetHashCode()),
-                    c => c.ToList()
-                )
-            );
 
         builder.OwnsOne(
             word => word.WordGrammer,
@@ -187,5 +149,53 @@ public class WordsConfigurations : IEntityTypeConfiguration<Word>
                     .HasMaxLength(255);
             }
         );
+    }
+
+    private void ConfigureSynonymesIdsTable(EntityTypeBuilder<Word> builder)
+    {
+        builder.OwnsMany(
+            m => m.SynonymIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("WordSynonymIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("WordId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder
+                    .Property(r => r.Value)
+                    .HasColumnName("SynonymId")
+                    .ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(Word.SynonymIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private void ConfigureAntonymesIdsTable(EntityTypeBuilder<Word> builder)
+    {
+        builder.OwnsMany(
+            m => m.AntonymIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("WordAntonymIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("WordId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder
+                    .Property(r => r.Value)
+                    .HasColumnName("AntonymId")
+                    .ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(Word.AntonymIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
