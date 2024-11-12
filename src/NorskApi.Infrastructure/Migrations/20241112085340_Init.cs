@@ -221,11 +221,8 @@ namespace NorskApi.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Time = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Arsak = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Hensikt = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Betingelse = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Motsetning = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Label = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SubjunctionType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

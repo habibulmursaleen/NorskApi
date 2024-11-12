@@ -1,70 +1,41 @@
 using NorskApi.Domain.Common.Models;
-using NorskApi.Domain.SubjunctionAggregate.Events.DomainEvent;
+using NorskApi.Domain.SubjunctionAggregate.Enums;
 using NorskApi.Domain.SubjunctionAggregate.ValueObjects;
 
-namespace NorskApi.Domain.SubjunctionAgreegate;
+namespace NorskApi.Domain.SubjunctionAggregate;
 
 public sealed class Subjunction : AggregateRoot<SubjunctionId, Guid>
 {
-    public List<string>? Time { get; set; }
-    public List<string>? Arsak { get; set; }
-    public List<string>? Hensikt { get; set; }
-    public List<string>? Betingelse { get; set; }
-    public List<string>? Motsetning { get; set; }
+    public string Label { get; set; }
+    public SubjunctionType SubjunctionType { get; set; }
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Subjunction() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-    public Subjunction(SubjunctionId id, List<string>? time, List<string>? arsak, List<string>? hensikt, List<string>? betingelse, List<string>? motsetning)
+    public Subjunction(SubjunctionId id, string label, SubjunctionType subjunctionType)
         : base(id)
     {
-        this.Time = time;
-        this.Arsak = arsak;
-        this.Hensikt = hensikt;
-        this.Betingelse = betingelse;
-        this.Motsetning = motsetning;
+        this.Label = label;
+        this.SubjunctionType = subjunctionType;
     }
 
-    public static Subjunction Create(
-        List<string>? time,
-        List<string>? arsak,
-        List<string>? hensikt,
-        List<string>? betingelse,
-        List<string>? motsetning
-    )
+    public static Subjunction Create(string label, SubjunctionType subjunctionType)
     {
         Subjunction subjunction = new Subjunction(
             SubjunctionId.CreateUnique(),
-            time,
-            arsak,
-            hensikt,
-            betingelse,
-            motsetning
+            label,
+            subjunctionType
         );
-
-        subjunction.AddDomainEvent(new SubjunctionCreatedDomainEvent(subjunction));
 
         return subjunction;
     }
 
-    public void Update(
-        List<string>? time,
-        List<string>? arsak,
-        List<string>? hensikt,
-        List<string>? betingelse,
-        List<string>? motsetning
-    )
+    public void Update(string label, SubjunctionType subjunctionType)
     {
-        this.Time = time;
-        this.Arsak = arsak;
-        this.Hensikt = hensikt;
-        this.Betingelse = betingelse;
-        this.Motsetning = motsetning;
-
-        this.AddDomainEvent(new SubjunctionUpdatedDomainEvent(this));
+        this.Label = label;
+        this.SubjunctionType = subjunctionType;
     }
 
-    public void Delete()
-    {
-        this.AddDomainEvent(new SubjunctionDeletedDomainEvent(this));
-    }
+    public void Delete() { }
 }

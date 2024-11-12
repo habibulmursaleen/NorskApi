@@ -1,14 +1,11 @@
-using NorskApi.Domain.SubjunctionAggregate;
+using NorskApi.Domain.SubjunctionAggregate.Enums;
 
 namespace NorskApi.Application.Subjunctions.Models;
 
 public record SubjunctionResult(
     Guid Id,
-    List<string>? Time,
-    List<string>? Arsak,
-    List<string>? Hensikt,
-    List<string>? Betingelse,
-    List<string>? Motsetning,
+    string Label,
+    SubjunctionType SubjunctionType,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
