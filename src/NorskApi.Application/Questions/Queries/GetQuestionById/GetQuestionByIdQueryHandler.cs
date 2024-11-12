@@ -25,17 +25,12 @@ public record GetQuestionByIdQueryHandler
     )
     {
         // Use the Create method to create a QuestionId from the Guid
-        EssayId essayId = EssayId.Create(query.EssayId);
         QuestionId questionId = QuestionId.Create(query.Id);
-        Question? question = await questionRepository.GetById(
-            essayId,
-            questionId,
-            cancellationToken
-        );
+        Question? question = await questionRepository.GetById(questionId, cancellationToken);
 
         if (question is null)
         {
-            return Errors.QuestionErrors.QuestionNotFound(query.Id, query.EssayId);
+            return Errors.QuestionErrors.QuestionNotFound(query.Id);
         }
 
         return new QuestionResult(
@@ -44,6 +39,7 @@ public record GetQuestionByIdQueryHandler
             question.Label,
             question.Answer ?? string.Empty,
             question.IsCompleted,
+            question.QuestionType,
             question.DifficultyLevel,
             question.CreatedDateTime,
             question.UpdatedDateTime

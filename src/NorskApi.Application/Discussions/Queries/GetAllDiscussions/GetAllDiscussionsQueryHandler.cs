@@ -24,21 +24,9 @@ public class GetAllDiscussionsQueryHandler
     )
     {
         List<Discussion> discussions = new List<Discussion>();
-        QueryParamsBaseFilters? filters = query.Filters;
+        QueryParamsWithEssayFilters? filters = query.Filters;
 
-        if (query.EssayId == Guid.Empty)
-        {
-            discussions = await this.discussionRepository.GetAll(filters, cancellationToken);
-        }
-        else
-        {
-            var essayId = EssayId.Create(query.EssayId ?? Guid.Empty);
-            discussions = await this.discussionRepository.GetAllByEssayId(
-                essayId,
-                filters,
-                cancellationToken
-            );
-        }
+        discussions = await this.discussionRepository.GetAll(filters, cancellationToken);
 
         List<DiscussionResult> discussionsResults = discussions
             .Select(discussions => new DiscussionResult(

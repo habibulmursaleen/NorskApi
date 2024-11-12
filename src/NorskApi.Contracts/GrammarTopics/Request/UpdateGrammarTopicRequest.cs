@@ -12,6 +12,8 @@ public record UpdateGrammarTopicRequest(
     double Progress,
     bool IsCompleted,
     bool IsSaved,
-    List<string> Tags,
+    List<UpdateGrammarTopicTagRequest> GrammarTopicTagIds,
     DifficultyLevel DifficultyLevel
 );
+
+public record UpdateGrammarTopicTagRequest(Guid TagId);

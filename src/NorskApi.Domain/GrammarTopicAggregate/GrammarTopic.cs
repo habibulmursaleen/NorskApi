@@ -2,6 +2,7 @@ using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.GrammarTopicAggregate.Events.DomainEvent;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 
 namespace NorskApi.Domain.GrammarTopicAggregate;
 
@@ -15,7 +16,8 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
     public double Progress { get; set; }
     public bool IsCompleted { get; set; }
     public bool IsSaved { get; set; }
-    public List<string>? Tags { get; set; }
+    private readonly List<TagId> grammarTopicTagIds = new List<TagId>();
+    public IReadOnlyCollection<TagId> GrammarTopicTagIds => this.grammarTopicTagIds;
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private GrammarTopic() { }
@@ -31,7 +33,7 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         double progress,
         bool isCompleted,
         bool isSaved,
-        List<string>? tags,
+        List<TagId> grammarTopicTagIds,
         DifficultyLevel difficultyLevel
     )
         : base(topicId)
@@ -44,7 +46,7 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         this.Progress = progress;
         this.IsCompleted = isCompleted;
         this.IsSaved = isSaved;
-        this.Tags = tags;
+        this.grammarTopicTagIds = grammarTopicTagIds;
         this.DifficultyLevel = difficultyLevel;
     }
 
@@ -57,7 +59,7 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         double progress,
         bool isCompleted,
         bool isSaved,
-        List<string>? tags,
+        List<TagId> grammarTopicTagIds,
         DifficultyLevel difficultyLevel
     )
     {
@@ -71,7 +73,7 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
             progress,
             isCompleted,
             isSaved,
-            tags,
+            grammarTopicTagIds,
             difficultyLevel
         );
 
@@ -89,7 +91,7 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         double progress,
         bool isCompleted,
         bool isSaved,
-        List<string>? tags,
+        List<TagId> grammarTopicTagIds,
         DifficultyLevel difficultyLevel
     )
     {
@@ -101,7 +103,8 @@ public sealed class GrammarTopic : AggregateRoot<TopicId, Guid>
         this.Progress = progress;
         this.IsCompleted = isCompleted;
         this.IsSaved = isSaved;
-        this.Tags = tags;
+        this.grammarTopicTagIds.Clear();
+        this.grammarTopicTagIds.AddRange(grammarTopicTagIds);
         this.DifficultyLevel = difficultyLevel;
 
         this.AddDomainEvent(new GrammarTopicUpdatedDomainEvent(this));

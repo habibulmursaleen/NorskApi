@@ -20,7 +20,7 @@ using NorskApi.Contracts.GrammarRules.Requests.Update;
 using NorskApi.Contracts.GrammarRules.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/grammars")]
+[Route("api/v2/grammarTopics")]
 public class GrammarRulesController : ApiController
 {
     private readonly ISender mediator;
@@ -34,7 +34,7 @@ public class GrammarRulesController : ApiController
 
     [ProducesResponseType(typeof(GrammarRuleResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpPost("topics/{topicId:guid}/rules")]
+    [HttpPost("{topicId:guid}/rules")]
     public async Task<IActionResult> CreateGrammarRule(
         [FromRoute] Guid topicId,
         [FromBody] CreateGrammarRuleRequest request
@@ -54,7 +54,7 @@ public class GrammarRulesController : ApiController
 
     [ProducesResponseType(typeof(List<GrammarRuleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("topics/all/rules")]
+    [HttpGet("all/rules")]
     public async Task<IActionResult> GetGrammarRules(
         [FromQuery] QueryParamsBaseFiltersRequest filters
     )
@@ -72,7 +72,7 @@ public class GrammarRulesController : ApiController
 
     [ProducesResponseType(typeof(List<GrammarRuleResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("topics/{topicId:guid}/rules")]
+    [HttpGet("{topicId:guid}/rules")]
     public async Task<IActionResult> GetGrammarRuleByTopicId(
         [FromRoute] Guid topicId,
         [FromQuery] QueryParamsBaseFiltersRequest filters
@@ -92,7 +92,7 @@ public class GrammarRulesController : ApiController
 
     [ProducesResponseType(typeof(GrammarRuleResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpGet("topics/{topicId:guid}/rules/{id:guid}")]
+    [HttpGet("{topicId:guid}/rules/{id:guid}")]
     public async Task<IActionResult> GetGrammarRule([FromRoute] Guid topicId, [FromRoute] Guid id)
     {
         GetGrammarRuleByIdQuery query = new(topicId, id);
@@ -108,7 +108,7 @@ public class GrammarRulesController : ApiController
 
     [ProducesResponseType(typeof(GrammarRuleResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpPut("topics/{topicId:guid}/rules/{id:guid}")]
+    [HttpPut("{topicId:guid}/rules/{id:guid}")]
     public async Task<IActionResult> UpdateGrammarRule(
         [FromRoute] Guid topicId,
         [FromRoute] Guid id,
@@ -129,7 +129,7 @@ public class GrammarRulesController : ApiController
 
     [ProducesResponseType(typeof(GrammarRuleResponse), StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [HttpDelete("topics/{topicId:guid}/rules/{id:guid}")]
+    [HttpDelete("{topicId:guid}/rules/{id:guid}")]
     public async Task<IActionResult> DeleteGrammarRule(
         [FromRoute] Guid topicId,
         [FromRoute] Guid id

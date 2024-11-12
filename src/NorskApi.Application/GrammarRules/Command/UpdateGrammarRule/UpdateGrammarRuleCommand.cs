@@ -11,13 +11,13 @@ public record UpdateGrammarRuleCommand(
     string Label,
     string? Description,
     string? ExplanatoryNotes,
-    List<string>? SentenceStructure,
+    List<UpdateSentenceStructureCommand> SentenceStructures,
     string? RuleType,
     DifficultyLevel DifficultyLevel,
-    List<string>? Tags,
+    List<UpdateGrammarRuleTagIdCommand>? GrammarRuleTagIds,
     string? AdditionalInformation,
     List<string>? Comments,
-    List<Guid>? RelatedRuleIds,
+    List<UpdateRelatedRuleIdCommand>? RelatedGrammarRuleIds,
     List<UpdateExceptionCommand>? Exceptions,
     List<UpdateExampleOfRuleCommand>? ExampleOfRules
 ) : IRequest<ErrorOr<GrammarRuleResult>>;
@@ -47,3 +47,9 @@ public record UpdateExampleOfRuleCommand(
     string? TransformationFrom,
     string? TransformationTo
 );
+
+public record UpdateSentenceStructureCommand(Guid Id, string Label);
+
+public record UpdateRelatedRuleIdCommand(Guid GrammarRuleId);
+
+public record UpdateGrammarRuleTagIdCommand(Guid TagId);

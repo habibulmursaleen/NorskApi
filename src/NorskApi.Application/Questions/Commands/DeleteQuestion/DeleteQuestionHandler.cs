@@ -24,18 +24,13 @@ public class DeleteQuestionHandler
     )
     {
         // Use the Create method to create a EssayId and QuestionId from the Guid
-        EssayId essayId = EssayId.Create(command.EssayId);
         QuestionId questionId = QuestionId.Create(command.Id);
 
-        Question? question = await questionRepository.GetById(
-            essayId,
-            questionId,
-            cancellationToken
-        );
+        Question? question = await questionRepository.GetById(questionId, cancellationToken);
 
         if (question is null)
         {
-            return Errors.QuestionErrors.QuestionNotFound(command.Id, command.EssayId);
+            return Errors.QuestionErrors.QuestionNotFound(command.Id);
         }
 
         await questionRepository.Delete(question, cancellationToken);

@@ -16,21 +16,17 @@ public class DiscussionMappingConfig : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config
-            .NewConfig<(Guid essayId, CreateDiscussionRequest request), CreateDiscussionCommand>()
-            .Map(dest => dest.EssayId, src => src.essayId)
-            .Map(dest => dest.Title, src => src.request.Title)
-            .Map(dest => dest.DiscussionEssays, src => src.request.DiscussionEssays)
-            .Map(dest => dest.Note, src => src.request.Note)
-            .Map(dest => dest.IsCompleted, src => src.request.IsCompleted)
-            .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel);
+            .NewConfig<CreateDiscussionRequest, CreateDiscussionCommand>()
+            .Map(dest => dest.Title, src => src.Title)
+            .Map(dest => dest.DiscussionEssays, src => src.DiscussionEssays)
+            .Map(dest => dest.Note, src => src.Note)
+            .Map(dest => dest.IsCompleted, src => src.IsCompleted)
+            .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel);
 
         config
-            .NewConfig<
-                (Guid essayId, Guid id, UpdateDiscussionRequest request),
-                UpdateDiscussionCommand
-            >()
+            .NewConfig<(Guid id, UpdateDiscussionRequest request), UpdateDiscussionCommand>()
             .Map(dest => dest.Id, src => src.id)
-            .Map(dest => dest.EssayId, src => src.essayId)
+            .Map(dest => dest.EssayId, src => src.request.EssayId)
             .Map(dest => dest.Title, src => src.request.Title)
             .Map(dest => dest.DiscussionEssays, src => src.request.DiscussionEssays)
             .Map(dest => dest.Note, src => src.request.Note)
@@ -40,15 +36,12 @@ public class DiscussionMappingConfig : IRegister
         config.NewConfig<Guid, DeleteDiscussionCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<
-                (Guid essayId, QueryParamsBaseFiltersRequest filters),
-                GetAllDiscussionsQuery
-            >()
-            .Map(dest => dest.EssayId, src => src.essayId)
-            .Map(dest => dest.Filters, src => src.filters);
+            .NewConfig<QueryParamsWithEssayFiltersRequest, GetAllDiscussionsQuery>()
+            .Map(dest => dest.Filters, src => src);
 
         config
-            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
+            .NewConfig<QueryParamsWithEssayFiltersRequest, QueryParamsWithEssayFilters>()
+            .Map(dest => dest.EssayId, src => src.EssayId)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

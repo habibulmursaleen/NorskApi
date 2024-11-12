@@ -8,15 +8,21 @@ public record GrammarRuleResponse(
     string Label,
     string? Description,
     string? ExplanatoryNotes,
-    List<string>? SentenceStructure,
+    List<SentenceStructureResponse> SentenceStructures,
     string? RuleType,
     DifficultyLevel DifficultyLevel,
-    List<string>? Tags,
+    List<GrammarRuleTagIdsResponse> GrammarRuleTagIds,
     string? AdditionalInformation,
     List<string>? Comments,
-    List<Guid>? RelatedRuleIds,
+    List<RelatedGramarRuleIdsResponse> RelatedGrammarRuleIds,
     List<ExceptionResponse>? Exceptions,
     List<ExampleOfRuleResponse>? ExampleOfRules,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
+
+public record SentenceStructureResponse(string Label);
+
+public record RelatedGramarRuleIdsResponse(Guid GrammarRuleId);
+
+public record GrammarRuleTagIdsResponse(Guid TagId);

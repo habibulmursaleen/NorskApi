@@ -5,10 +5,13 @@ using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Application.Words.Command.CreateWord;
 using NorskApi.Application.Words.Command.DeleteWord;
 using NorskApi.Application.Words.Command.UpdateWord;
+using NorskApi.Application.Words.Models;
 using NorskApi.Application.Words.Queries.GetAllWords;
 using NorskApi.Contracts.Common.QueryParamsRequest;
 using NorskApi.Contracts.Words.Requests.Create;
 using NorskApi.Contracts.Words.Requests.Update;
+using NorskApi.Contracts.Words.Response;
+using NorskApi.Domain.WordAggregate;
 
 public class WordMappingConfig : IRegister
 {
@@ -25,8 +28,8 @@ public class WordMappingConfig : IRegister
             .Map(dest => dest.PartOfSpeechTag, src => src.PartOfSpeechTag)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.IsCompleted, src => src.IsCompleted)
-            .Map(dest => dest.SynonymIds, src => src.SynonymIds)
-            .Map(dest => dest.AntonymIds, src => src.AntonymIds)
+            .Map(dest => dest.WordSynonymIds, src => src.WordSynonymIds)
+            .Map(dest => dest.WordAntonymIds, src => src.WordAntonymIds)
             .Map(dest => dest.WordGrammer, src => src.WordGrammer)
             .Map(dest => dest.WordUsageExample, src => src.WordUsageExample);
 
@@ -42,8 +45,8 @@ public class WordMappingConfig : IRegister
             .Map(dest => dest.PartOfSpeechTag, src => src.request.PartOfSpeechTag)
             .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel)
             .Map(dest => dest.IsCompleted, src => src.request.IsCompleted)
-            .Map(dest => dest.SynonymIds, src => src.request.SynonymIds)
-            .Map(dest => dest.AntonymIds, src => src.request.AntonymIds)
+            .Map(dest => dest.WordSynonymIds, src => src.request.WordSynonymIds)
+            .Map(dest => dest.WordAntonymIds, src => src.request.WordAntonymIds)
             .Map(dest => dest.WordUsageExample, src => src.request.WordUsageExample)
             .Map(dest => dest.WordGrammer, src => src.request.WordGrammer);
 
@@ -126,5 +129,24 @@ public class WordMappingConfig : IRegister
             .Map(dest => dest.Irregular, src => src.Irregular)
             .Map(dest => dest.StrongVerb, src => src.StrongVerb)
             .Map(dest => dest.WeakVerb, src => src.WeakVerb);
+
+        config
+            .NewConfig<WordResult, WordResponse>()
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest.EssayId, src => src.EssayId)
+            .Map(dest => dest.Title, src => src.Title)
+            .Map(dest => dest.Meaning, src => src.Meaning)
+            .Map(dest => dest.EnTranslation, src => src.EnTranslation)
+            .Map(dest => dest.NativeMeaning, src => src.NativeMeaning)
+            .Map(dest => dest.Type, src => src.Type)
+            .Map(dest => dest.PartOfSpeechTag, src => src.PartOfSpeechTag)
+            .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
+            .Map(dest => dest.IsCompleted, src => src.IsCompleted)
+            .Map(dest => dest.WordSynonymeIds, src => src.WordSynonymeIds)
+            .Map(dest => dest.WordAntonymeIds, src => src.WordAntonymeIds)
+            .Map(dest => dest.WordGrammer, src => src.WordGrammer)
+            .Map(dest => dest.WordUsageExample, src => src.WordUsageExample)
+            .Map(dest => dest.CreatedDateTime, src => src.CreatedDateTime)
+            .Map(dest => dest.UpdatedDateTime, src => src.UpdatedDateTime);
     }
 }

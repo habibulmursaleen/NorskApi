@@ -25,11 +25,11 @@ public class UpdateTaskWorkHandler : IRequestHandler<UpdateTaskWorkCommand, Erro
     {
         var id = TaskWorkId.Create(command.Id);
         var topicId = TopicId.Create(command.TopicId);
-        TaskWork? taskWork = await taskWorkRepository.GetById(topicId, id, cancellationToken);
+        TaskWork? taskWork = await taskWorkRepository.GetById(id, cancellationToken);
 
         if (taskWork is null)
         {
-            return Errors.TaskWorkErrors.TaskWorkNotFound(command.Id, command.TopicId);
+            return Errors.TaskWorkErrors.TaskWorkNotFound(command.Id);
         }
 
         taskWork.Update(

@@ -16,8 +16,8 @@ public record CreateWordCommand(
     PartOfSpeechTag PartOfSpeechTag,
     DifficultyLevel DifficultyLevel,
     bool IsCompleted,
-    List<Guid>? SynonymIds,
-    List<Guid>? AntonymIds,
+    List<WordSynonymeIdCommand> WordSynonymIds,
+    List<WordAntonymeIdCommand> WordAntonymIds,
     CreateWordUsageExampleCommand? WordUsageExample,
     CreateWordGrammerCommand? WordGrammer
 ) : IRequest<ErrorOr<WordResult>>;
@@ -52,3 +52,7 @@ public record CreateWordGrammerCommand(
     bool? StrongVerb,
     bool? WeakVerb
 );
+
+public record WordSynonymeIdCommand(Guid WordId);
+
+public record WordAntonymeIdCommand(Guid WordId);

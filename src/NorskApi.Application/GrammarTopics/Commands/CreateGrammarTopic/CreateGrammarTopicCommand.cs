@@ -14,6 +14,8 @@ public record CreateGrammarTopicCommand(
     double Progress,
     bool IsCompleted,
     bool IsSaved,
-    List<string> Tags,
+    List<GrammarTopicTagCommand> GrammarTopicTagIds,
     DifficultyLevel DifficultyLevel
 ) : IRequest<ErrorOr<GrammarTopicResult>>;
+
+public record GrammarTopicTagCommand(Guid TagId);

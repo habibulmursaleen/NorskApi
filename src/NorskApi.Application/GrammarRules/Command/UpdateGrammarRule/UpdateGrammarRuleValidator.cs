@@ -21,11 +21,7 @@ public class UpdateGrammarRuleValidator : AbstractValidator<UpdateGrammarRuleCom
             .MaximumLength(1000)
             .WithMessage("ExplanatoryNotes must not exceed 1000 characters.");
 
-        RuleFor(x => x.SentenceStructure).NotEmpty().WithMessage("SentenceStructure is required.");
-
         RuleFor(x => x.RuleType).NotEmpty().WithMessage("RuleType is required.");
-
-        RuleFor(x => x.Tags).NotEmpty().WithMessage("Tags are required.");
 
         RuleFor(x => x.AdditionalInformation)
             .MaximumLength(1000)
@@ -37,10 +33,12 @@ public class UpdateGrammarRuleValidator : AbstractValidator<UpdateGrammarRuleCom
             .IsEnumName(typeof(DifficultyLevel), caseSensitive: false)
             .WithMessage("Invalid DifficultyLevel.");
 
-        RuleFor(x => x.RelatedRuleIds)
-            .Must(x => x == null || x.All(id => id != Guid.Empty))
-            .WithMessage("RelatedRuleIds must be valid guids.");
-
+        RuleForEach(x => x.SentenceStructures)
+            .SetValidator(new UpdateSentenceStructuresCommandValidator());
+        RuleForEach(x => x.RelatedGrammarRuleIds)
+            .SetValidator(new UpdateRelatedGrammarRuleIdCommandValidator());
+        RuleForEach(x => x.GrammarRuleTagIds)
+            .SetValidator(new UpdateGrammarRuleTagIdCommandValidator());
         RuleForEach(x => x.Exceptions).SetValidator(new UpdateExceptionCommandValidator());
         RuleForEach(x => x.ExampleOfRules).SetValidator(new UpdateExampleOfRuleCommandValidator());
     }
@@ -49,10 +47,6 @@ public class UpdateGrammarRuleValidator : AbstractValidator<UpdateGrammarRuleCom
     {
         public UpdateExceptionCommandValidator()
         {
-            RuleFor(x => x.GrammarRuleId)
-                .Must(x => x != Guid.Empty)
-                .WithMessage("GrammarRule Id must be a valid guid.");
-
             RuleFor(x => x.Title)
                 .MaximumLength(255)
                 .WithMessage("Title must not exceed 255 characters.");
@@ -79,10 +73,6 @@ public class UpdateGrammarRuleValidator : AbstractValidator<UpdateGrammarRuleCom
     {
         public UpdateExampleOfRuleCommandValidator()
         {
-            RuleFor(x => x.GrammarRuleId)
-                .Must(x => x != Guid.Empty)
-                .WithMessage("GrammarRule Id must be a valid guid.");
-
             RuleFor(x => x.Subjunction)
                 .MaximumLength(255)
                 .WithMessage("Subjunction must not exceed 255 characters.");
@@ -118,6 +108,37 @@ public class UpdateGrammarRuleValidator : AbstractValidator<UpdateGrammarRuleCom
             RuleFor(x => x.IncorrectSentence)
                 .MaximumLength(1000)
                 .WithMessage("IncorrectSentence must not exceed 1000 characters.");
+        }
+    }
+
+    public class UpdateGrammarRuleTagIdCommandValidator
+        : AbstractValidator<UpdateGrammarRuleTagIdCommand>
+    {
+        public UpdateGrammarRuleTagIdCommandValidator()
+        {
+            RuleFor(x => x.TagId)
+                .Must(x => x != Guid.Empty)
+                .WithMessage("Tag Id must be a valid guid.");
+        }
+    }
+
+    public class UpdateRelatedGrammarRuleIdCommandValidator
+        : AbstractValidator<UpdateRelatedRuleIdCommand>
+    {
+        public UpdateRelatedGrammarRuleIdCommandValidator()
+        {
+            RuleFor(x => x.GrammarRuleId)
+                .Must(x => x != Guid.Empty)
+                .WithMessage("GrammarRuleId must be a valid guid.");
+        }
+    }
+
+    public class UpdateSentenceStructuresCommandValidator
+        : AbstractValidator<UpdateSentenceStructureCommand>
+    {
+        public UpdateSentenceStructuresCommandValidator()
+        {
+            RuleFor(x => x.Label).NotEmpty().WithMessage("Label is required.");
         }
     }
 }

@@ -45,7 +45,9 @@ public record GetGrammarTopicByIdQueryHandler
             grammarTopic.Progress,
             grammarTopic.IsCompleted,
             grammarTopic.IsSaved,
-            grammarTopic.Tags ?? new List<string>(),
+            grammarTopic
+                .GrammarTopicTagIds.Select(x => new GrammarTopicTagResult(x.Value))
+                .ToList(),
             grammarTopic.DifficultyLevel,
             grammarTopic.CreatedDateTime,
             grammarTopic.UpdatedDateTime

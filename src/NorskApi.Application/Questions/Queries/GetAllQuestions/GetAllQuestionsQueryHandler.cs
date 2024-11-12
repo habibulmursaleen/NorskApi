@@ -24,21 +24,9 @@ public class GetAllQuestionsQueryHandler
     )
     {
         List<Question> questions = new List<Question>();
-        QueryParamsBaseFilters? filters = query.Filters;
+        QueryParamsWithEssayFilters? filters = query.Filters;
 
-        if (query.EssayId == Guid.Empty)
-        {
-            questions = await this.questionRepository.GetAll(filters, cancellationToken);
-        }
-        else
-        {
-            var essayId = EssayId.Create(query.EssayId ?? Guid.Empty);
-            questions = await this.questionRepository.GetAllByEssayId(
-                essayId,
-                filters,
-                cancellationToken
-            );
-        }
+        questions = await this.questionRepository.GetAll(filters, cancellationToken);
 
         List<QuestionResult> questionsResults = questions
             .Select(questions => new QuestionResult(
@@ -47,6 +35,7 @@ public class GetAllQuestionsQueryHandler
                 questions.Label,
                 questions.Answer ?? string.Empty,
                 questions.IsCompleted,
+                questions.QuestionType,
                 questions.DifficultyLevel,
                 questions.CreatedDateTime,
                 questions.UpdatedDateTime

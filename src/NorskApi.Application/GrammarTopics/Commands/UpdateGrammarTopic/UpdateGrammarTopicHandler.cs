@@ -5,6 +5,7 @@ using NorskApi.Application.GrammarTopics.Models;
 using NorskApi.Domain.Common.Errors;
 using NorskApi.Domain.GrammarTopicAggregate;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 
 namespace NorskApi.Application.GrammarTopics.Commands.UpdateGrammarTopic;
 
@@ -40,7 +41,8 @@ public class UpdateGrammarTopicHandler
             command.Progress,
             command.IsCompleted,
             command.IsSaved,
-            command.Tags,
+            command.GrammarTopicTagIds?.Select(x => TagId.Create(x.TagId)).ToList()
+                ?? new List<TagId>(),
             command.DifficultyLevel
         );
 
@@ -56,7 +58,9 @@ public class UpdateGrammarTopicHandler
             grammarTopic.Progress,
             grammarTopic.IsCompleted,
             grammarTopic.IsSaved,
-            grammarTopic.Tags ?? new List<string>(),
+            grammarTopic
+                .GrammarTopicTagIds.Select(x => new GrammarTopicTagResult(x.Value))
+                .ToList(),
             grammarTopic.DifficultyLevel,
             grammarTopic.CreatedDateTime,
             grammarTopic.UpdatedDateTime

@@ -25,11 +25,11 @@ public class UpdateQuestionHandler : IRequestHandler<UpdateQuestionCommand, Erro
     {
         var id = QuestionId.Create(command.Id);
         var essayId = EssayId.Create(command.EssayId);
-        Question? question = await questionRepository.GetById(essayId, id, cancellationToken);
+        Question? question = await questionRepository.GetById(id, cancellationToken);
 
         if (question is null)
         {
-            return Errors.QuestionErrors.QuestionNotFound(command.Id, command.EssayId);
+            return Errors.QuestionErrors.QuestionNotFound(command.Id);
         }
 
         question.Update(
@@ -37,6 +37,7 @@ public class UpdateQuestionHandler : IRequestHandler<UpdateQuestionCommand, Erro
             command.Label,
             command.Answer,
             command.IsCompleted,
+            command.QuestionType,
             command.DifficultyLevel
         );
 
@@ -48,6 +49,7 @@ public class UpdateQuestionHandler : IRequestHandler<UpdateQuestionCommand, Erro
             question.Label,
             question.Answer ?? string.Empty,
             question.IsCompleted,
+            question.QuestionType,
             question.DifficultyLevel,
             question.CreatedDateTime,
             question.UpdatedDateTime

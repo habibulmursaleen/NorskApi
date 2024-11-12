@@ -205,10 +205,6 @@ namespace NorskApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Tags")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("datetime2");
 
@@ -249,20 +245,9 @@ namespace NorskApi.Infrastructure.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("RelatedRuleIds")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("RuleType")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("SentenceStructure")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tags")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("TopicId")
                         .HasColumnType("uniqueidentifier");
@@ -313,6 +298,61 @@ namespace NorskApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LocalExpressions", (string)null);
+                });
+
+            modelBuilder.Entity("NorskApi.Domain.NorskproveAggregate.Norskprove", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("Attempts")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("DifficultyLevel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("EstimatedCompletionTime")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSaved")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("MaxScore")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Progress")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("TimeLimit")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Norskproves", (string)null);
                 });
 
             modelBuilder.Entity("NorskApi.Domain.PodcastAggregate.Podcast", b =>
@@ -391,6 +431,10 @@ namespace NorskApi.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("QuestionType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("datetime2");
@@ -501,6 +545,39 @@ namespace NorskApi.Infrastructure.Migrations
                     b.ToTable("Subjunctions", (string)null);
                 });
 
+            modelBuilder.Entity("NorskApi.Domain.TagAggregate.Tag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("TagType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Label")
+                        .IsUnique();
+
+                    b.ToTable("Tags", (string)null);
+                });
+
             modelBuilder.Entity("NorskApi.Domain.TaskWorkAggregate.TaskWork", b =>
                 {
                     b.Property<Guid>("Id")
@@ -557,9 +634,6 @@ namespace NorskApi.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AntonymIds")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
@@ -586,9 +660,6 @@ namespace NorskApi.Infrastructure.Migrations
 
                     b.Property<int>("PartOfSpeechTag")
                         .HasColumnType("int");
-
-                    b.Property<string>("SynonymIds")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -646,6 +717,36 @@ namespace NorskApi.Infrastructure.Migrations
                         });
 
                     b.Navigation("Paragraphs");
+                });
+
+            modelBuilder.Entity("NorskApi.Domain.GrammarTopicAggregate.GrammarTopic", b =>
+                {
+                    b.OwnsMany("NorskApi.Domain.TagAggregate.ValueObjects.TagId", "GrammarTopicTagIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("GrammarTopicId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("TagId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("GrammarTopicId");
+
+                            b1.ToTable("GrammarTopicTagIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrammarTopicId");
+                        });
+
+                    b.Navigation("GrammarTopicTagIds");
                 });
 
             modelBuilder.Entity("NorskApi.Domain.GrammmarRuleAggregate.GrammarRule", b =>
@@ -768,9 +869,258 @@ namespace NorskApi.Infrastructure.Migrations
                                 .HasForeignKey("GrammarRuleId");
                         });
 
+                    b.OwnsMany("NorskApi.Domain.GrammmarRuleAggregate.Entites.SentenceStructure", "SentenceStructures", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<DateTime>("CreatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<Guid>("GrammarRuleId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Label")
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<DateTime>("UpdatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("GrammarRuleId");
+
+                            b1.ToTable("SentenceStructure", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrammarRuleId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.TagAggregate.ValueObjects.TagId", "GrammarRuleTagIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("GrammarRuleId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("TagId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("GrammarRuleId");
+
+                            b1.ToTable("GrammarRuleTagIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrammarRuleId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.GrammmarRuleAggregate.ValueObjects.GrammarRuleId", "RelatedGrammarRuleIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("GrammarRuleId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("TagId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("GrammarRuleId");
+
+                            b1.ToTable("RelatedGrammarRuleIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("GrammarRuleId");
+                        });
+
                     b.Navigation("ExampleOfRules");
 
                     b.Navigation("Exceptions");
+
+                    b.Navigation("GrammarRuleTagIds");
+
+                    b.Navigation("RelatedGrammarRuleIds");
+
+                    b.Navigation("SentenceStructures");
+                });
+
+            modelBuilder.Entity("NorskApi.Domain.NorskproveAggregate.Norskprove", b =>
+                {
+                    b.OwnsMany("NorskApi.Domain.DictationAggregate.ValueObjects.DictationId", "ListeningContentIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("NorskproveId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("DictationId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("NorskproveId");
+
+                            b1.ToTable("ListeningContentIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("NorskproveId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.DiscussionAggregate.ValueObjects.DiscussionId", "WritingContentIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("NorskproveId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("DiscussionId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("NorskproveId");
+
+                            b1.ToTable("WritingContentIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("NorskproveId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.EssayAggregate.ValueObjects.EssayId", "ReadingContentIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("NorskproveId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("EssayId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("NorskproveId");
+
+                            b1.ToTable("ReadingContentIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("NorskproveId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.TagAggregate.ValueObjects.TagId", "NorskproveTagIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("NorskproveId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("TagId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("NorskproveId");
+
+                            b1.ToTable("NorskproveTagIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("NorskproveId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.QuestionAggregate.ValueObjects.QuestionId", "SpeakingContentIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("NorskproveId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("QuestionId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("NorskproveId");
+
+                            b1.ToTable("SpeakingContentIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("NorskproveId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.TaskWorkAggregate.ValueObjects.TaskWorkId", "AdditionalGrammarTaskIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("NorskproveId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("TaskWorkId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("NorskproveId");
+
+                            b1.ToTable("AdditionalGrammarTaskIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("NorskproveId");
+                        });
+
+                    b.Navigation("AdditionalGrammarTaskIds");
+
+                    b.Navigation("ListeningContentIds");
+
+                    b.Navigation("NorskproveTagIds");
+
+                    b.Navigation("ReadingContentIds");
+
+                    b.Navigation("SpeakingContentIds");
+
+                    b.Navigation("WritingContentIds");
                 });
 
             modelBuilder.Entity("NorskApi.Domain.QuizAggregate.Quiz", b =>
@@ -968,6 +1318,60 @@ namespace NorskApi.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("WordId");
                         });
+
+                    b.OwnsMany("NorskApi.Domain.WordAggregate.ValueObjects.WordId", "AntonymIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("AntonymId");
+
+                            b1.Property<Guid>("WordId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("WordId");
+
+                            b1.ToTable("WordAntonymIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("WordId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.WordAggregate.ValueObjects.WordId", "SynonymIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("SynonymId");
+
+                            b1.Property<Guid>("WordId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("WordId");
+
+                            b1.ToTable("WordSynonymIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("WordId");
+                        });
+
+                    b.Navigation("AntonymIds");
+
+                    b.Navigation("SynonymIds");
 
                     b.Navigation("WordGrammer");
 

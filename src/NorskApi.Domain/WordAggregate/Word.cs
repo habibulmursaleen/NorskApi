@@ -19,8 +19,11 @@ public sealed class Word : AggregateRoot<WordId, Guid>
     public PartOfSpeechTag PartOfSpeechTag { get; set; } // Enum: NOUN, PRONOUN, ADVERB, etc.
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
     public bool IsCompleted { get; set; }
-    public List<WordId>? SynonymIds { get; set; }
-    public List<WordId>? AntonymIds { get; set; }
+    private readonly List<WordId> synonymIds = new List<WordId>();
+    private readonly List<WordId> antonymIds = new List<WordId>();
+
+    public IReadOnlyCollection<WordId> SynonymIds => this.synonymIds;
+    public IReadOnlyCollection<WordId> AntonymIds => this.antonymIds;
     public WordGrammer? WordGrammer { get; set; }
     public WordUsageExample? WordUsageExample { get; set; }
 
@@ -55,8 +58,8 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         this.PartOfSpeechTag = partOfSpeechTag;
         this.DifficultyLevel = difficultyLevel;
         this.IsCompleted = isCompleted;
-        this.SynonymIds = synonymIds;
-        this.AntonymIds = antonymIds;
+        this.synonymIds = synonymIds;
+        this.antonymIds = antonymIds;
         this.WordGrammer = wordGrammer;
         this.WordUsageExample = wordUsageExample;
     }
@@ -124,10 +127,13 @@ public sealed class Word : AggregateRoot<WordId, Guid>
         this.PartOfSpeechTag = partOfSpeechTag;
         this.DifficultyLevel = difficultyLevel;
         this.IsCompleted = isCompleted;
-        this.SynonymIds = synonymIds;
-        this.AntonymIds = antonymIds;
+        this.synonymIds.Clear();
+        this.synonymIds.AddRange(synonymIds);
+        this.antonymIds.Clear();
+        this.antonymIds.AddRange(antonymIds);
         this.WordGrammer = wordGrammer;
         this.WordUsageExample = wordUsageExample;
+
         this.AddDomainEvent(new WordUpdatedDomainEvent(this));
     }
 
