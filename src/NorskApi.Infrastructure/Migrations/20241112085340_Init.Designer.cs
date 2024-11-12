@@ -12,7 +12,7 @@ using NorskApi.Infrastructure.Persistance.DBContext;
 namespace NorskApi.Infrastructure.Migrations
 {
     [DbContext(typeof(NorskApiDbContext))]
-    [Migration("20241111160839_Init")]
+    [Migration("20241112085340_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -480,31 +480,19 @@ namespace NorskApi.Infrastructure.Migrations
                     b.ToTable("Roleplays", (string)null);
                 });
 
-            modelBuilder.Entity("NorskApi.Domain.SubjunctionAgreegate.Subjunction", b =>
+            modelBuilder.Entity("NorskApi.Domain.SubjunctionAggregate.Subjunction", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Arsak")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Betingelse")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Hensikt")
+                    b.Property<string>("Label")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Motsetning")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Time")
+                    b.Property<string>("SubjunctionType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
