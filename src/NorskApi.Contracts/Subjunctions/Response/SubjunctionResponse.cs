@@ -1,12 +1,11 @@
+using NorskApi.Contracts.Subjunctions.Enums;
+
 namespace NorskApi.Contracts.Subjunctions.Response;
 
 public record SubjunctionResponse(
     Guid Id,
-    List<string>? Time,
-    List<string>? Arsak,
-    List<string>? Hensikt,
-    List<string>? Betingelse,
-    List<string>? Motsetning,
+    string Label,
+    SubjunctionType SubjunctionType,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );

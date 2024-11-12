@@ -24,11 +24,8 @@ public class GetAllSubjunctionsQueryHandler
         var subjunctionResults = subjunctions
             .Select(subjunction => new SubjunctionResult(
                 subjunction.Id.Value,
-                subjunction.Time,
-                subjunction.Arsak,
-                subjunction.Hensikt,
-                subjunction.Betingelse,
-                subjunction.Motsetning,
+                subjunction.Label,
+                subjunction.SubjunctionType,
                 subjunction.CreatedDateTime,
                 subjunction.UpdatedDateTime
             ))
