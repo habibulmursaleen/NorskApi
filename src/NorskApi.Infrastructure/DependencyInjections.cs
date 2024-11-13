@@ -33,7 +33,6 @@ namespace NorskApi.Infrastructure
             services.AddScoped<IDictationRepository, DictationRepository>();
             services.AddScoped<IPodcastRepository, PodcastRepository>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
-            services.AddScoped<IRoleplayRepository, RoleplayRepository>();
             services.AddScoped<ITaskWorkRepository, TaskWorkRepository>();
             services.AddScoped<IGrammarTopicRepository, GrammarTopicRepository>();
             services.AddScoped<IQuizRepository, QuizRepository>();
@@ -43,6 +42,7 @@ namespace NorskApi.Infrastructure
             services.AddScoped<IWordRepository, WordRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<INorskproveRepository, NorskproveRepository>();
+            services.AddScoped<IActivityRepository, ActivityRepository>();
 
             services.AddScoped<IQueryParamsBaseBuilder, QueryParamsBaseBuilder>();
             services.AddScoped<IQueryParamsWithEssayBuilder, QueryParamsWithEssayBuilder>();

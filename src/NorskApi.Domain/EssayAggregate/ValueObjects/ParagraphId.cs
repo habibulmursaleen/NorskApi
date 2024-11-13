@@ -1,11 +1,10 @@
 using NorskApi.Domain.Common.Models;
 
 namespace NorskApi.Domain.EssayAggregate.ValueObjects;
+
 public sealed class ParagraphId : AggregateRootId<Guid>
 {
-    private ParagraphId()
-    {
-    }
+    private ParagraphId() { }
 
     private ParagraphId(Guid value)
     {
