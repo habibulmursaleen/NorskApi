@@ -75,10 +75,25 @@
 ]
 ```
 
+## Activity
+### POST PUT DELETE GET `{host}/api/v2/activity`
+### GET PUT DELETE `{host}/api/v2/activity/{id}`
+        
+```json
+[
+  {
+    "id": "430c537b-3f63-439e-a7b2-acaf5e1ce836",
+    "label": "Totam minus",
+    "type": "PARAGRAPH", // enum "PARAGRAPH" OR "TASK" "DICTATION" "DISCUSSION" "VOCABULARY" "PODCAST" "QUESTION" "QUIZ" "ROLEPLAY" "TASK"
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+  }
+]
+```
+
 ## Essay
 
-### POST PUT DELETE GET `{host}/api/v2/essays`
-### POST PUT DELETE GET `{host}/api/v2/essays`
+### POST GET `{host}/api/v2/essays`
 ### Query params 
     Filters:
         difficultyLevel
@@ -92,19 +107,17 @@
     "description": "foo description",
     "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE"
     "progress": 75,
-    "activities":  [
-      {
-        "id": "a9230259-e947-4525-85ae-275b2524fdcc", 
-        "label": "paragraph"
-      }
-    ],
     "isCompleted": false,
     "isSaved": true,
-    "essayTags": [
+    "essayActivityIds":  [
       {
-        "id": "a9230259-e947-4525-85ae-275b2524fdcc", 
-        "label": "odit"
+        "essayActivityId": "a9230259-e947-4525-85ae-275b2524fdcc", 
       }
+    ],
+    "essayTagIds": [
+      {
+        "essayTagId": "a9230259-e947-4525-85ae-275b2524fdcc", 
+       }
     ],
     "difficultyLevel": "B1", // enum "A1", "A2", "B1", "B2" , "C1"
     "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
@@ -113,8 +126,7 @@
 ]
 ```
 
-### POST PUT DELETE GET `{host}/api/v2/essays/{id}`
-### POST PUT DELETE GET `{host}/api/v2/essays/{id}`
+### PUT DELETE GET `{host}/api/v2/essays/{id}`
 
 ```json
 {
@@ -123,22 +135,10 @@
   "label": "accusantium magni optio",
   "description": "doloremque occaecati et",
   "progress": 75,
-  "activities":  [
-      {
-        "id": "a9230259-e947-4525-85ae-275b2524fdcc", 
-        "label": "paragraph"
-      }
-  ],
   "status": "ACTIVE", // enums "ACTIVE" and "INACTIVE",
   "notes": "Eos aspernatur sunt in eum dicta fugiat quia. Qui distinctio alias veritatis nihil voluptas iusto ab.",
   "isCompleted": false,
   "isSaved": true,
-  "essayTags": [
-    {
-      "id": "a9230259-e947-4525-85ae-275b2524fdcc",
-      "label": "quia", 
-    }
-  ],
   "difficultyLevel": "A1", // enum "A1", "A2", "B1", "B2" , "C1"
   "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
   "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
@@ -155,16 +155,25 @@
   "roleplays": [
     {
       "id": "27ed959e-6240-4039-b83c-a93368d948e9",
-      "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af", // child of Essay aggregate
       "content": "Rerum et numquam possimus assumenda. Quas delectus ut dolorem quia. Quis et odio commodi aut.",
-      "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+      "isCompleted": false,
       "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
       "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
     }
   ],
+  "essayActivityIds":  [
+      {
+        "essayActivityId": "a9230259-e947-4525-85ae-275b2524fdcc", 
+      }
+  ],
+  "essayTagIds": [
+    {
+      "essayTagId": "a9230259-e947-4525-85ae-275b2524fdcc",
+    }
+  ],
   "essayGrammarTopicIds": [
     {
-      "grammarTopicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
+      "essayGrammarTopicId": "1ea2629c-c4cd-43ee-87b6-eed68d1ab543"
     }
   ]
 }

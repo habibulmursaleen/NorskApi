@@ -19,15 +19,16 @@ public class EssayMappingConfig : IRegister
             .Map(dest => dest.Label, src => src.Label)
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.Progress, src => src.Progress)
-            .Map(dest => dest.Activities, src => src.Activities)
             .Map(dest => dest.Status, src => src.Status)
             .Map(dest => dest.Notes, src => src.Notes)
             .Map(dest => dest.IsCompleted, src => src.IsCompleted)
             .Map(dest => dest.IsSaved, src => src.IsSaved)
-            .Map(dest => dest.Tags, src => src.Tags)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
-            .Map(dest => dest.RelatedGrammarTopicIds, src => src.RelatedGrammarTopicIds)
-            .Map(dest => dest.Paragraphs, src => src.Paragraphs);
+            .Map(dest => dest.EssayActivityIds, src => src.EssayActivityIds)
+            .Map(dest => dest.EssayTagIds, src => src.EssayTagIds)
+            .Map(dest => dest.EssayRelatedGrammarTopicIds, src => src.EssayRelatedGrammarTopicIds)
+            .Map(dest => dest.Paragraphs, src => src.Paragraphs)
+            .Map(dest => dest.Roleplays, src => src.Roleplays);
 
         config
             .NewConfig<(Guid id, UpdateEssayRequest request), UpdateEssayCommand>()
@@ -36,15 +37,19 @@ public class EssayMappingConfig : IRegister
             .Map(dest => dest.Label, src => src.request.Label)
             .Map(dest => dest.Description, src => src.request.Description)
             .Map(dest => dest.Progress, src => src.request.Progress)
-            .Map(dest => dest.Activities, src => src.request.Activities)
             .Map(dest => dest.Status, src => src.request.Status)
             .Map(dest => dest.Notes, src => src.request.Notes)
             .Map(dest => dest.IsCompleted, src => src.request.IsCompleted)
             .Map(dest => dest.IsSaved, src => src.request.IsSaved)
-            .Map(dest => dest.Tags, src => src.request.Tags)
             .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel)
-            .Map(dest => dest.RelatedGrammarTopicIds, src => src.request.RelatedGrammarTopicIds)
-            .Map(dest => dest.Paragraphs, src => src.request.Paragraphs);
+            .Map(dest => dest.EssayActivityIds, src => src.request.EssayActivityIds)
+            .Map(dest => dest.EssayTagIds, src => src.request.EssayTagIds)
+            .Map(
+                dest => dest.EssayRelatedGrammarTopicIds,
+                src => src.request.EssayRelatedGrammarTopicIds
+            )
+            .Map(dest => dest.Paragraphs, src => src.request.Paragraphs)
+            .Map(dest => dest.Roleplays, src => src.request.Roleplays);
 
         config.NewConfig<Guid, DeleteEssayCommand>().Map(dest => dest.Id, src => src);
 
@@ -72,5 +77,16 @@ public class EssayMappingConfig : IRegister
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Content, src => src.Content)
             .Map(dest => dest.ContentType, src => src.ContentType);
+
+        config
+            .NewConfig<CreateRoleplayRequest, CreateRoleplayCommand>()
+            .Map(dest => dest.Content, src => src.Content)
+            .Map(dest => dest.IsCompleted, src => src.IsCompleted);
+
+        config
+            .NewConfig<UpdateRoleplayRequest, UpdateRoleplayCommand>()
+            .Map(dest => dest.Id, src => src.Id)
+            .Map(dest => dest.Content, src => src.Content)
+            .Map(dest => dest.IsCompleted, src => src.IsCompleted);
     }
 }

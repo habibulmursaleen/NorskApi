@@ -5,19 +5,20 @@ namespace NorskApi.Contracts.Essays.Response;
 
 public record EssayResponse(
     Guid Id,
-    string Logo,
+    string? Logo,
     string Label,
-    string Description,
+    string? Description,
     double Progress,
-    List<string> Activities,
     Status Status,
     string Notes,
     bool IsCompleted,
     bool IsSaved,
-    List<string> Tags,
     DifficultyLevel DifficultyLevel,
+    List<EssayActivityIdsResponse> EssayActivityIds,
+    List<EssayTagIdsResponse> EssayTagIds,
+    List<EssayRelatedGrammarTopicIdsResponse> EssayRelatedGrammarTopicIds,
     List<ParagraphResponse> Paragraphs,
-    List<Guid> RelatedGrammarTopicIds,
+    List<RoleplayResponse> Roleplays,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
@@ -31,18 +32,32 @@ public record ParagraphResponse(
     DateTime UpdatedDateTime
 );
 
+public record RoleplayResponse(
+    Guid Id,
+    string Content,
+    bool IsCompleted,
+    DateTime CreatedDateTime,
+    DateTime UpdatedDateTime
+);
+
+public record EssayActivityIdsResponse(Guid ActivityId);
+
+public record EssayTagIdsResponse(Guid TagId);
+
+public record EssayRelatedGrammarTopicIdsResponse(Guid TopicId);
+
 public record EssayLiteResponse(
     Guid Id,
     string Logo,
     string Label,
     string Description,
     double Progress,
-    List<string> Activities,
-    Status Status,
     bool IsCompleted,
     bool IsSaved,
-    List<string> Tags,
+    Status Status,
     DifficultyLevel DifficultyLevel,
+    List<EssayActivityIdsResponse> EssayActivityIds,
+    List<EssayTagIdsResponse> EssayTagIds,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );

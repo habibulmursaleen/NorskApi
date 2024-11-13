@@ -4,7 +4,7 @@ using NorskApi.Domain.QuizAggregate.ValueObjects;
 
 namespace NorskApi.Domain.QuizAggregate.Entites;
 
-public sealed class QuizOption : AggregateRoot<QuizOptionId, Guid>
+public sealed class QuizOption : Entity<QuizOptionId>
 {
     public string Title { get; set; }
     public bool IsCorrect { get; set; }

@@ -33,37 +33,43 @@ public record GetEssayByIdQueryHandler : IRequestHandler<GetEssayByIdQuery, Erro
             return Errors.EssaysErrors.EssaysNotFound(query.Id);
         }
 
-        List<ParagraphResult> paragraphs = [];
-
-        foreach (Paragraph paragraph in essay.Paragraphs)
-        {
-            paragraphs.Add(
-                new ParagraphResult(
-                    paragraph.Id.Value,
-                    paragraph.Title,
-                    paragraph.Content,
-                    paragraph.ContentType,
-                    paragraph.CreatedDateTime,
-                    paragraph.UpdatedDateTime
-                )
-            );
-        }
-
         return new EssayResult(
             essay.Id.Value,
             essay.Logo,
             essay.Label,
             essay.Description,
             essay.Progress,
-            essay.Activities,
             essay.Status,
             essay.Notes,
             essay.IsCompleted,
             essay.IsSaved,
-            essay.Tags,
             essay.DifficultyLevel,
-            essay.RelatedGrammarTopicIds?.Select(id => TopicId.Create(id)).ToList(),
-            paragraphs,
+            essay.EssayActivityIds.Select(x => new EssayActivityIdsResult(x.Value)).ToList(),
+            essay.EssayTagIds.Select(x => new EssayTagIdsResult(x.Value)).ToList(),
+            essay
+                .EssayRelatedGrammarTopicIds.Select(x => new EssayRelatedGrammarTopicIdsResult(
+                    x.Value
+                ))
+                .ToList(),
+            essay
+                .Paragraphs.Select(paragraph => new ParagraphResult(
+                    paragraph.Id.Value,
+                    paragraph.Title,
+                    paragraph.Content,
+                    paragraph.ContentType,
+                    paragraph.CreatedDateTime,
+                    paragraph.UpdatedDateTime
+                ))
+                .ToList(),
+            essay
+                .Roleplays.Select(roleplay => new RoleplayResult(
+                    roleplay.Id.Value,
+                    roleplay.Content,
+                    roleplay.IsCompleted,
+                    roleplay.CreatedDateTime,
+                    roleplay.UpdatedDateTime
+                ))
+                .ToList(),
             essay.CreatedDateTime,
             essay.UpdatedDateTime
         );
