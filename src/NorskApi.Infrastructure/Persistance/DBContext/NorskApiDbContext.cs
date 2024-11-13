@@ -6,11 +6,13 @@ using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.GrammarTopicAggregate;
 using NorskApi.Domain.GrammmarRuleAggregate;
 using NorskApi.Domain.LocalExpressionAggregate;
+using NorskApi.Domain.NorskproveAggregate;
 using NorskApi.Domain.PodcastAggregate;
 using NorskApi.Domain.QuestionAggregate;
 using NorskApi.Domain.QuizAggregate;
 using NorskApi.Domain.RoleplayAggregate;
 using NorskApi.Domain.SubjunctionAggregate;
+using NorskApi.Domain.TagAggregate;
 using NorskApi.Domain.TaskWorkAggregate;
 using NorskApi.Domain.WordAggregate;
 using NorskApi.Infrastructure.Persistance.Interceptors;
@@ -35,6 +37,8 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<GrammarRule> GrammarRules { get; set; } = null!;
     public DbSet<Subjunction> Subjunctions { get; set; } = null!;
     public DbSet<Word> Words { get; set; } = null!;
+    public DbSet<Tag> Tags { get; set; } = null!;
+    public DbSet<Norskprove> Norskproves { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,

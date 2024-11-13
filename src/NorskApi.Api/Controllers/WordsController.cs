@@ -20,7 +20,7 @@ using NorskApi.Contracts.Words.Requests.Update;
 using NorskApi.Contracts.Words.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/words")]
+[Route("api/v2/words")]
 public class WordsController : ApiController
 {
     private readonly ISender mediator;

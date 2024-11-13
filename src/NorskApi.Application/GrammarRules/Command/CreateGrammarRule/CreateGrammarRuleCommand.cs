@@ -10,13 +10,13 @@ public record CreateGrammarRuleCommand(
     string Label,
     string? Description,
     string? ExplanatoryNotes,
-    List<string>? SentenceStructure,
+    List<CreateSentenceStructureCommand> SentenceStructures,
     string? RuleType,
     DifficultyLevel DifficultyLevel,
-    List<string>? Tags,
+    List<CreateGrammarRuleTagIdCommand>? GrammarRuleTagIds,
     string? AdditionalInformation,
     List<string>? Comments,
-    List<Guid>? RelatedRuleIds,
+    List<CreateRelatedRuleIdCommand>? RelatedGrammarRuleIds,
     List<CreateExceptionCommand>? Exceptions,
     List<CreateExampleOfRuleCommand>? ExampleOfRules
 ) : IRequest<ErrorOr<GrammarRuleResult>>;
@@ -42,3 +42,9 @@ public record CreateExampleOfRuleCommand(
     string? TransformationFrom,
     string? TransformationTo
 );
+
+public record CreateSentenceStructureCommand(string Label);
+
+public record CreateRelatedRuleIdCommand(Guid GrammarRuleId);
+
+public record CreateGrammarRuleTagIdCommand(Guid TagId);

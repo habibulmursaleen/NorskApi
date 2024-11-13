@@ -8,13 +8,19 @@ public record UpdateGrammarRuleRequest(
     string Label,
     string? Description,
     string? ExplanatoryNotes,
-    List<string>? SentenceStructure,
+    List<UpdateSentenceStructureRequest> SentenceStructures,
     string? RuleType,
     DifficultyLevel DifficultyLevel,
-    List<string>? Tags,
+    List<UpdateGrammarRuleTagIdsRequest> GrammarRuleTagIds,
     string? AdditionalInformation,
     List<string>? Comments,
-    List<Guid>? RelatedRuleIds,
+    List<UpdateRelatedGramarRuleIdsRequest> RelatedGrammarRuleIds,
     List<UpdateExceptionRequest>? Exceptions,
     List<UpdateExampleOfRuleRequest>? ExampleOfRules
 );
+
+public record UpdateSentenceStructureRequest(string Label);
+
+public record UpdateRelatedGramarRuleIdsRequest(Guid GrammarRuleId);
+
+public record UpdateGrammarRuleTagIdsRequest(Guid TagId);

@@ -6,6 +6,7 @@ using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.GrammmarRuleAggregate;
 using NorskApi.Domain.GrammmarRuleAggregate.Entites;
 using NorskApi.Domain.GrammmarRuleAggregate.ValueObjects;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 using Exception = NorskApi.Domain.GrammmarRuleAggregate.Entites.Exception;
 
 namespace NorskApi.Application.GrammarRules.Command.CreateGrammarRule;
@@ -30,13 +31,20 @@ public class CreateGrammarRuleHandler
             command.Label,
             command.Description,
             command.ExplanatoryNotes,
-            command.SentenceStructure,
+            command
+                .SentenceStructures.Select(sentenceStructure =>
+                    SentenceStructure.Create(sentenceStructure.Label)
+                )
+                .ToList(),
             command.RuleType,
             command.DifficultyLevel,
-            command.Tags,
+            command.GrammarRuleTagIds?.Select(x => TagId.Create(x.TagId)).ToList()
+                ?? new List<TagId>(),
             command.AdditionalInformation,
-            command.Comments,
-            command.RelatedRuleIds?.Select(GrammarRuleId.Create).ToList(),
+            command.Comments ?? new List<string>(),
+            command
+                .RelatedGrammarRuleIds?.Select(x => GrammarRuleId.Create(x.GrammarRuleId))
+                .ToList() ?? new List<GrammarRuleId>(),
             [],
             []
         );
@@ -90,13 +98,21 @@ public class CreateGrammarRuleHandler
             grammarRule.Label,
             grammarRule.Description,
             grammarRule.ExplanatoryNotes,
-            grammarRule.SentenceStructure,
+            grammarRule
+                .SentenceStructures.Select(sentenceStructure => new SentenceStructureResult(
+                    sentenceStructure.Label
+                ))
+                .ToList(),
             grammarRule.RuleType,
             grammarRule.DifficultyLevel,
-            grammarRule.Tags,
+            grammarRule
+                .GrammarRuleTagIds.Select(tagId => new GrammarRuleTagIdResult(tagId.Value))
+                .ToList(),
             grammarRule.AdditionalInformation,
             grammarRule.Comments,
-            grammarRule.RelatedRuleIds?.Select(id => GrammarRuleId.Create(id)).ToList(),
+            grammarRule
+                .RelatedGrammarRuleIds?.Select(x => new RelatedRuleIdResult(x.Value))
+                .ToList() ?? new List<RelatedRuleIdResult>(),
             grammarRule
                 .Exceptions.Select(exception => new ExceptionResult(
                     exception.Id.Value,

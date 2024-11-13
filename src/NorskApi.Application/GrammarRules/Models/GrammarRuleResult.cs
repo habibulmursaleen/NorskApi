@@ -9,15 +9,21 @@ public record GrammarRuleResult(
     string Label,
     string? Description,
     string? ExplanatoryNotes,
-    List<string>? SentenceStructure,
+    List<SentenceStructureResult> SentenceStructures,
     string? RuleType,
     DifficultyLevel DifficultyLevel,
-    List<string>? Tags,
+    List<GrammarRuleTagIdResult> GrammarRuleTagIds,
     string? AdditionalInformation,
     List<string>? Comments,
-    List<GrammarRuleId>? RelatedRuleIds,
-    List<ExceptionResult>? Exceptions,
-    List<ExampleOfRuleResult>? ExampleOfRules,
+    List<RelatedRuleIdResult> RelatedGrammarRuleIds,
+    List<ExceptionResult> Exceptions,
+    List<ExampleOfRuleResult> ExampleOfRules,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
+
+public record SentenceStructureResult(string Label);
+
+public record RelatedRuleIdResult(Guid GrammarRuleId);
+
+public record GrammarRuleTagIdResult(Guid TagId);

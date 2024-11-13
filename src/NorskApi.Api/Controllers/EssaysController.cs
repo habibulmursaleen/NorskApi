@@ -19,7 +19,7 @@ using NorskApi.Contracts.Essays.Requests;
 using NorskApi.Contracts.Essays.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/essays")]
+[Route("api/v2/essays")]
 public class EssaysController : ApiController
 {
     private readonly ISender mediator;

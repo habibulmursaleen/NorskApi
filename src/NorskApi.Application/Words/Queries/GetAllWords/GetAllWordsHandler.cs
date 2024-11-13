@@ -41,8 +41,10 @@ public class GetAllWordsQueryHandler : IRequestHandler<GetAllWordsQuery, ErrorOr
                 word.PartOfSpeechTag,
                 word.DifficultyLevel,
                 word.IsCompleted,
-                word.SynonymIds?.Select(x => x.Value).ToList() ?? new List<Guid>(),
-                word.AntonymIds?.Select(x => x.Value).ToList() ?? new List<Guid>(),
+                word.SynonymIds?.Select(x => new WordSynonymeIdsResult(x.Value)).ToList()
+                    ?? new List<WordSynonymeIdsResult>(),
+                word.AntonymIds?.Select(x => new WordAntonymeIdsResult(x.Value)).ToList()
+                    ?? new List<WordAntonymeIdsResult>(),
                 new WordGrammerResult(
                     word.WordGrammer?.Id.Value ?? Guid.Empty,
                     word.WordGrammer?.WordId_FK?.Value,

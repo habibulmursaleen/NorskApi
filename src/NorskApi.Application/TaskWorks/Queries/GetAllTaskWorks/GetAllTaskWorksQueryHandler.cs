@@ -24,21 +24,9 @@ public class GetAllTasksQueryHandler
     )
     {
         List<TaskWork> taskWorks = [];
-        QueryParamsBaseFilters? filters = query.Filters;
+        QueryParamsWithTopicFilters? filters = query.Filters;
 
-        if (query.TopicId == Guid.Empty)
-        {
-            taskWorks = await this.taskWorkRepository.GetAll(filters, cancellationToken);
-        }
-        else
-        {
-            var topicId = TopicId.Create(query.TopicId ?? Guid.Empty);
-            taskWorks = await this.taskWorkRepository.GetAllByTopicId(
-                topicId,
-                filters,
-                cancellationToken
-            );
-        }
+        taskWorks = await this.taskWorkRepository.GetAll(filters, cancellationToken);
 
         List<TaskWorkResult> tasksResults = taskWorks
             .Select(tasks => new TaskWorkResult(

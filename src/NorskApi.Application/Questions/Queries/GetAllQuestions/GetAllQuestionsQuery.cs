@@ -5,5 +5,5 @@ using NorskApi.Application.Questions.Models;
 
 namespace NorskApi.Application.Questions.Queries.GetAllQuestions;
 
-public record GetAllQuestionsQuery(Guid? EssayId, QueryParamsBaseFilters Filters)
+public record GetAllQuestionsQuery(QueryParamsWithEssayFilters Filters)
     : IRequest<ErrorOr<List<QuestionResult>>>;

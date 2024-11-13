@@ -19,7 +19,7 @@ using NorskApi.Contracts.Quizes.Requests;
 using NorskApi.Contracts.Quizs.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/quizzes")]
+[Route("api/v2/quizzes")]
 public class QuizzesController : ApiController
 {
     private readonly ISender mediator;

@@ -18,7 +18,7 @@
 - [Norskprove](#norskprove)
 
 
-![Norsk API Aggregate](norskapi.png)
+![Norsk API Aggregate](norskapi-version1.png)
 
 ## LocalExpressions
 

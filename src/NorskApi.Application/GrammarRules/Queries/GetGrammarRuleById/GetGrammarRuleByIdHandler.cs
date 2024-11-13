@@ -90,13 +90,21 @@ public record GetGrammarRuleByIdQueryHandler
             grammarRule.Label,
             grammarRule.Description,
             grammarRule.ExplanatoryNotes,
-            grammarRule.SentenceStructure,
+            grammarRule
+                .SentenceStructures.Select(sentenceStructure => new SentenceStructureResult(
+                    sentenceStructure.Label
+                ))
+                .ToList(),
             grammarRule.RuleType,
             grammarRule.DifficultyLevel,
-            grammarRule.Tags,
+            grammarRule
+                .GrammarRuleTagIds.Select(tagId => new GrammarRuleTagIdResult(tagId.Value))
+                .ToList(),
             grammarRule.AdditionalInformation,
             grammarRule.Comments,
-            grammarRule.RelatedRuleIds?.Select(id => GrammarRuleId.Create(id)).ToList(),
+            grammarRule
+                .RelatedGrammarRuleIds?.Select(x => new RelatedRuleIdResult(x.Value))
+                .ToList() ?? new List<RelatedRuleIdResult>(),
             exceptions,
             exampleOfRules,
             grammarRule.CreatedDateTime,

@@ -1,4 +1,5 @@
 using FluentValidation;
+using NorskApi.Application.GrammarTopics.Commands.CreateGrammarTopic;
 using NorskApi.Domain.Common.Enums;
 
 namespace NorskApi.Application.GrammarTopics.Commands.UpdateGrammarTopic;
@@ -40,10 +41,19 @@ public class UpdateGrammarTopicValidator : AbstractValidator<UpdateGrammarTopicC
 
         RuleFor(x => x.IsSaved).NotNull().WithMessage("IsSaved is required.");
 
-        RuleFor(x => x.Tags).NotEmpty().WithMessage("Tags is required.");
+        RuleForEach(x => x.GrammarTopicTagIds)
+            .SetValidator(new UpdateGrammarTopicTagIdsCommandValidator());
 
         RuleFor(x => x.DifficultyLevel.ToString())
             .IsEnumName(typeof(DifficultyLevel), caseSensitive: false)
             .WithMessage("Invalid DifficultyLevel.");
+    }
+}
+
+public class UpdateGrammarTopicTagIdsCommandValidator : AbstractValidator<GrammarTopicTagCommand>
+{
+    public UpdateGrammarTopicTagIdsCommandValidator()
+    {
+        RuleFor(x => x.TagId).NotEmpty().WithMessage("TagId is required.");
     }
 }

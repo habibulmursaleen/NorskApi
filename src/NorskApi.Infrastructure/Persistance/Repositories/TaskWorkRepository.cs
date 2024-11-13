@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using NorskApi.Application.Common.Interfaces.Persistance;
+using NorskApi.Application.Common.Interfaces.Persistance.IQueryParamsBuilders;
 using NorskApi.Application.Common.QueryParamsBuilder;
-using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.TaskWorkAggregate;
 using NorskApi.Domain.TaskWorkAggregate.ValueObjects;
 using NorskApi.Infrastructure.Persistance.DBContext;
@@ -11,11 +11,11 @@ namespace NorskApi.Infrastructure.Persistance.Repositories;
 public class TaskWorkRepository : ITaskWorkRepository
 {
     private readonly NorskApiDbContext dbContext;
-    private readonly IQueryParamsBaseBuilder queryParamsWithTopicBuilder;
+    private readonly IQueryParamsWithTopicBuilder queryParamsWithTopicBuilder;
 
     public TaskWorkRepository(
         NorskApiDbContext dbContext,
-        IQueryParamsBaseBuilder queryParamsWithTopicBuilder
+        IQueryParamsWithTopicBuilder queryParamsWithTopicBuilder
     )
     {
         this.dbContext = dbContext;
@@ -23,7 +23,7 @@ public class TaskWorkRepository : ITaskWorkRepository
     }
 
     public async Task<List<TaskWork>> GetAll(
-        QueryParamsBaseFilters? filters,
+        QueryParamsWithTopicFilters? filters,
         CancellationToken cancellationToken
     )
     {
@@ -38,31 +38,10 @@ public class TaskWorkRepository : ITaskWorkRepository
         return await query.AsSplitQuery().ToListAsync(cancellationToken);
     }
 
-    public async Task<List<TaskWork>> GetAllByTopicId(
-        TopicId topicId,
-        QueryParamsBaseFilters filters,
-        CancellationToken cancellationToken
-    )
-    {
-        var query = queryParamsWithTopicBuilder.BuildQueriesTaskWorks<TaskWork>(filters);
-        query = query?.Where(x => x.TopicId == topicId);
-        if (query == null)
-        {
-            return new List<TaskWork>();
-        }
-        List<TaskWork>? tasks = await query.AsSplitQuery().ToListAsync(cancellationToken);
-
-        return tasks;
-    }
-
-    public async Task<TaskWork?> GetById(
-        TopicId topicId,
-        TaskWorkId taskWorkId,
-        CancellationToken cancellationToken
-    )
+    public async Task<TaskWork?> GetById(TaskWorkId taskWorkId, CancellationToken cancellationToken)
     {
         return await this.dbContext.TaskWorks.SingleOrDefaultAsync(
-            x => x.TopicId == topicId && x.Id == taskWorkId,
+            x => x.Id == taskWorkId,
             cancellationToken
         );
     }

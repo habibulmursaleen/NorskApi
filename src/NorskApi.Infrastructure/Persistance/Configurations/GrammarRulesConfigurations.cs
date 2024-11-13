@@ -13,6 +13,8 @@ public class GrammarRulesConfigurations : IEntityTypeConfiguration<GrammarRule>
     public void Configure(EntityTypeBuilder<GrammarRule> builder)
     {
         this.ConfigureGrammarRuleTable(builder);
+        this.ConfigureGrammarRuleTagIdsTable(builder);
+        this.ConfigureRelatedGrammarRuleIdsTable(builder);
     }
 
     private void ConfigureGrammarRuleTable(EntityTypeBuilder<GrammarRule> builder)
@@ -37,36 +39,13 @@ public class GrammarRulesConfigurations : IEntityTypeConfiguration<GrammarRule>
 
         builder.Property(x => x.ExplanatoryNotes).IsRequired(false).HasMaxLength(255);
 
-        builder.Property(x => x.SentenceStructure).IsRequired();
-
         builder.Property(x => x.RuleType).IsRequired(false).HasMaxLength(255);
 
         builder.Property(x => x.DifficultyLevel).IsRequired();
 
-        builder.Property(x => x.Tags).IsRequired();
-
         builder.Property(x => x.AdditionalInformation).IsRequired(false).HasMaxLength(255);
 
         builder.Property(x => x.Comments).IsRequired();
-
-        builder
-            .Property(x => x.RelatedRuleIds)
-            .IsRequired(false)
-            .HasConversion(
-                x =>
-                    JsonSerializer.Serialize(
-                        x,
-                        new JsonSerializerOptions { WriteIndented = false }
-                    ), // Serialize List<Guid>
-                value => JsonSerializer.Deserialize<List<Guid>>(value, new JsonSerializerOptions()) // Deserialize as List<Guid>
-            )
-            .Metadata.SetValueComparer(
-                new ValueComparer<List<Guid>>(
-                    (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2), // Compare elements in the collection
-                    c => c.Aggregate(0, (a, v) => a ^ v.GetHashCode()), // Generate a hash code for the collection
-                    c => c.ToList()
-                ) // Create a new list instance when copying
-            );
 
         builder.OwnsMany(
             grammarRule => grammarRule.Exceptions,
@@ -94,6 +73,21 @@ public class GrammarRulesConfigurations : IEntityTypeConfiguration<GrammarRule>
                     .Property(x => x.IncorrectSentence)
                     .IsRequired(false)
                     .HasMaxLength(255);
+            }
+        );
+
+        builder.OwnsMany(
+            grammarRule => grammarRule.SentenceStructures,
+            sentenceStructurebuilder =>
+            {
+                sentenceStructurebuilder.ToTable("SentenceStructure");
+                sentenceStructurebuilder.HasKey(x => x.Id);
+                sentenceStructurebuilder
+                    .Property(x => x.Id)
+                    .ValueGeneratedNever()
+                    .HasConversion(x => x.Value, value => SentenceStructureId.Create(value));
+
+                sentenceStructurebuilder.Property(x => x.Label).IsRequired(false).HasMaxLength(255);
             }
         );
 
@@ -146,5 +140,47 @@ public class GrammarRulesConfigurations : IEntityTypeConfiguration<GrammarRule>
                     .HasMaxLength(255);
             }
         );
+    }
+
+    private void ConfigureGrammarRuleTagIdsTable(EntityTypeBuilder<GrammarRule> builder)
+    {
+        builder.OwnsMany(
+            m => m.GrammarRuleTagIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("GrammarRuleTagIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("GrammarRuleId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder.Property(r => r.Value).HasColumnName("TagId").ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(GrammarRule.GrammarRuleTagIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private void ConfigureRelatedGrammarRuleIdsTable(EntityTypeBuilder<GrammarRule> builder)
+    {
+        builder.OwnsMany(
+            m => m.RelatedGrammarRuleIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("RelatedGrammarRuleIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("GrammarRuleId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder.Property(r => r.Value).HasColumnName("TagId").ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(GrammarRule.RelatedGrammarRuleIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }
