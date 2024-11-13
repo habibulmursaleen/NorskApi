@@ -50,6 +50,9 @@ public record GetNorskproveByIdQueryHandler
             norskprove.DifficultyLevel,
             norskprove.NorskproveTagIds.Select(x => new NorskproveTagIdsResult(x.Value)).ToList(),
             norskprove
+                .SpeakingContentIds.Select(x => new SpeakingContentIdsResult(x.Value))
+                .ToList(),
+            norskprove
                 .ListeningContentIds.Select(x => new ListeningContentIdsResult(x.Value))
                 .ToList(),
             norskprove.ReadingContentIds.Select(x => new ReadingContentIdsResult(x.Value)).ToList(),

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NorskApi.Infrastructure.Persistance.DBContext;
 
@@ -11,9 +12,11 @@ using NorskApi.Infrastructure.Persistance.DBContext;
 namespace NorskApi.Infrastructure.Migrations
 {
     [DbContext(typeof(NorskApiDbContext))]
-    partial class NorskApiDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113103158_MigrationName")]
+    partial class MigrationName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1060,31 +1063,6 @@ namespace NorskApi.Infrastructure.Migrations
                                 .HasForeignKey("NorskproveId");
                         });
 
-                    b.OwnsMany("NorskApi.Domain.QuestionAggregate.ValueObjects.QuestionId", "SpeakingContentIds", b1 =>
-                        {
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<Guid>("NorskproveId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uniqueidentifier")
-                                .HasColumnName("QuestionId");
-
-                            b1.HasKey("Id");
-
-                            b1.HasIndex("NorskproveId");
-
-                            b1.ToTable("SpeakingContentIds", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("NorskproveId");
-                        });
-
                     b.OwnsMany("NorskApi.Domain.TaskWorkAggregate.ValueObjects.TaskWorkId", "AdditionalGrammarTaskIds", b1 =>
                         {
                             b1.Property<int>("Id")
@@ -1117,8 +1095,6 @@ namespace NorskApi.Infrastructure.Migrations
                     b.Navigation("NorskproveTagIds");
 
                     b.Navigation("ReadingContentIds");
-
-                    b.Navigation("SpeakingContentIds");
 
                     b.Navigation("WritingContentIds");
                 });

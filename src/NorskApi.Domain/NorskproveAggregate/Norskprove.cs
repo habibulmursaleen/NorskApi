@@ -5,6 +5,7 @@ using NorskApi.Domain.DiscussionAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.NorskproveAggregate.Events.DomainEvent;
 using NorskApi.Domain.NorskproveAggregate.ValueObjects;
+using NorskApi.Domain.QuestionAggregate.ValueObjects;
 using NorskApi.Domain.TagAggregate.ValueObjects;
 using NorskApi.Domain.TaskWorkAggregate.ValueObjects;
 
@@ -24,11 +25,13 @@ public sealed class Norskprove : AggregateRoot<NorskproveId, Guid>
     public Status Status { get; set; } // Enum: ACTIVE, INACTIVE
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1, C2
     private readonly List<TagId> norskproveTagIds = [];
+    private readonly List<QuestionId> speakingContentIds = [];
     private readonly List<DictationId> listeningContentIds = [];
     private readonly List<EssayId> readingContentIds = [];
     private readonly List<DiscussionId> writingContentIds = [];
     private readonly List<TaskWorkId> additionalGrammarTaskIds = [];
     public IReadOnlyCollection<TagId> NorskproveTagIds => this.norskproveTagIds;
+    public IReadOnlyCollection<QuestionId> SpeakingContentIds => this.speakingContentIds;
     public IReadOnlyCollection<DictationId> ListeningContentIds => this.listeningContentIds;
     public IReadOnlyCollection<EssayId> ReadingContentIds => this.readingContentIds;
     public IReadOnlyCollection<DiscussionId> WritingContentIds => this.writingContentIds;
@@ -53,6 +56,7 @@ public sealed class Norskprove : AggregateRoot<NorskproveId, Guid>
         Status Status,
         DifficultyLevel DifficultyLevel,
         List<TagId> NorskproveTagIds,
+        List<QuestionId> SpeakingContentIds,
         List<DictationId> ListeningContentIds,
         List<EssayId> ReadingContentIds,
         List<DiscussionId> WritingContentIds,
@@ -72,6 +76,7 @@ public sealed class Norskprove : AggregateRoot<NorskproveId, Guid>
         this.Status = Status;
         this.DifficultyLevel = DifficultyLevel;
         this.norskproveTagIds.AddRange(NorskproveTagIds);
+        this.speakingContentIds.AddRange(SpeakingContentIds);
         this.listeningContentIds.AddRange(ListeningContentIds);
         this.readingContentIds.AddRange(ReadingContentIds);
         this.writingContentIds.AddRange(WritingContentIds);
@@ -91,6 +96,7 @@ public sealed class Norskprove : AggregateRoot<NorskproveId, Guid>
         Status Status,
         DifficultyLevel DifficultyLevel,
         List<TagId> NorskproveTagIds,
+        List<QuestionId> SpeakingContentIds,
         List<DictationId> ListeningContentIds,
         List<EssayId> ReadingContentIds,
         List<DiscussionId> WritingContentIds,
@@ -111,6 +117,7 @@ public sealed class Norskprove : AggregateRoot<NorskproveId, Guid>
             Status,
             DifficultyLevel,
             NorskproveTagIds,
+            SpeakingContentIds,
             ListeningContentIds,
             ReadingContentIds,
             WritingContentIds,
@@ -135,6 +142,7 @@ public sealed class Norskprove : AggregateRoot<NorskproveId, Guid>
         Status Status,
         DifficultyLevel DifficultyLevel,
         List<TagId> NorskproveTagIds,
+        List<QuestionId> SpeakingContentIds,
         List<DictationId> ListeningContentIds,
         List<EssayId> ReadingContentIds,
         List<DiscussionId> WritingContentIds,
@@ -154,6 +162,8 @@ public sealed class Norskprove : AggregateRoot<NorskproveId, Guid>
         this.DifficultyLevel = DifficultyLevel;
         this.norskproveTagIds.Clear();
         this.norskproveTagIds.AddRange(NorskproveTagIds);
+        this.speakingContentIds.Clear();
+        this.speakingContentIds.AddRange(SpeakingContentIds);
         this.listeningContentIds.Clear();
         this.listeningContentIds.AddRange(ListeningContentIds);
         this.readingContentIds.Clear();

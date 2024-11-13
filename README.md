@@ -22,6 +22,7 @@ A very comprehensive backend api for norsk learning application.
       - [Essay Endpoint](#essay-endpoint)
       - [Dictation Endpoint](#dictation-endpoint)
       - [Podcast Endpoint](#podcast-endpoint)
+      - [Question](#question)
       - [Discussion Endpoint](#discussion-endpoint)
       - [Word Endpoint](#word-endpoint)
       - [Grammar Topic Endpoint](#grammar-topic-endpoint)
@@ -163,6 +164,14 @@ These are the main endpoints for the Norsk learning platform, grouped by type. T
 - POST GET `{host}/api/v2/podcasts`
 - GET PUT DELETE `{host}/api/v2/podcasts/{id}`
 - Query params `Filters by by difficultyLevel & essayId`
+---
+
+#### Question
+
+- POST GET `{host}/api/v2/questions`
+- GET PUT DELETE `{host}/api/v1/questions/{id}`
+- Query params `Filters by by difficultyLevel & essayId`
+
 ---
 
 #### Discussion Endpoint

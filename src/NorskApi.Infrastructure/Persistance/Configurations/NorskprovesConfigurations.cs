@@ -11,6 +11,7 @@ public class NorskprovesConfigurations : IEntityTypeConfiguration<Norskprove>
     {
         this.ConfigureNorskproveTable(builder);
         this.ConfigureNorskproveTagIdsTable(builder);
+        this.ConfigureSpeakingContentIdsTable(builder);
         this.ConfigureListeningContentIdsTable(builder);
         this.ConfigureReadingContentIdsTable(builder);
         this.ConfigureWritingContentIdsTable(builder);
@@ -68,6 +69,30 @@ public class NorskprovesConfigurations : IEntityTypeConfiguration<Norskprove>
                 reviewBuilder.HasKey("Id");
 
                 reviewBuilder.Property(r => r.Value).HasColumnName("TagId").ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(Norskprove.NorskproveTagIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private void ConfigureSpeakingContentIdsTable(EntityTypeBuilder<Norskprove> builder)
+    {
+        builder.OwnsMany(
+            m => m.SpeakingContentIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("SpeakingContentIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("NorskproveId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder
+                    .Property(r => r.Value)
+                    .HasColumnName("QuestionId")
+                    .ValueGeneratedNever();
             }
         );
 

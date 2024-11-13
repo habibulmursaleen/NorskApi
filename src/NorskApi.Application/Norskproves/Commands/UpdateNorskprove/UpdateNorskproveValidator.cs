@@ -56,6 +56,9 @@ public class UpdateNorskproveValidator : AbstractValidator<UpdateNorskproveComma
         RuleForEach(x => x.NorskproveTagIds)
             .SetValidator(new UpdateNorskproveTagIdsCommandValidator());
 
+        RuleForEach(x => x.SpeakingContentIds)
+            .SetValidator(new CreateSpeakingContentIdsCommandValidator());
+
         RuleForEach(x => x.ListeningContentIds)
             .SetValidator(new UpdateListeningContentIdsCommandValidator());
 
@@ -75,6 +78,14 @@ public class UpdateNorskproveTagIdsCommandValidator : AbstractValidator<Norskpro
     public UpdateNorskproveTagIdsCommandValidator()
     {
         RuleFor(x => x.TagId).NotEmpty().WithMessage("TagId is required.");
+    }
+}
+
+public class CreateSpeakingContentIdsCommandValidator : AbstractValidator<SpeakingContentIdsCommand>
+{
+    public CreateSpeakingContentIdsCommandValidator()
+    {
+        RuleFor(x => x.QuestionId).NotEmpty().WithMessage("QuestionId is required.");
     }
 }
 

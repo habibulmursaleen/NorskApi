@@ -18,6 +18,7 @@ public record CreateNorskproveCommand(
     Status Status,
     DifficultyLevel DifficultyLevel,
     List<NorskproveTagIdsCommand> NorskproveTagIds,
+    List<SpeakingContentIdsCommand> SpeakingContentIds,
     List<ListeningContentIdsCommand> ListeningContentIds,
     List<ReadingContentIdsCommand> ReadingContentIds,
     List<WritingContentIdsCommand> WritingContentIds,
@@ -25,6 +26,8 @@ public record CreateNorskproveCommand(
 ) : IRequest<ErrorOr<NorskproveResult>>;
 
 public record NorskproveTagIdsCommand(Guid TagId);
+
+public record SpeakingContentIdsCommand(Guid QuestionId);
 
 public record ListeningContentIdsCommand(Guid DictationId);
 

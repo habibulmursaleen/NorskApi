@@ -15,6 +15,7 @@ public record UpdateNorskproveRequest(
     Status Status,
     DifficultyLevel DifficultyLevel,
     List<UpdateNorskproveTagIdsRequest> NorskproveTagIds,
+    List<UpdateSpeakingContentIdsRequest> SpeakingContentIds,
     List<UpdateListeningContentIdsRequest> ListeningContentIds,
     List<UpdateReadingContentIdsRequest> ReadingContentIds,
     List<UpdateWritingContentIdsRequest> WritingContentIds,
@@ -22,6 +23,8 @@ public record UpdateNorskproveRequest(
 );
 
 public record UpdateNorskproveTagIdsRequest(Guid TagId);
+
+public record UpdateSpeakingContentIdsRequest(Guid QuestionId);
 
 public record UpdateListeningContentIdsRequest(Guid DictationId);
 

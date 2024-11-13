@@ -8,6 +8,7 @@ using NorskApi.Domain.DiscussionAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.NorskproveAggregate;
 using NorskApi.Domain.NorskproveAggregate.ValueObjects;
+using NorskApi.Domain.QuestionAggregate.ValueObjects;
 using NorskApi.Domain.TagAggregate.ValueObjects;
 using NorskApi.Domain.TaskWorkAggregate.ValueObjects;
 
@@ -50,6 +51,8 @@ public class UpdateNorskproveHandler
             command.DifficultyLevel,
             command.NorskproveTagIds?.Select(x => TagId.Create(x.TagId)).ToList()
                 ?? new List<TagId>(),
+            command.SpeakingContentIds?.Select(x => QuestionId.Create(x.QuestionId)).ToList()
+                ?? new List<QuestionId>(),
             command.ListeningContentIds?.Select(x => DictationId.Create(x.DictationId)).ToList()
                 ?? new List<DictationId>(),
             command.ReadingContentIds?.Select(x => EssayId.Create(x.EssayId)).ToList()
@@ -76,6 +79,9 @@ public class UpdateNorskproveHandler
             norskprove.Status,
             norskprove.DifficultyLevel,
             norskprove.NorskproveTagIds.Select(x => new NorskproveTagIdsResult(x.Value)).ToList(),
+            norskprove
+                .SpeakingContentIds.Select(x => new SpeakingContentIdsResult(x.Value))
+                .ToList(),
             norskprove
                 .ListeningContentIds.Select(x => new ListeningContentIdsResult(x.Value))
                 .ToList(),

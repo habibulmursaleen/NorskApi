@@ -44,6 +44,9 @@ public class GetAllNorskprovesQueryHandler
                     .NorskproveTagIds.Select(x => new NorskproveTagIdsResult(x.Value))
                     .ToList(),
                 norskprove
+                    .SpeakingContentIds.Select(x => new SpeakingContentIdsResult(x.Value))
+                    .ToList(),
+                norskprove
                     .ListeningContentIds.Select(x => new ListeningContentIdsResult(x.Value))
                     .ToList(),
                 norskprove

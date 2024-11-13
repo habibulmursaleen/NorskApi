@@ -16,6 +16,7 @@ public record NorskproveResponse(
     Status Status,
     DifficultyLevel DifficultyLevel,
     List<NorskproveTagIdsResponse> NorskproveTagIds,
+    List<SpeakingContentIdsResponse> SpeakingContentIds,
     List<ListeningContentIdsResponse> ListeningContentIds,
     List<ReadingContentIdsResponse> ReadingContentIds,
     List<WritingContentIdsResponse> WritingContentIds,
@@ -25,6 +26,8 @@ public record NorskproveResponse(
 );
 
 public record NorskproveTagIdsResponse(Guid TagId);
+
+public record SpeakingContentIdsResponse(Guid QuestionId);
 
 public record ListeningContentIdsResponse(Guid DictationId);
 

@@ -15,6 +15,7 @@ public record CreateNorskproveRequest(
     Status Status,
     DifficultyLevel DifficultyLevel,
     List<CreateNorskproveTagIdsRequest> NorskproveTagIds,
+    List<CreateSpeakingContentIdsRequest> SpeakingContentIds,
     List<CreateListeningContentIdsRequest> ListeningContentIds,
     List<CreateReadingContentIdsRequest> ReadingContentIds,
     List<CreateWritingContentIdsRequest> WritingContentIds,
@@ -22,6 +23,8 @@ public record CreateNorskproveRequest(
 );
 
 public record CreateNorskproveTagIdsRequest(Guid TagId);
+
+public record CreateSpeakingContentIdsRequest(Guid QuestionId);
 
 public record CreateListeningContentIdsRequest(Guid DictationId);
 

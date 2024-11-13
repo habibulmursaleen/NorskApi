@@ -7,10 +7,11 @@
 - [Tags](#tags)
 - [Essay](#essay)
 - [Dictation](#dictation)
-- [Podcasts](#podcasts)
+- [Podcasts](#podcast)
+- [Question](#question)
 - [Discussion](#discussion)
 - [Word](#word)
-- [Grammars](#grammars)
+- [Grammars Topic](#grammars)
 - [Grammar Rules](#grammar-rules)
 - [Tasks](#tasks)
 - [Quiz](#quiz)
@@ -151,18 +152,6 @@
       "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
     }
   ],
-  "questions": [
-    {
-      "id": "388dcd8d-24f3-4d2a-bb46-4604169a155e",
-      "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",  // child of Essay aggregate
-      "label": "Dolores voluptate rerum quisquam ipsam animi voluptatem fugiat rem id?",
-      "answer": "Id vitae veniam qui omnis omnis labore est voluptatem.",
-      "isCompleted": true,
-      "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
-      "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
-      "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
-    }
-  ],
   "roleplays": [
     {
       "id": "27ed959e-6240-4039-b83c-a93368d948e9",
@@ -179,6 +168,32 @@
     }
   ]
 }
+```
+
+## Question
+
+### POST GET `{host}/api/v2/questions`
+### GET `{host}/api/v2/questions`
+### GET PUT DELETE `{host}/api/v1/questions/{id}`
+### Query params 
+    Filters:
+        difficultyLevel
+        essayId
+        
+```json
+[
+  {
+    "id": "388dcd8d-24f3-4d2a-bb46-4604169a155e",
+    "essayId": "dd4d0668-7ef1-4656-bca7-78a7798211af",  
+    "label": "Dolores voluptate rerum quisquam ipsam animi voluptatem fugiat rem id?",
+    "answer": "Id vitae veniam qui omnis omnis labore est voluptatem.",
+    "isCompleted": true,
+    "type": "SHORT", //enum "SHORT" or "DESCRIPTIVE" or "HYPOTHETICAL" or "GENERAL_KNOWLEDGE"
+    "difficultyLevel": "B1", // Enum: A1, A2, B1, B2, C1
+    "createdAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)",
+    "updatedAt": "Fri Oct 14 2061 08:47:19 GMT+0200 (Central European Summer Time)"
+  }
+]
 ```
 
 ## Dictation
@@ -526,6 +541,11 @@
     "estimatedCompletionTime": 45,
     "attempts": 3,
     "maxScore": 100,
+    "speaking": [
+      {
+        "questionId": "6fc17d3c-56ce-41b3-9d4f-b82a92c98e4d",
+      }
+    ],
     "norskproveTagIds": [
       {
         "norskproveTagId": "a9230259-e947-4525-85ae-275b2524fdcc", 
