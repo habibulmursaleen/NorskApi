@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NorskApi.Application.Common.Interfaces.Persistance;
+using NorskApi.Application.Common.Interfaces.Persistance.IQueryParamsBuilders;
 using NorskApi.Application.Common.Interfaces.Services;
 using NorskApi.Infrastructure.Common;
 using NorskApi.Infrastructure.Persistance.DBContext;
@@ -40,10 +41,14 @@ namespace NorskApi.Infrastructure
             services.AddScoped<IGrammarRuleRepository, GrammarRuleRepository>();
             services.AddScoped<ISubjunctionRepository, SubjunctionRepository>();
             services.AddScoped<IWordRepository, WordRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<INorskproveRepository, NorskproveRepository>();
 
             services.AddScoped<IQueryParamsBaseBuilder, QueryParamsBaseBuilder>();
             services.AddScoped<IQueryParamsWithEssayBuilder, QueryParamsWithEssayBuilder>();
             services.AddScoped<IQuizQueryParamsBuilder, QuizQueryParamsBuilder>();
+            services.AddScoped<IQueryParamsWithTopicBuilder, QueryParamsWithTopicBuilder>();
+            services.AddScoped<ITagsQueryParamsBuilder, TagsQueryParamsBuilder>();
 
             return services;
         }

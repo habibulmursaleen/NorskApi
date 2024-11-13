@@ -13,8 +13,12 @@ public record CreateWordRequest(
     PartOfSpeechTag PartOfSpeechTag,
     DifficultyLevel DifficultyLevel,
     bool IsCompleted,
-    List<Guid> SynonymIds,
-    List<Guid> AntonymIds,
+    List<CreateSynonymIdRequest> WordSynonymIds,
+    List<CreateAntonymIdRequest> WordAntonymIds,
     CreateWordGrammerRequest WordGrammer,
     CreateWordUsageExampleRequest WordUsageExample
 );
+
+public record CreateSynonymIdRequest(Guid WordId);
+
+public record CreateAntonymIdRequest(Guid WordId);

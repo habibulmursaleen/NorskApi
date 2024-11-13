@@ -11,7 +11,7 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
     public string Label { get; set; }
     public string? Description { get; set; }
     public double Progress { get; set; }
-    public List<string>? Activities { get; set; } // Enum: Paragraphs, Discussions, Quizzes, Words, Roleplay
+    public List<string>? Activities { get; set; }
     public Status Status { get; set; } // Enum: ACTIVE, INACTIVE
     public string Notes { get; set; }
     public bool IsCompleted { get; set; }

@@ -37,7 +37,9 @@ public class GetAllGrammarTopicsQueryHandler
                 grammarTopic.Progress,
                 grammarTopic.IsCompleted,
                 grammarTopic.IsSaved,
-                grammarTopic.Tags ?? [],
+                grammarTopic
+                    .GrammarTopicTagIds.Select(x => new GrammarTopicTagResult(x.Value))
+                    .ToList(),
                 grammarTopic.DifficultyLevel,
                 grammarTopic.CreatedDateTime,
                 grammarTopic.UpdatedDateTime

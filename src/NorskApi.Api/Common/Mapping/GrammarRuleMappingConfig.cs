@@ -20,13 +20,13 @@ public class GrammarRuleMappingConfig : IRegister
             .Map(dest => dest.Label, src => src.request.Label)
             .Map(dest => dest.Description, src => src.request.Description)
             .Map(dest => dest.ExplanatoryNotes, src => src.request.ExplanatoryNotes)
-            .Map(dest => dest.SentenceStructure, src => src.request.SentenceStructure)
+            .Map(dest => dest.SentenceStructures, src => src.request.SentenceStructures)
             .Map(dest => dest.RuleType, src => src.request.RuleType)
             .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel)
-            .Map(dest => dest.Tags, src => src.request.Tags)
+            .Map(dest => dest.GrammarRuleTagIds, src => src.request.GrammarRuleTagIds)
             .Map(dest => dest.AdditionalInformation, src => src.request.AdditionalInformation)
             .Map(dest => dest.Comments, src => src.request.Comments)
-            .Map(dest => dest.RelatedRuleIds, src => src.request.RelatedRuleIds)
+            .Map(dest => dest.RelatedGrammarRuleIds, src => src.request.RelatedGrammarRuleIds)
             .Map(dest => dest.Exceptions, src => src.request.Exceptions)
             .Map(dest => dest.ExampleOfRules, src => src.request.ExampleOfRules);
 
@@ -40,13 +40,13 @@ public class GrammarRuleMappingConfig : IRegister
             .Map(dest => dest.Label, src => src.request.Label)
             .Map(dest => dest.Description, src => src.request.Description)
             .Map(dest => dest.ExplanatoryNotes, src => src.request.ExplanatoryNotes)
-            .Map(dest => dest.SentenceStructure, src => src.request.SentenceStructure)
+            .Map(dest => dest.SentenceStructures, src => src.request.SentenceStructures)
             .Map(dest => dest.RuleType, src => src.request.RuleType)
             .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel)
-            .Map(dest => dest.Tags, src => src.request.Tags)
+            .Map(dest => dest.GrammarRuleTagIds, src => src.request.GrammarRuleTagIds)
             .Map(dest => dest.AdditionalInformation, src => src.request.AdditionalInformation)
             .Map(dest => dest.Comments, src => src.request.Comments)
-            .Map(dest => dest.RelatedRuleIds, src => src.request.RelatedRuleIds)
+            .Map(dest => dest.RelatedGrammarRuleIds, src => src.request.RelatedGrammarRuleIds)
             .Map(dest => dest.Exceptions, src => src.request.Exceptions)
             .Map(dest => dest.ExampleOfRules, src => src.request.ExampleOfRules);
 
@@ -75,6 +75,14 @@ public class GrammarRuleMappingConfig : IRegister
             .Map(dest => dest.Comments, src => src.Comments)
             .Map(dest => dest.CorrectSentence, src => src.CorrectSentence)
             .Map(dest => dest.IncorrectSentence, src => src.IncorrectSentence);
+
+        config
+            .NewConfig<CreateSentenceStructureRequest, CreateSentenceStructureCommand>()
+            .Map(dest => dest.Label, src => src.Label);
+
+        config
+            .NewConfig<UpdateSentenceStructureRequest, UpdateSentenceStructureCommand>()
+            .Map(dest => dest.Label, src => src.Label);
 
         config
             .NewConfig<UpdateExceptionRequest, UpdateExceptionCommand>()

@@ -1,6 +1,7 @@
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
+using NorskApi.Domain.QuestionAggregate.Enums;
 using NorskApi.Domain.QuestionAggregate.Events.DomainEvent;
 using NorskApi.Domain.QuestionAggregate.ValueObjects;
 
@@ -12,6 +13,7 @@ public sealed class Question : AggregateRoot<QuestionId, Guid>
     public string Label { get; set; }
     public string? Answer { get; set; }
     public bool IsCompleted { get; set; }
+    public QuestionType QuestionType { get; set; } // Enum: MultipleChoice, TrueOrFalse, FillInTheBlank
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Question() { }
@@ -23,6 +25,7 @@ public sealed class Question : AggregateRoot<QuestionId, Guid>
         string label,
         string? answer,
         bool isCompleted,
+        QuestionType questionType,
         DifficultyLevel difficultyLevel
     )
         : base(questionId)
@@ -31,6 +34,7 @@ public sealed class Question : AggregateRoot<QuestionId, Guid>
         this.Label = label;
         this.Answer = answer;
         this.IsCompleted = isCompleted;
+        this.QuestionType = questionType;
         this.DifficultyLevel = difficultyLevel;
     }
 
@@ -39,6 +43,7 @@ public sealed class Question : AggregateRoot<QuestionId, Guid>
         string label,
         string? answer,
         bool isCompleted,
+        QuestionType questionType,
         DifficultyLevel difficultyLevel
     )
     {
@@ -48,6 +53,7 @@ public sealed class Question : AggregateRoot<QuestionId, Guid>
             label,
             answer,
             isCompleted,
+            questionType,
             difficultyLevel
         );
 
@@ -61,6 +67,7 @@ public sealed class Question : AggregateRoot<QuestionId, Guid>
         string label,
         string? answer,
         bool isCompleted,
+        QuestionType questionType,
         DifficultyLevel difficultyLevel
     )
     {
@@ -68,6 +75,7 @@ public sealed class Question : AggregateRoot<QuestionId, Guid>
         this.Label = label;
         this.Answer = answer;
         this.IsCompleted = isCompleted;
+        this.QuestionType = questionType;
         this.DifficultyLevel = difficultyLevel;
     }
 

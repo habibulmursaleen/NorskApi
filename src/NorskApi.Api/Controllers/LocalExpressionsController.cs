@@ -18,7 +18,7 @@ using NorskApi.Contracts.LocalExpressions.Request;
 using NorskApi.Contracts.LocalExpressions.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/localexpressions")]
+[Route("api/v2/localexpressions")]
 public class LocalExpressionsController : ApiController
 {
     private readonly ISender mediator;

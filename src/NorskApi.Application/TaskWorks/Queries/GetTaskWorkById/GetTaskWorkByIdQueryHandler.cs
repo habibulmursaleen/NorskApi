@@ -26,17 +26,12 @@ public record GetTaskByIdQueryHandler
     )
     {
         // Use the Create method to create a TaskWorkId from the Guid
-        TopicId topicId = TopicId.Create(query.TopicId);
         TaskWorkId taskWorkId = TaskWorkId.Create(query.Id);
-        TaskWork? taskWork = await taskWorkRepository.GetById(
-            topicId,
-            taskWorkId,
-            cancellationToken
-        );
+        TaskWork? taskWork = await taskWorkRepository.GetById(taskWorkId, cancellationToken);
 
         if (taskWork is null)
         {
-            return Errors.TaskWorkErrors.TaskWorkNotFound(query.Id, query.TopicId);
+            return Errors.TaskWorkErrors.TaskWorkNotFound(query.Id);
         }
 
         return new TaskWorkResult(

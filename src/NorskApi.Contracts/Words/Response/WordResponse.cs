@@ -15,10 +15,14 @@ public record WordResponse(
     PartOfSpeechTag PartOfSpeechTag,
     DifficultyLevel DifficultyLevel,
     bool IsCompleted,
-    List<Guid> Synonyms,
-    List<Guid> Antonyms,
-    UpdateWordGrammerRequest WordGrammer,
-    UpdateWordUsageExampleRequest WordUsageExample,
+    List<SynonymIdResponse> WordSynonymeIds,
+    List<AntonymIdResponse> WordAntonymeIds,
+    WordGrammarResponse WordGrammer,
+    WordUseageExampleResponse WordUsageExample,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
+
+public record SynonymIdResponse(Guid WordId);
+
+public record AntonymIdResponse(Guid WordId);

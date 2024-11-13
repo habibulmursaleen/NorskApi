@@ -20,7 +20,7 @@ using NorskApi.Contracts.Podcasts.Request;
 using NorskApi.Contracts.Podcasts.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/podcasts")]
+[Route("api/v2/podcasts")]
 public class PodcastsController : ApiController
 {
     private readonly ISender mediator;

@@ -27,6 +27,7 @@ public class CreateQuestionHandler : IRequestHandler<CreateQuestionCommand, Erro
             command.Label,
             command.Answer,
             command.IsCompleted,
+            command.QuestionType,
             command.DifficultyLevel
         );
 
@@ -38,6 +39,7 @@ public class CreateQuestionHandler : IRequestHandler<CreateQuestionCommand, Erro
             question.Label,
             question.Answer ?? string.Empty,
             question.IsCompleted,
+            question.QuestionType,
             question.DifficultyLevel,
             question.CreatedDateTime,
             question.UpdatedDateTime

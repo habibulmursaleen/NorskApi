@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using NorskApi.Application.Common.Interfaces.Persistance;
+using NorskApi.Application.Common.Interfaces.Persistance.IQueryParamsBuilders;
 using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Domain.DiscussionAggregate;
 using NorskApi.Domain.DiscussionAggregate.ValueObjects;
@@ -13,25 +14,25 @@ namespace NorskApi.Infrastructure.Persistance.Repositories;
 public class DiscussionRepository : IDiscussionRepository
 {
     private readonly NorskApiDbContext dbContext;
-    private readonly IQueryParamsBaseBuilder queryParamsBaseBuilder;
+    private readonly IQueryParamsWithEssayBuilder queryParamsWithEssayBuilder;
 
     public DiscussionRepository(
         NorskApiDbContext dbContext,
-        IQueryParamsBaseBuilder queryParamsBaseBuilder
+        IQueryParamsWithEssayBuilder queryParamsWithEssayBuilder
     )
     {
         this.dbContext = dbContext;
-        this.queryParamsBaseBuilder = queryParamsBaseBuilder;
+        this.queryParamsWithEssayBuilder = queryParamsWithEssayBuilder;
     }
 
     public async Task<List<Discussion>> GetAll(
-        QueryParamsBaseFilters? filters,
+        QueryParamsWithEssayFilters? filters,
         CancellationToken cancellationToken
     )
     {
         var query =
             filters != null
-                ? queryParamsBaseBuilder.BuildQueriesDiscussions<Discussion>(filters)
+                ? queryParamsWithEssayBuilder.BuildQueriesDiscussions<Discussion>(filters)
                 : null;
         if (query == null)
         {
@@ -40,31 +41,13 @@ public class DiscussionRepository : IDiscussionRepository
         return await query.AsSplitQuery().ToListAsync(cancellationToken);
     }
 
-    public async Task<List<Discussion>> GetAllByEssayId(
-        EssayId essayId,
-        QueryParamsBaseFilters filters,
-        CancellationToken cancellationToken
-    )
-    {
-        var query = queryParamsBaseBuilder.BuildQueriesDiscussions<Discussion>(filters);
-        query = query?.Where(x => x.EssayId == essayId);
-        if (query == null)
-        {
-            return new List<Discussion>();
-        }
-        List<Discussion>? discussions = await query.AsSplitQuery().ToListAsync(cancellationToken);
-
-        return discussions;
-    }
-
     public async Task<Discussion?> GetById(
-        EssayId essayId,
         DiscussionId discussionId,
         CancellationToken cancellationToken
     )
     {
         return await this.dbContext.Discussions.SingleOrDefaultAsync(
-            x => x.EssayId == essayId && x.Id == discussionId,
+            x => x.Id == discussionId,
             cancellationToken
         );
     }
