@@ -2,9 +2,10 @@ using ErrorOr;
 using MediatR;
 using NorskApi.Application.Common.Interfaces.Persistance;
 using NorskApi.Application.Essays.Models;
+using NorskApi.Domain.ActivityAggregate.ValueObjects;
 using NorskApi.Domain.EssayAggregate.Entities;
-using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 
 namespace NorskApi.Application.Essays.Command.CreateEssay;
 
@@ -27,19 +28,24 @@ public class CreateEssayHandler : IRequestHandler<CreateEssayCommand, ErrorOr<Es
             command.Label,
             command.Description,
             command.Progress,
-            command.Activities,
             command.Status,
             command.Notes,
             command.IsCompleted,
             command.IsSaved,
-            command.Tags,
             command.DifficultyLevel,
+            command.EssayActivityIds?.Select(x => ActivityId.Create(x.ActivityId)).ToList()
+                ?? new List<ActivityId>(),
+            command.EssayTagIds?.Select(x => TagId.Create(x.TagId)).ToList() ?? new List<TagId>(),
+            command.EssayRelatedGrammarTopicIds?.Select(x => TopicId.Create(x.TopicId)).ToList()
+                ?? new List<TopicId>(),
             command
-                .Paragraphs.Select(paragraph =>
-                    Paragraph.Create(paragraph.Title, paragraph.Content, paragraph.ContentType)
+                .Paragraphs?.Select(option =>
+                    Paragraph.Create(option.Title, option.Content, option.ContentType)
                 )
-                .ToList(),
-            command.RelatedGrammarTopicIds?.Select(TopicId.Create).ToList()
+                .ToList() ?? new List<Paragraph>(),
+            command
+                .Roleplays?.Select(option => Roleplay.Create(option.Content, option.IsCompleted))
+                .ToList() ?? new List<Roleplay>()
         );
 
         await this.essayRepository.Add(essay, cancellationToken);
@@ -50,14 +56,18 @@ public class CreateEssayHandler : IRequestHandler<CreateEssayCommand, ErrorOr<Es
             essay.Label,
             essay.Description,
             essay.Progress,
-            essay.Activities,
             essay.Status,
             essay.Notes,
             essay.IsCompleted,
             essay.IsSaved,
-            essay.Tags,
             essay.DifficultyLevel,
-            essay.RelatedGrammarTopicIds?.Select(id => TopicId.Create(id)).ToList(),
+            essay.EssayActivityIds.Select(x => new EssayActivityIdsResult(x.Value)).ToList(),
+            essay.EssayTagIds.Select(x => new EssayTagIdsResult(x.Value)).ToList(),
+            essay
+                .EssayRelatedGrammarTopicIds.Select(x => new EssayRelatedGrammarTopicIdsResult(
+                    x.Value
+                ))
+                .ToList(),
             essay
                 .Paragraphs.Select(paragraph => new ParagraphResult(
                     paragraph.Id.Value,
@@ -66,6 +76,15 @@ public class CreateEssayHandler : IRequestHandler<CreateEssayCommand, ErrorOr<Es
                     paragraph.ContentType,
                     paragraph.CreatedDateTime,
                     paragraph.UpdatedDateTime
+                ))
+                .ToList(),
+            essay
+                .Roleplays.Select(roleplay => new RoleplayResult(
+                    roleplay.Id.Value,
+                    roleplay.Content,
+                    roleplay.IsCompleted,
+                    roleplay.CreatedDateTime,
+                    roleplay.UpdatedDateTime
                 ))
                 .ToList(),
             essay.CreatedDateTime,

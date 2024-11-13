@@ -4,7 +4,6 @@ namespace NorskApi.Application.Common.Interfaces.Persistance.IQueryParamsBuilder
 
 public interface IQueryParamsBaseBuilder
 {
-    IQueryable<T>? BuildQueriesRoleplays<T>(QueryParamsBaseFilters filters);
     IQueryable<T>? BuildQueriesGrammarTopics<T>(QueryParamsBaseFilters filters);
     IQueryable<T>? BuildQueriesEssays<T>(QueryParamsBaseFilters filters);
     IQueryable<T>? BuildQueriesGrammarRules<T>(QueryParamsBaseFilters filters);

@@ -13,15 +13,16 @@ public record UpdateEssayCommand(
     string Label,
     string? Description,
     double Progress,
-    List<string>? Activities,
     Status Status,
     string Notes,
     bool IsCompleted,
     bool IsSaved,
-    List<string>? Tags,
     DifficultyLevel DifficultyLevel,
-    List<Guid>? RelatedGrammarTopicIds,
-    List<UpdateParagraphCommand> Paragraphs
+    List<UpdateEssayActivityIdsCommand> EssayActivityIds,
+    List<UpdateEssayTagIdsCommand> EssayTagIds,
+    List<UpdateEssayRelatedGrammarTopicIdsCommand> EssayRelatedGrammarTopicIds,
+    List<UpdateParagraphCommand>? Paragraphs,
+    List<UpdateRoleplayCommand>? Roleplays
 ) : IRequest<ErrorOr<EssayResult>>;
 
 public record UpdateParagraphCommand(
@@ -30,3 +31,11 @@ public record UpdateParagraphCommand(
     string Content,
     ContentType ContentType
 );
+
+public record UpdateRoleplayCommand(Guid Id, string Content, bool IsCompleted);
+
+public record UpdateEssayActivityIdsCommand(Guid ActivityId);
+
+public record UpdateEssayTagIdsCommand(Guid TagId);
+
+public record UpdateEssayRelatedGrammarTopicIdsCommand(Guid TopicId);

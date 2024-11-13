@@ -27,9 +27,6 @@ namespace NorskApi.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Activities")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("datetime2");
 
@@ -64,14 +61,8 @@ namespace NorskApi.Infrastructure.Migrations
                     b.Property<double>("Progress")
                         .HasColumnType("float");
 
-                    b.Property<string>("RelatedGrammarTopicIds")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tags")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdatedDateTime")
@@ -80,6 +71,34 @@ namespace NorskApi.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Essays", (string)null);
+                });
+
+            modelBuilder.Entity("NorskApi.Domain.ActivityAggregate.Activity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ActivityType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Label")
+                        .IsUnique();
+
+                    b.ToTable("Activites", (string)null);
                 });
 
             modelBuilder.Entity("NorskApi.Domain.DictationAggregate.Dictation", b =>
@@ -490,37 +509,6 @@ namespace NorskApi.Infrastructure.Migrations
                     b.ToTable("Quizzes", (string)null);
                 });
 
-            modelBuilder.Entity("NorskApi.Domain.RoleplayAggregate.Roleplay", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DifficultyLevel")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("EssayId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("UpdatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roleplays", (string)null);
-                });
-
             modelBuilder.Entity("NorskApi.Domain.SubjunctionAggregate.Subjunction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -679,6 +667,56 @@ namespace NorskApi.Infrastructure.Migrations
 
             modelBuilder.Entity("Essay", b =>
                 {
+                    b.OwnsMany("NorskApi.Domain.TagAggregate.ValueObjects.TagId", "EssayTagIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("EssayId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("TagId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("EssayId");
+
+                            b1.ToTable("EssayTagIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("EssayId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.ActivityAggregate.ValueObjects.ActivityId", "EssayActivityIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("EssayId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("ActivityId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("EssayId");
+
+                            b1.ToTable("Essay", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("EssayId");
+                        });
+
                     b.OwnsMany("NorskApi.Domain.EssayAggregate.Entities.Paragraph", "Paragraphs", b1 =>
                         {
                             b1.Property<Guid>("Id")
@@ -716,7 +754,72 @@ namespace NorskApi.Infrastructure.Migrations
                                 .HasForeignKey("EssayId");
                         });
 
+                    b.OwnsMany("NorskApi.Domain.EssayAggregate.Entities.Roleplay", "Roleplays", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("Content")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("nvarchar(255)");
+
+                            b1.Property<DateTime>("CreatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<Guid>("EssayId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("IsCompleted")
+                                .HasColumnType("bit");
+
+                            b1.Property<DateTime>("UpdatedDateTime")
+                                .HasColumnType("datetime2");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("EssayId");
+
+                            b1.ToTable("Roleplays", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("EssayId");
+                        });
+
+                    b.OwnsMany("NorskApi.Domain.GrammarTopicAggregate.ValueObjects.TopicId", "EssayRelatedGrammarTopicIds", b1 =>
+                        {
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<Guid>("EssayId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Value")
+                                .HasColumnType("uniqueidentifier")
+                                .HasColumnName("TopicId");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("EssayId");
+
+                            b1.ToTable("EssayRelatedGrammarTopicIds", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("EssayId");
+                        });
+
+                    b.Navigation("EssayActivityIds");
+
+                    b.Navigation("EssayRelatedGrammarTopicIds");
+
+                    b.Navigation("EssayTagIds");
+
                     b.Navigation("Paragraphs");
+
+                    b.Navigation("Roleplays");
                 });
 
             modelBuilder.Entity("NorskApi.Domain.GrammarTopicAggregate.GrammarTopic", b =>

@@ -11,15 +11,24 @@ public record CreateEssayCommand(
     string Label,
     string? Description,
     double Progress,
-    List<string>? Activities,
     Status Status,
     string Notes,
     bool IsCompleted,
     bool IsSaved,
-    List<string>? Tags,
     DifficultyLevel DifficultyLevel,
-    List<Guid>? RelatedGrammarTopicIds,
-    List<CreateParagraphCommand> Paragraphs
+    List<CreateEssayActivityIdsCommand> EssayActivityIds,
+    List<CreateEssayTagIdsCommand> EssayTagIds,
+    List<CreateEssayRelatedGrammarTopicIdsCommand> EssayRelatedGrammarTopicIds,
+    List<CreateParagraphCommand>? Paragraphs,
+    List<CreateRoleplayCommand>? Roleplays
 ) : IRequest<ErrorOr<EssayResult>>;
 
 public record CreateParagraphCommand(string? Title, string Content, ContentType ContentType);
+
+public record CreateRoleplayCommand(string Content, bool IsCompleted);
+
+public record CreateEssayActivityIdsCommand(Guid ActivityId);
+
+public record CreateEssayTagIdsCommand(Guid TagId);
+
+public record CreateEssayRelatedGrammarTopicIdsCommand(Guid TopicId);

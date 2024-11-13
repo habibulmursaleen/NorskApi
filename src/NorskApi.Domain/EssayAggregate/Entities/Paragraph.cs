@@ -5,7 +5,7 @@ using NorskApi.Domain.EssayAggregate.ValueObjects;
 
 namespace NorskApi.Domain.EssayAggregate.Entities;
 
-public sealed class Paragraph : AggregateRoot<ParagraphId, Guid>
+public sealed class Paragraph : Entity<ParagraphId>
 {
     public string? Title { get; set; }
     public string Content { get; set; }

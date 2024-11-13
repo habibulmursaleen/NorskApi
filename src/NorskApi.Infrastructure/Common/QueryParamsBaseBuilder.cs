@@ -14,40 +14,6 @@ public class QueryParamsBaseBuilder : IQueryParamsBaseBuilder
         this.dbContext = dbContext;
     }
 
-    public IQueryable<T>? BuildQueriesRoleplays<T>(QueryParamsBaseFilters filters)
-    {
-        var query = dbContext.Roleplays.AsQueryable();
-        double skip =
-            (filters.Page > 0 && filters.Size > 0) ? (filters.Page - 1) * (int)filters.Size : 0;
-        double take = filters.Size > 0 ? (int)filters.Size : 25;
-
-        if (
-            filters.DifficultyLevel != default
-            || filters.DifficultyLevel != DifficultyLevel.ALL
-                && Enum.IsDefined(typeof(DifficultyLevel), filters.DifficultyLevel)
-        )
-        {
-            query = query.Where(x => x.DifficultyLevel == filters.DifficultyLevel);
-        }
-        if (!string.IsNullOrEmpty(filters.SortBy))
-        {
-            switch (filters.SortBy.ToLower())
-            {
-                case "asc":
-                    query = query.OrderBy(x => x.CreatedDateTime);
-                    break;
-                case "desc":
-                    query = query.OrderByDescending(x => x.CreatedDateTime);
-                    break;
-                default:
-                    query = query.OrderBy(x => x.CreatedDateTime);
-                    break;
-            }
-        }
-
-        return (IQueryable<T>?)query;
-    }
-
     public IQueryable<T>? BuildQueriesGrammarTopics<T>(QueryParamsBaseFilters filters)
     {
         var query = dbContext.GrammarTopics.AsQueryable();

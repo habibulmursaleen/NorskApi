@@ -19,6 +19,7 @@ A very comprehensive backend api for norsk learning application.
       - [Subjunction Endpoint](#subjunction-endpoint)
       - [LocalExpression Endpoint](#localexpression-endpoint)
       - [Tag Endpoint](#tag-endpoint)
+      - [Activity Endpoint](#activity-endpoint)
       - [Essay Endpoint](#essay-endpoint)
       - [Dictation Endpoint](#dictation-endpoint)
       - [Podcast Endpoint](#podcast-endpoint)
@@ -85,6 +86,7 @@ docker compose up
 ```
 
 ####  Step 3: Apply Migrations
+
 Navigate to the Infrastructure layer where the DbContext is located and run the following commands to apply migrations:
 ```bash
 dotnet ef migrations add Init -p src/NorskApi.Infrastructure -s src/NorskApi.Api; 
@@ -108,6 +110,7 @@ dotnet ef migrations remove -p src/NorskApi.Infrastructure -s src/NorskApi.Api;
 ```
 
 ####  Step 4: Build and Run the Application
+
 Navigate to the root of project directory and start the API:
 
 ```bash
@@ -146,6 +149,12 @@ These are the main endpoints for the Norsk learning platform, grouped by type. T
 - GET PUT DELETE `{host}/api/v2/tags/{id}`
 - Query params `Filters by difficultyLevel`
 ---
+
+#### Activity Endpoint
+
+- POST GET `{host}/api/v2/activity`
+- GET PUT DELETE `{host}/api/v2/activity/{id}`
+ ---
 
 #### Essay Endpoint
 
