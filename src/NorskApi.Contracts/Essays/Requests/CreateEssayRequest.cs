@@ -1,5 +1,5 @@
 using NorskApi.Contracts.Common.Enums;
-using NorskApi.Contracts.Quizes.Common.Enums;
+using NorskApi.Contracts.Essays.Common.Enums;
 
 namespace NorskApi.Contracts.Essays.Requests;
 
@@ -8,13 +8,24 @@ public record CreateEssayRequest(
     string Label,
     string? Description,
     double Progress,
-    List<string>? Activities,
     Status Status,
     string Notes,
     bool IsCompleted,
     bool IsSaved,
-    List<string>? Tags,
     DifficultyLevel DifficultyLevel,
-    List<Guid>? RelatedGrammarTopicIds,
-    List<CreateParagraphRequest> Paragraphs
+    List<CreateEssayActivityIdsRequest> EssayActivityIds,
+    List<CreateEssayTagIdsRequest> EssayTagIds,
+    List<CreateEssayRelatedGrammarTopicIdsRequest> EssayRelatedGrammarTopicIds,
+    List<CreateParagraphRequest> Paragraphs,
+    List<CreateRoleplayRequest> Roleplays
 );
+
+public record CreateParagraphRequest(string Title, string Content, ContentType ContentType);
+
+public record CreateRoleplayRequest(string Content, bool IsCompleted);
+
+public record CreateEssayActivityIdsRequest(Guid ActivityId);
+
+public record CreateEssayTagIdsRequest(Guid TagId);
+
+public record CreateEssayRelatedGrammarTopicIdsRequest(Guid TopicId);

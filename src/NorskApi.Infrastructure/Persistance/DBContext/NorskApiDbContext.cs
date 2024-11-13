@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using NorskApi.Domain.ActivityAggregate;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.DictationAggregate;
 using NorskApi.Domain.DiscussionAggregate;
@@ -10,7 +11,6 @@ using NorskApi.Domain.NorskproveAggregate;
 using NorskApi.Domain.PodcastAggregate;
 using NorskApi.Domain.QuestionAggregate;
 using NorskApi.Domain.QuizAggregate;
-using NorskApi.Domain.RoleplayAggregate;
 using NorskApi.Domain.SubjunctionAggregate;
 using NorskApi.Domain.TagAggregate;
 using NorskApi.Domain.TaskWorkAggregate;
@@ -29,7 +29,6 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<Dictation> Dictations { get; set; } = null!;
     public DbSet<Podcast> Podcasts { get; set; } = null!;
     public DbSet<Question> Questions { get; set; } = null!;
-    public DbSet<Roleplay> Roleplays { get; set; } = null!;
     public DbSet<TaskWork> TaskWorks { get; set; } = null!;
     public DbSet<GrammarTopic> GrammarTopics { get; set; } = null!;
     public DbSet<Quiz> Quizes { get; set; } = null!;
@@ -39,6 +38,7 @@ public sealed class NorskApiDbContext : DbContext
     public DbSet<Word> Words { get; set; } = null!;
     public DbSet<Tag> Tags { get; set; } = null!;
     public DbSet<Norskprove> Norskproves { get; set; } = null!;
+    public DbSet<Activity> Activities { get; set; } = null!;
 
     public NorskApiDbContext(
         DbContextOptions<NorskApiDbContext> options,

@@ -11,6 +11,9 @@ public class EssaysConfigurations : IEntityTypeConfiguration<Essay>
     public void Configure(EntityTypeBuilder<Essay> builder)
     {
         this.ConfigureEssayTable(builder);
+        this.ConfigureEssayActivityIdsTable(builder);
+        this.ConfigureEssayTagIdsTable(builder);
+        this.ConfigureEssayRelatedGrammarTopicIdsTable(builder);
     }
 
     private void ConfigureEssayTable(EntityTypeBuilder<Essay> builder)
@@ -32,8 +35,6 @@ public class EssaysConfigurations : IEntityTypeConfiguration<Essay>
 
         builder.Property(x => x.Progress).IsRequired();
 
-        builder.Property(x => x.Activities).IsRequired(false);
-
         builder.Property(x => x.Status).IsRequired().HasConversion<string>();
 
         builder.Property(x => x.Notes).IsRequired().HasMaxLength(255);
@@ -41,8 +42,6 @@ public class EssaysConfigurations : IEntityTypeConfiguration<Essay>
         builder.Property(x => x.IsCompleted).IsRequired();
 
         builder.Property(x => x.IsSaved).IsRequired();
-
-        builder.Property(x => x.Tags).IsRequired(false);
 
         builder.Property(x => x.DifficultyLevel).IsRequired().HasConversion<string>();
 
@@ -62,23 +61,85 @@ public class EssaysConfigurations : IEntityTypeConfiguration<Essay>
             }
         );
 
+        builder.OwnsMany(
+            essay => essay.Roleplays,
+            roleplayssbuilder =>
+            {
+                roleplayssbuilder.ToTable("Roleplays");
+                roleplayssbuilder.HasKey(x => x.Id);
+                roleplayssbuilder
+                    .Property(x => x.Id)
+                    .ValueGeneratedNever()
+                    .HasConversion(x => x.Value, value => RoleplayId.Create(value));
+                roleplayssbuilder.Property(x => x.Content).IsRequired().HasMaxLength(255);
+                roleplayssbuilder.Property(x => x.IsCompleted).IsRequired();
+            }
+        );
+    }
+
+    private void ConfigureEssayActivityIdsTable(EntityTypeBuilder<Essay> builder)
+    {
+        builder.OwnsMany(
+            m => m.EssayActivityIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("Essay");
+
+                reviewBuilder.WithOwner().HasForeignKey("EssayId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder
+                    .Property(r => r.Value)
+                    .HasColumnName("ActivityId")
+                    .ValueGeneratedNever();
+            }
+        );
+
         builder
-            .Property(x => x.RelatedGrammarTopicIds)
-            .IsRequired(false)
-            .HasConversion(
-                x =>
-                    JsonSerializer.Serialize(
-                        x,
-                        new JsonSerializerOptions { WriteIndented = false }
-                    ), // Serialize List<Guid>
-                value => JsonSerializer.Deserialize<List<Guid>>(value, new JsonSerializerOptions()) // Deserialize as List<Guid>
-            )
-            .Metadata.SetValueComparer(
-                new ValueComparer<List<Guid>>(
-                    (c1, c2) => c1 != null && c2 != null && c1.SequenceEqual(c2), // Compare elements in the collection
-                    c => c.Aggregate(0, (a, v) => a ^ v.GetHashCode()), // Generate a hash code for the collection
-                    c => c.ToList()
-                ) // Create a new list instance when copying
-            );
+            .Metadata.FindNavigation(nameof(Essay.EssayActivityIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private void ConfigureEssayTagIdsTable(EntityTypeBuilder<Essay> builder)
+    {
+        builder.OwnsMany(
+            m => m.EssayTagIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("EssayTagIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("EssayId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder.Property(r => r.Value).HasColumnName("TagId").ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(Essay.EssayTagIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+    }
+
+    private void ConfigureEssayRelatedGrammarTopicIdsTable(EntityTypeBuilder<Essay> builder)
+    {
+        builder.OwnsMany(
+            m => m.EssayRelatedGrammarTopicIds,
+            reviewBuilder =>
+            {
+                reviewBuilder.ToTable("EssayRelatedGrammarTopicIds");
+
+                reviewBuilder.WithOwner().HasForeignKey("EssayId");
+
+                reviewBuilder.HasKey("Id");
+
+                reviewBuilder.Property(r => r.Value).HasColumnName("TopicId").ValueGeneratedNever();
+            }
+        );
+
+        builder
+            .Metadata.FindNavigation(nameof(Essay.EssayRelatedGrammarTopicIds))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

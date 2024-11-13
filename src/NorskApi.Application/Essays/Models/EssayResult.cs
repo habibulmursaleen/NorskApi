@@ -1,5 +1,4 @@
 using NorskApi.Domain.Common.Enums;
-using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 
 namespace NorskApi.Application.Essays.Models;
 
@@ -9,15 +8,22 @@ public record EssayResult(
     string Label,
     string? Description,
     double Progress,
-    List<string>? Activities,
     Status Status,
     string Notes,
     bool IsCompleted,
     bool IsSaved,
-    List<string>? Tags,
     DifficultyLevel DifficultyLevel,
-    List<TopicId>? RelatedGrammarTopicIds,
+    List<EssayActivityIdsResult> EssayActivityIds,
+    List<EssayTagIdsResult> EssayTagIds,
+    List<EssayRelatedGrammarTopicIdsResult> EssayRelatedGrammarTopicIds,
     List<ParagraphResult>? Paragraphs,
+    List<RoleplayResult>? Roleplays,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
+
+public record EssayActivityIdsResult(Guid ActivityId);
+
+public record EssayTagIdsResult(Guid TagId);
+
+public record EssayRelatedGrammarTopicIdsResult(Guid TopicId);

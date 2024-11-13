@@ -1,9 +1,11 @@
+using NorskApi.Domain.ActivityAggregate.ValueObjects;
 using NorskApi.Domain.Common.Enums;
 using NorskApi.Domain.Common.Models;
 using NorskApi.Domain.Entities.EssayAggregate.Events.DomainEvent;
 using NorskApi.Domain.EssayAggregate.Entities;
 using NorskApi.Domain.EssayAggregate.ValueObjects;
 using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 
 public sealed class Essay : AggregateRoot<EssayId, Guid>
 {
@@ -11,18 +13,18 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
     public string Label { get; set; }
     public string? Description { get; set; }
     public double Progress { get; set; }
-    public List<string>? Activities { get; set; }
     public Status Status { get; set; } // Enum: ACTIVE, INACTIVE
     public string Notes { get; set; }
     public bool IsCompleted { get; set; }
     public bool IsSaved { get; set; }
-    public List<string>? Tags { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, B1, B2, C1
-    public List<Guid>? RelatedGrammarTopicIds { get; set; }
-    private readonly List<Paragraph> paragraphs = new List<Paragraph>();
+    public List<ActivityId> EssayActivityIds { get; set; }
+    public List<TagId> EssayTagIds { get; set; }
+    public List<TopicId> EssayRelatedGrammarTopicIds { get; set; }
+    private readonly List<Paragraph> paragraphs = [];
+    private readonly List<Roleplay> roleplays = [];
     public IReadOnlyCollection<Paragraph> Paragraphs => this.paragraphs;
-
-    public List<Guid> GetTopicIds() => RelatedGrammarTopicIds?.ToList() ?? new List<Guid>();
+    public IReadOnlyCollection<Roleplay> Roleplays => this.roleplays;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     private Essay() { }
@@ -34,15 +36,16 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
         string label,
         string? description,
         double progress,
-        List<string>? activities,
         Status status,
         string notes,
         bool isCompleted,
         bool isSaved,
-        List<string>? tags,
         DifficultyLevel difficultyLevel,
+        List<ActivityId> essayActivityIds,
+        List<TagId> essayTagIds,
+        List<TopicId> EssayRelatedGrammarTopicIds,
         List<Paragraph> paragraphs,
-        List<TopicId>? relatedGrammarTopicIds
+        List<Roleplay> roleplays
     )
         : base(id)
     {
@@ -51,15 +54,16 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
         this.Label = label;
         this.Description = description;
         this.Progress = progress;
-        this.Activities = activities;
         this.Status = status;
         this.Notes = notes;
         this.IsCompleted = isCompleted;
         this.IsSaved = isSaved;
-        this.Tags = tags;
         this.DifficultyLevel = difficultyLevel;
+        this.EssayActivityIds = essayActivityIds;
+        this.EssayTagIds = essayTagIds;
+        this.EssayRelatedGrammarTopicIds = EssayRelatedGrammarTopicIds;
         this.paragraphs = paragraphs;
-        this.RelatedGrammarTopicIds = relatedGrammarTopicIds?.Select(t => t.Value).ToList();
+        this.roleplays = roleplays;
     }
 
     public static Essay Create(
@@ -67,15 +71,16 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
         string label,
         string? description,
         double progress,
-        List<string>? activities,
         Status status,
         string notes,
         bool isCompleted,
         bool isSaved,
-        List<string>? tags,
         DifficultyLevel difficultyLevel,
+        List<ActivityId> essayActivityIds,
+        List<TagId> essayTagIds,
+        List<TopicId> EssayRelatedGrammarTopicIds,
         List<Paragraph> paragraphs,
-        List<TopicId>? relatedGrammarTopicIds
+        List<Roleplay> roleplays
     )
     {
         Essay essay =
@@ -85,15 +90,16 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
                 label,
                 description,
                 progress,
-                activities,
                 status,
                 notes,
                 isCompleted,
                 isSaved,
-                tags,
                 difficultyLevel,
+                essayActivityIds,
+                essayTagIds,
+                EssayRelatedGrammarTopicIds,
                 paragraphs,
-                relatedGrammarTopicIds
+                roleplays
             );
 
         essay.AddDomainEvent(new EssayCreatedDomainEvent(essay));
@@ -106,31 +112,33 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
         string label,
         string? description,
         double progress,
-        List<string>? activities,
         Status status,
         string notes,
         bool isCompleted,
         bool isSaved,
-        List<string>? tags,
         DifficultyLevel difficultyLevel,
+        List<ActivityId> essayActivityIds,
+        List<TagId> essayTagIds,
+        List<TopicId> EssayRelatedGrammarTopicIds,
         List<Paragraph> paragraphs,
-        List<TopicId>? relatedGrammarTopicIds
+        List<Roleplay> roleplays
     )
     {
         this.Logo = logo;
         this.Label = label;
         this.Description = description;
         this.Progress = progress;
-        this.Activities = activities;
         this.Status = status;
         this.Notes = notes;
         this.IsCompleted = isCompleted;
         this.IsSaved = isSaved;
-        this.Tags = tags;
         this.DifficultyLevel = difficultyLevel;
-        this.RelatedGrammarTopicIds = relatedGrammarTopicIds?.Select(t => t.Value).ToList();
+        this.EssayActivityIds = essayActivityIds;
+        this.EssayTagIds = essayTagIds;
+        this.EssayRelatedGrammarTopicIds = EssayRelatedGrammarTopicIds;
 
         UpdateParagraphs(paragraphs);
+        UpdateRoleplays(roleplays);
         this.AddDomainEvent(new EssayUpdatedDomainEvent(this));
     }
 
@@ -169,6 +177,33 @@ public sealed class Essay : AggregateRoot<EssayId, Guid>
             if (this.paragraphs != null)
             {
                 this.paragraphs.RemoveAll(p => newParagraphs.All(np => np.Id != p.Id));
+            }
+        }
+    }
+
+    private void UpdateRoleplays(List<Roleplay>? newRoleplays)
+    {
+        if (newRoleplays is not null)
+        {
+            foreach (var newRoleplay in newRoleplays)
+            {
+                var existingRoleplay = this.roleplays?.FirstOrDefault(p => p.Id == newRoleplay.Id);
+                if (existingRoleplay is not null)
+                {
+                    // Update existing paragraph
+                    existingRoleplay.Update(newRoleplay.Content, newRoleplay.IsCompleted);
+                }
+                else
+                {
+                    // Add new paragraph
+                    this.roleplays?.Add(newRoleplay);
+                }
+            }
+
+            // Remove paragraphs that are no longer in the new list
+            if (this.roleplays != null)
+            {
+                this.roleplays.RemoveAll(p => newRoleplays.All(np => np.Id != p.Id));
             }
         }
     }
