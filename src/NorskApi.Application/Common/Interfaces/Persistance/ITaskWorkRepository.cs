@@ -8,19 +8,11 @@ namespace NorskApi.Application.Common.Interfaces.Persistance;
 public interface ITaskWorkRepository
 {
     Task<List<TaskWork>> GetAll(
-        QueryParamsBaseFilters? filters,
+        QueryParamsWithTopicFilters? filters,
         CancellationToken cancellationToken
     );
-    Task<List<TaskWork>> GetAllByTopicId(
-        TopicId topicId,
-        QueryParamsBaseFilters filters,
-        CancellationToken cancellationToken
-    );
-    Task<TaskWork?> GetById(
-        TopicId topicId,
-        TaskWorkId taskWorkId,
-        CancellationToken cancellationToken
-    );
+
+    Task<TaskWork?> GetById(TaskWorkId taskWorkId, CancellationToken cancellationToken);
     Task Add(TaskWork taskWork, CancellationToken cancellationToken);
     Task Update(TaskWork taskWork, CancellationToken cancellationToken);
     Task Delete(TaskWork taskWork, CancellationToken cancellationToken);

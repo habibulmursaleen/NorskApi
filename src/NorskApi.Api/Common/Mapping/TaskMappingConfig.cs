@@ -16,24 +16,21 @@ public class TaskMappingConfig : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config
-            .NewConfig<(Guid topicId, CreateTaskWorkRequest request), CreateTaskWorkCommand>()
-            .Map(dest => dest.TopicId, src => src.topicId)
-            .Map(dest => dest.Label, src => src.request.Label)
-            .Map(dest => dest.Logo, src => src.request.Logo)
-            .Map(dest => dest.TaskPointer, src => src.request.TaskPointer)
-            .Map(dest => dest.IsCompleted, src => src.request.IsCompleted)
-            .Map(dest => dest.Answer, src => src.request.Answer)
-            .Map(dest => dest.Comments, src => src.request.Comments)
-            .Map(dest => dest.AdditionalInfo, src => src.request.AdditionalInfo)
-            .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel);
+            .NewConfig<CreateTaskWorkRequest, CreateTaskWorkCommand>()
+            .Map(dest => dest.TopicId, src => src.TopicId)
+            .Map(dest => dest.Label, src => src.Label)
+            .Map(dest => dest.Logo, src => src.Logo)
+            .Map(dest => dest.TaskPointer, src => src.TaskPointer)
+            .Map(dest => dest.IsCompleted, src => src.IsCompleted)
+            .Map(dest => dest.Answer, src => src.Answer)
+            .Map(dest => dest.Comments, src => src.Comments)
+            .Map(dest => dest.AdditionalInfo, src => src.AdditionalInfo)
+            .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel);
 
         config
-            .NewConfig<
-                (Guid topicId, Guid id, UpdateTaskWorkRequest request),
-                UpdateTaskWorkCommand
-            >()
+            .NewConfig<(Guid id, UpdateTaskWorkRequest request), UpdateTaskWorkCommand>()
             .Map(dest => dest.Id, src => src.id)
-            .Map(dest => dest.TopicId, src => src.topicId)
+            .Map(dest => dest.TopicId, src => src.request.TopicId)
             .Map(dest => dest.Label, src => src.request.Label)
             .Map(dest => dest.Logo, src => src.request.Logo)
             .Map(dest => dest.TaskPointer, src => src.request.TaskPointer)
@@ -46,15 +43,12 @@ public class TaskMappingConfig : IRegister
         config.NewConfig<Guid, DeleteTaskWorkCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<
-                (Guid topicId, QueryParamsBaseFiltersRequest filters),
-                GetAllTaskWorksQuery
-            >()
-            .Map(dest => dest.TopicId, src => src.topicId)
-            .Map(dest => dest.Filters, src => src.filters);
+            .NewConfig<QueryParamsWithTopicFiltersRequest, GetAllTaskWorksQuery>()
+            .Map(dest => dest.Filters, src => src);
 
         config
-            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
+            .NewConfig<QueryParamsWithTopicFiltersRequest, QueryParamsWithTopicFilters>()
+            .Map(dest => dest.TopicId, src => src.TopicId)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)

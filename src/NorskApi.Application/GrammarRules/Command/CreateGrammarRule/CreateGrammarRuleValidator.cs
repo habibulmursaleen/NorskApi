@@ -21,11 +21,7 @@ public class CreateGrammarRuleValidator : AbstractValidator<CreateGrammarRuleCom
             .MaximumLength(1000)
             .WithMessage("ExplanatoryNotes must not exceed 1000 characters.");
 
-        RuleFor(x => x.SentenceStructure).NotEmpty().WithMessage("SentenceStructure is required.");
-
         RuleFor(x => x.RuleType).NotEmpty().WithMessage("RuleType is required.");
-
-        RuleFor(x => x.Tags).NotEmpty().WithMessage("Tags are required.");
 
         RuleFor(x => x.AdditionalInformation)
             .MaximumLength(1000)
@@ -37,10 +33,12 @@ public class CreateGrammarRuleValidator : AbstractValidator<CreateGrammarRuleCom
             .IsEnumName(typeof(DifficultyLevel), caseSensitive: false)
             .WithMessage("Invalid DifficultyLevel.");
 
-        RuleFor(x => x.RelatedRuleIds)
-            .Must(x => x == null || x.All(id => id != Guid.Empty))
-            .WithMessage("RelatedRuleIds must be valid guids.");
-
+        RuleForEach(x => x.SentenceStructures)
+            .SetValidator(new CreateSentenceStructuresCommandValidator());
+        RuleForEach(x => x.RelatedGrammarRuleIds)
+            .SetValidator(new CreateRelatedGrammarRuleIdCommandValidator());
+        RuleForEach(x => x.GrammarRuleTagIds)
+            .SetValidator(new CreateGrammarRuleTagIdCommandValidator());
         RuleForEach(x => x.Exceptions).SetValidator(new CreateExceptionCommandValidator());
         RuleForEach(x => x.ExampleOfRules).SetValidator(new CreateExampleOfRuleCommandValidator());
     }
@@ -110,6 +108,37 @@ public class CreateGrammarRuleValidator : AbstractValidator<CreateGrammarRuleCom
             RuleFor(x => x.IncorrectSentence)
                 .MaximumLength(1000)
                 .WithMessage("IncorrectSentence must not exceed 1000 characters.");
+        }
+    }
+
+    public class CreateGrammarRuleTagIdCommandValidator
+        : AbstractValidator<CreateGrammarRuleTagIdCommand>
+    {
+        public CreateGrammarRuleTagIdCommandValidator()
+        {
+            RuleFor(x => x.TagId)
+                .Must(x => x != Guid.Empty)
+                .WithMessage("Tag Id must be a valid guid.");
+        }
+    }
+
+    public class CreateRelatedGrammarRuleIdCommandValidator
+        : AbstractValidator<CreateRelatedRuleIdCommand>
+    {
+        public CreateRelatedGrammarRuleIdCommandValidator()
+        {
+            RuleFor(x => x.GrammarRuleId)
+                .Must(x => x != Guid.Empty)
+                .WithMessage("GrammarRuleId must be a valid guid.");
+        }
+    }
+
+    public class CreateSentenceStructuresCommandValidator
+        : AbstractValidator<CreateSentenceStructureCommand>
+    {
+        public CreateSentenceStructuresCommandValidator()
+        {
+            RuleFor(x => x.Label).NotEmpty().WithMessage("Label is required.");
         }
     }
 }

@@ -8,7 +8,6 @@ using ErrorOr;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using NorskApi.Application.Common.QueryParamsBuilder;
 using NorskApi.Application.GrammarTopics.Commands.CreateGrammarTopic;
 using NorskApi.Application.GrammarTopics.Commands.DeleteGrammarTopic;
 using NorskApi.Application.GrammarTopics.Commands.UpdateGrammarTopic;
@@ -20,7 +19,7 @@ using NorskApi.Contracts.GrammarTopics.Request;
 using NorskApi.Contracts.GrammarTopics.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/grammar/topics")]
+[Route("api/v2/grammarTopics")]
 public class GrammarTopicsController : ApiController
 {
     private readonly ISender mediator;

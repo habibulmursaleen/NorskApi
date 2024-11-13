@@ -4,6 +4,7 @@ using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.GrammmarRuleAggregate.Entites;
 using NorskApi.Domain.GrammmarRuleAggregate.Events.DomainEvent.GrammarRule;
 using NorskApi.Domain.GrammmarRuleAggregate.ValueObjects;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 using Exception = NorskApi.Domain.GrammmarRuleAggregate.Entites.Exception;
 
 namespace NorskApi.Domain.GrammmarRuleAggregate;
@@ -14,16 +15,15 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
     public string Label { get; set; }
     public string? Description { get; set; }
     public string? ExplanatoryNotes { get; set; }
-    public List<string>? SentenceStructure { get; set; }
+    public List<SentenceStructure> SentenceStructures { get; set; }
     public string? RuleType { get; set; }
     public DifficultyLevel DifficultyLevel { get; set; } // Enum: A1, A2, etc.
-    public List<string>? Tags { get; set; }
+    private readonly List<TagId> grammarRuleTagIds = new List<TagId>();
+    public IReadOnlyCollection<TagId> GrammarRuleTagIds => this.grammarRuleTagIds;
     public string? AdditionalInformation { get; set; }
     public List<string>? Comments { get; set; }
-    public List<Guid>? RelatedRuleIds { get; set; }
-
-    public List<Guid> GetRuleIds() => RelatedRuleIds?.ToList() ?? new List<Guid>();
-
+    private readonly List<GrammarRuleId> relatedGrammarRuleIds = new List<GrammarRuleId>();
+    public IReadOnlyCollection<GrammarRuleId> RelatedGrammarRuleIds => this.relatedGrammarRuleIds;
     public List<Exception> exceptions = new();
     public List<ExampleOfRule> exampleOfRules = new();
     public IReadOnlyCollection<Exception> Exceptions => this.exceptions;
@@ -42,10 +42,10 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         string? ruleType,
         string? additionalInformation,
         DifficultyLevel difficultyLevel,
-        List<string>? sentenceStructure,
-        List<string>? tags,
+        List<SentenceStructure> sentenceStructures,
+        List<TagId> grammarRuleTagIds,
         List<string>? comments,
-        List<GrammarRuleId>? relatedRuleIds,
+        List<GrammarRuleId> relatedGrammarRuleIds,
         List<Exception> exceptions,
         List<ExampleOfRule> exampleOfRules
     )
@@ -59,10 +59,10 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         this.RuleType = ruleType;
         this.AdditionalInformation = additionalInformation;
         this.DifficultyLevel = difficultyLevel;
-        this.SentenceStructure = sentenceStructure;
-        this.Tags = tags;
+        this.SentenceStructures = sentenceStructures;
+        this.grammarRuleTagIds = grammarRuleTagIds;
         this.Comments = comments;
-        this.RelatedRuleIds = relatedRuleIds?.Select(t => t.Value).ToList();
+        this.relatedGrammarRuleIds = relatedGrammarRuleIds;
         this.exceptions = exceptions;
         this.exampleOfRules = exampleOfRules;
     }
@@ -72,13 +72,13 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         string label,
         string? description,
         string? explanatoryNotes,
-        List<string>? sentenceStructure,
+        List<SentenceStructure> sentenceStructures,
         string? ruleType,
         DifficultyLevel difficultyLevel,
-        List<string>? tags,
+        List<TagId> grammarRuleTagIds,
         string? additionalInformation,
-        List<string>? comments,
-        List<GrammarRuleId>? relatedRuleIds,
+        List<string> comments,
+        List<GrammarRuleId> relatedGrammarRuleIds,
         List<Exception> exceptions,
         List<ExampleOfRule> exampleOfRules
     )
@@ -92,10 +92,10 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
             ruleType,
             additionalInformation,
             difficultyLevel,
-            sentenceStructure,
-            tags,
+            sentenceStructures,
+            grammarRuleTagIds,
             comments,
-            relatedRuleIds,
+            relatedGrammarRuleIds,
             exceptions,
             exampleOfRules
         );
@@ -110,13 +110,13 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         string label,
         string? description,
         string? explanatoryNotes,
-        List<string>? sentenceStructure,
+        List<SentenceStructure> sentenceStructures,
         string? ruleType,
         DifficultyLevel difficultyLevel,
-        List<string>? tags,
+        List<TagId> grammarRuleTagIds,
         string? additionalInformation,
-        List<string>? comments,
-        List<GrammarRuleId>? relatedRuleIds,
+        List<string> comments,
+        List<GrammarRuleId> relatedGrammarRuleIds,
         List<Exception> exceptions,
         List<ExampleOfRule> exampleOfRules
     )
@@ -128,13 +128,15 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
         this.RuleType = ruleType;
         this.AdditionalInformation = additionalInformation;
         this.DifficultyLevel = difficultyLevel;
-        this.SentenceStructure = sentenceStructure;
-        this.Tags = tags;
+        this.grammarRuleTagIds.Clear();
+        this.grammarRuleTagIds.AddRange(grammarRuleTagIds);
         this.Comments = comments;
-        this.RelatedRuleIds = relatedRuleIds?.Select(t => t.Value).ToList();
+        this.relatedGrammarRuleIds.Clear();
+        this.relatedGrammarRuleIds.AddRange(relatedGrammarRuleIds);
 
         UpdateExceptions(exceptions);
         UpdateExampleOfRules(exampleOfRules);
+        UpdateSentenceStructure(sentenceStructures);
 
         this.AddDomainEvent(new GrammarRuleUpdatedDomainEvent(this));
     }
@@ -220,6 +222,38 @@ public sealed class GrammarRule : AggregateRoot<GrammarRuleId, Guid>
             if (this.exampleOfRules != null)
             {
                 this.exampleOfRules.RemoveAll(e => newExampleOfRules.All(ne => ne.Id != e.Id));
+            }
+        }
+    }
+
+    private void UpdateSentenceStructure(List<SentenceStructure> newSentenceStructure)
+    {
+        if (newSentenceStructure is not null)
+        {
+            // Update existing sentenceStructure or add new ones
+            foreach (var newSentenceStructureItem in newSentenceStructure)
+            {
+                var existingSentenceStructure = this.SentenceStructures?.FirstOrDefault(e =>
+                    e.Id == newSentenceStructureItem.Id
+                );
+                if (existingSentenceStructure is not null)
+                {
+                    // Update existing sentenceStructure
+                    existingSentenceStructure.Update(newSentenceStructureItem.Label);
+                }
+                else
+                {
+                    // Add new sentenceStructure
+                    this.SentenceStructures?.Add(newSentenceStructureItem);
+                }
+            }
+
+            // Remove sentenceStructure that are no longer in the new list
+            if (this.SentenceStructures != null)
+            {
+                this.SentenceStructures.RemoveAll(e =>
+                    newSentenceStructure.All(ne => ne.Id != e.Id)
+                );
             }
         }
     }

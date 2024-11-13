@@ -12,8 +12,10 @@ public record GrammarTopicResult(
     double Progress,
     bool IsCompleted,
     bool IsSaved,
-    List<string> Tags,
+    List<GrammarTopicTagResult> GrammarTopicTagIds,
     DifficultyLevel DifficultyLevel,
     DateTime CreatedDateTime,
     DateTime UpdatedDateTime
 );
+
+public record GrammarTopicTagResult(Guid TagId);

@@ -1,5 +1,6 @@
 using FluentValidation;
 using NorskApi.Domain.Common.Enums;
+using NorskApi.Domain.QuestionAggregate.Enums;
 
 namespace NorskApi.Application.Questions.Commands.UpdateQuestion;
 
@@ -22,6 +23,10 @@ public class UpdateQuestionValidator : AbstractValidator<UpdateQuestionCommand>
             .WithMessage("Answer must not exceed 500 characters.");
 
         RuleFor(x => x.IsCompleted).NotNull().WithMessage("IsCompleted is required.");
+
+        RuleFor(x => x.QuestionType.ToString())
+            .IsEnumName(typeof(QuestionType), caseSensitive: false)
+            .WithMessage("Invalid QuestionType.");
 
         RuleFor(x => x.DifficultyLevel.ToString())
             .IsEnumName(typeof(DifficultyLevel), caseSensitive: false)

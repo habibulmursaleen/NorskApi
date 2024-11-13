@@ -26,11 +26,11 @@ public class UpdateDiscussionHandler
     {
         var id = DiscussionId.Create(command.Id);
         var essayId = EssayId.Create(command.EssayId);
-        Discussion? discussion = await discussionRepository.GetById(essayId, id, cancellationToken);
+        Discussion? discussion = await discussionRepository.GetById(id, cancellationToken);
 
         if (discussion is null)
         {
-            return Errors.DiscussionErrors.DiscussionNotFound(command.Id, command.EssayId);
+            return Errors.DiscussionErrors.DiscussionNotFound(command.Id);
         }
 
         discussion.Update(

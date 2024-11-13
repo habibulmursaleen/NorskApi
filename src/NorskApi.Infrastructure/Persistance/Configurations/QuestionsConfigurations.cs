@@ -35,6 +35,8 @@ public class QuestionsConfigurations : IEntityTypeConfiguration<Question>
 
         builder.Property(x => x.IsCompleted).IsRequired();
 
+        builder.Property(x => x.QuestionType).IsRequired().HasConversion<string>();
+
         builder.Property(x => x.DifficultyLevel).IsRequired().HasConversion<string>();
 
         builder.Property(x => x.CreatedDateTime).IsRequired();

@@ -20,7 +20,7 @@ using NorskApi.Contracts.Dictations.Request;
 using NorskApi.Contracts.Dictations.Response;
 
 [Produces(MediaTypeNames.Application.Json)]
-[Route("api/v1/dictations")]
+[Route("api/v2/dictations")]
 public class DictationsController : ApiController
 {
     private readonly ISender mediator;

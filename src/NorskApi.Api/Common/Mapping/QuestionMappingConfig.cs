@@ -21,6 +21,7 @@ public class QuestionMappingConfig : IRegister
             .Map(dest => dest.Label, src => src.request.Label)
             .Map(dest => dest.Answer, src => src.request.Answer)
             .Map(dest => dest.IsCompleted, src => src.request.IsCompleted)
+            .Map(dest => dest.QuestionType, src => src.request.QuestionType)
             .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel);
 
         config
@@ -33,20 +34,18 @@ public class QuestionMappingConfig : IRegister
             .Map(dest => dest.Label, src => src.request.Label)
             .Map(dest => dest.Answer, src => src.request.Answer)
             .Map(dest => dest.IsCompleted, src => src.request.IsCompleted)
+            .Map(dest => dest.QuestionType, src => src.request.QuestionType)
             .Map(dest => dest.DifficultyLevel, src => src.request.DifficultyLevel);
 
         config.NewConfig<Guid, DeleteQuestionCommand>().Map(dest => dest.Id, src => src);
 
         config
-            .NewConfig<
-                (Guid essayId, QueryParamsBaseFiltersRequest filters),
-                GetAllQuestionsQuery
-            >()
-            .Map(dest => dest.EssayId, src => src.essayId)
-            .Map(dest => dest.Filters, src => src.filters);
+            .NewConfig<QueryParamsWithEssayFiltersRequest, GetAllQuestionsQuery>()
+            .Map(dest => dest.Filters, src => src);
 
         config
-            .NewConfig<QueryParamsBaseFiltersRequest, QueryParamsBaseFilters>()
+            .NewConfig<QueryParamsWithEssayFiltersRequest, QueryParamsWithEssayFilters>()
+            .Map(dest => dest.EssayId, src => src.EssayId)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel)
             .Map(dest => dest.Page, src => src.Page)
             .Map(dest => dest.Size, src => src.Size)
@@ -59,6 +58,7 @@ public class QuestionMappingConfig : IRegister
             .Map(dest => dest.Label, src => src.Label)
             .Map(dest => dest.Answer, src => src.Answer)
             .Map(dest => dest.IsCompleted, src => src.IsCompleted)
+            .Map(dest => dest.QuestionType, src => src.QuestionType)
             .Map(dest => dest.DifficultyLevel, src => src.DifficultyLevel);
     }
 }

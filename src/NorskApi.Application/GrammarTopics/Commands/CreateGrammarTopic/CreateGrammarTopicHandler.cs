@@ -5,6 +5,7 @@ using MediatR;
 using NorskApi.Application.Common.Interfaces.Persistance;
 using NorskApi.Application.GrammarTopics.Models;
 using NorskApi.Domain.GrammarTopicAggregate;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 
 public class CreateGrammarTopicHandler
     : IRequestHandler<CreateGrammarTopicCommand, ErrorOr<GrammarTopicResult>>
@@ -30,7 +31,8 @@ public class CreateGrammarTopicHandler
             command.Progress,
             command.IsCompleted,
             command.IsSaved,
-            command.Tags,
+            command.GrammarTopicTagIds?.Select(x => TagId.Create(x.TagId)).ToList()
+                ?? new List<TagId>(),
             command.DifficultyLevel
         );
 
@@ -46,7 +48,9 @@ public class CreateGrammarTopicHandler
             grammarTopic.Progress,
             grammarTopic.IsCompleted,
             grammarTopic.IsSaved,
-            grammarTopic.Tags ?? new List<string>(),
+            grammarTopic
+                .GrammarTopicTagIds.Select(x => new GrammarTopicTagResult(x.Value))
+                .ToList(),
             grammarTopic.DifficultyLevel,
             grammarTopic.CreatedDateTime,
             grammarTopic.UpdatedDateTime

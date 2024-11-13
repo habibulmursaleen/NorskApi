@@ -41,10 +41,19 @@ public class CreateGrammarTopicValidator : AbstractValidator<CreateGrammarTopicC
 
         RuleFor(x => x.IsSaved).NotNull().WithMessage("IsSaved is required.");
 
-        RuleFor(x => x.Tags).NotEmpty().WithMessage("Tags is required.");
+        RuleForEach(x => x.GrammarTopicTagIds)
+            .SetValidator(new CreateGrammarTopicTagIdsCommandValidator());
 
         RuleFor(x => x.DifficultyLevel.ToString())
             .IsEnumName(typeof(DifficultyLevel), caseSensitive: false)
             .WithMessage("Invalid DifficultyLevel.");
+    }
+}
+
+public class CreateGrammarTopicTagIdsCommandValidator : AbstractValidator<GrammarTopicTagCommand>
+{
+    public CreateGrammarTopicTagIdsCommandValidator()
+    {
+        RuleFor(x => x.TagId).NotEmpty().WithMessage("TagId is required.");
     }
 }

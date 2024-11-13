@@ -14,8 +14,12 @@ public record UpdateWordRequest(
     PartOfSpeechTag PartOfSpeechTag,
     DifficultyLevel DifficultyLevel,
     bool IsCompleted,
-    List<Guid> SynonymIds,
-    List<Guid> AntonymIds,
+    List<UpdateSynonymIdRequest> WordSynonymIds,
+    List<UpdateAntonymIdRequest> WordAntonymIds,
     UpdateWordGrammerRequest WordGrammer,
     UpdateWordUsageExampleRequest WordUsageExample
 );
+
+public record UpdateSynonymIdRequest(Guid WordId);
+
+public record UpdateAntonymIdRequest(Guid WordId);

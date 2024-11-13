@@ -7,6 +7,7 @@ using NorskApi.Domain.GrammarTopicAggregate.ValueObjects;
 using NorskApi.Domain.GrammmarRuleAggregate;
 using NorskApi.Domain.GrammmarRuleAggregate.Entites;
 using NorskApi.Domain.GrammmarRuleAggregate.ValueObjects;
+using NorskApi.Domain.TagAggregate.ValueObjects;
 using Exception = NorskApi.Domain.GrammmarRuleAggregate.Entites.Exception;
 
 namespace NorskApi.Application.GrammarRules.Command.UpdateGrammarRule;
@@ -42,6 +43,7 @@ public class UpdateGrammarRuleHandler
 
         List<Exception> exceptionsToUpdate = [];
         List<ExampleOfRule> exampleOfRulesToUpdate = [];
+        List<SentenceStructure> SentenceStructureToUpdate = [];
 
         if (command.Exceptions != null)
         {
@@ -92,6 +94,34 @@ public class UpdateGrammarRuleHandler
         exceptionsToUpdate = exceptionsToUpdate
             .Where(exception => !exceptionsToRemove.Contains(exception))
             .ToList();
+
+        if (command.SentenceStructures != null)
+        {
+            foreach (
+                UpdateSentenceStructureCommand updateSentenceStructure in command.SentenceStructures
+            )
+            {
+                SentenceStructureId sentenceStructureId = SentenceStructureId.Create(
+                    updateSentenceStructure.Id
+                );
+                SentenceStructure? sentenceStructure =
+                    grammarRule.SentenceStructures.FirstOrDefault(sentenceStructure =>
+                        sentenceStructure.Id == sentenceStructureId
+                    );
+
+                if (sentenceStructure is null)
+                {
+                    SentenceStructureToUpdate.Add(
+                        SentenceStructure.Create(updateSentenceStructure.Label)
+                    );
+                }
+                else
+                {
+                    sentenceStructure.Update(updateSentenceStructure.Label);
+                    SentenceStructureToUpdate.Add(sentenceStructure);
+                }
+            }
+        }
 
         if (command.ExampleOfRules != null)
         {
@@ -160,13 +190,16 @@ public class UpdateGrammarRuleHandler
             command.Label,
             command.Description,
             command.ExplanatoryNotes,
-            command.SentenceStructure,
+            SentenceStructureToUpdate,
             command.RuleType,
             command.DifficultyLevel,
-            command.Tags,
+            command.GrammarRuleTagIds?.Select(x => TagId.Create(x.TagId)).ToList()
+                ?? new List<TagId>(),
             command.AdditionalInformation,
-            command.Comments,
-            command.RelatedRuleIds?.Select(GrammarRuleId.Create).ToList(),
+            command.Comments ?? new List<string>(),
+            command
+                .RelatedGrammarRuleIds?.Select(x => GrammarRuleId.Create(x.GrammarRuleId))
+                .ToList() ?? new List<GrammarRuleId>(),
             exceptionsToUpdate,
             exampleOfRulesToUpdate
         );
@@ -213,13 +246,21 @@ public class UpdateGrammarRuleHandler
             grammarRule.Label,
             grammarRule.Description,
             grammarRule.ExplanatoryNotes,
-            grammarRule.SentenceStructure,
+            grammarRule
+                .SentenceStructures.Select(sentenceStructure => new SentenceStructureResult(
+                    sentenceStructure.Label
+                ))
+                .ToList(),
             grammarRule.RuleType,
             grammarRule.DifficultyLevel,
-            grammarRule.Tags,
+            grammarRule
+                .GrammarRuleTagIds.Select(tagId => new GrammarRuleTagIdResult(tagId.Value))
+                .ToList(),
             grammarRule.AdditionalInformation,
             grammarRule.Comments,
-            grammarRule.RelatedRuleIds?.Select(id => GrammarRuleId.Create(id)).ToList(),
+            grammarRule
+                .RelatedGrammarRuleIds?.Select(x => new RelatedRuleIdResult(x.Value))
+                .ToList() ?? new List<RelatedRuleIdResult>(),
             exceptionsResult,
             exampleOfRulesResult,
             grammarRule.CreatedDateTime,

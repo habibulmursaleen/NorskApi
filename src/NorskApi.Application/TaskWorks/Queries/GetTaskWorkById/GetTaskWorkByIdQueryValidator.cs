@@ -12,11 +12,5 @@ public class GetTaskWorkByIdQueryValidator : AbstractValidator<GetTaskWorkByIdQu
             .NotNull()
             .Must(x => x != Guid.Empty)
             .WithMessage("Task id is required and must be valid guid.");
-
-        RuleFor(query => query.TopicId)
-            .NotEmpty()
-            .NotNull()
-            .Must(x => x != Guid.Empty)
-            .WithMessage("TopicId id is required and must be valid guid.");
     }
 }

@@ -7,13 +7,19 @@ public record CreateGrammarRuleRequest(
     string Label,
     string? Description,
     string? ExplanatoryNotes,
-    List<string>? SentenceStructure,
     string? RuleType,
     DifficultyLevel DifficultyLevel,
-    List<string>? Tags,
+    List<CreateGrammarRuleTagIdsRequest>? GrammarRuleTagIds,
     string? AdditionalInformation,
     List<string>? Comments,
-    List<Guid>? RelatedRuleIds,
-    List<CreateExceptionRequest>? Exceptions,
-    List<CreateExampleOfRuleRequest>? ExampleOfRules
+    List<CreateRelatedGramarRuleIdsRequest>? RelatedGrammarRuleIds,
+    List<CreateSentenceStructureRequest> SentenceStructures,
+    List<CreateExceptionRequest> Exceptions,
+    List<CreateExampleOfRuleRequest> ExampleOfRules
 );
+
+public record CreateSentenceStructureRequest(string Label);
+
+public record CreateRelatedGramarRuleIdsRequest(Guid GrammarRuleId);
+
+public record CreateGrammarRuleTagIdsRequest(Guid TagId);

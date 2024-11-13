@@ -4,4 +4,4 @@ using NorskApi.Application.Questions.Models;
 
 namespace NorskApi.Application.Questions.Queries.GetQuestionById;
 
-public record GetQuestionByIdQuery(Guid EssayId, Guid Id) : IRequest<ErrorOr<QuestionResult>>;
+public record GetQuestionByIdQuery(Guid Id) : IRequest<ErrorOr<QuestionResult>>;
