@@ -34,11 +34,11 @@ A very comprehensive backend api for norsk learning application.
 
 ![Norsk API Aggregate](norskapi-version2.png)
 
-This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .NET application.
+This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .net 9application.
 
 ### Requirements
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later
+- [.net 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) or later
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (or any database of your choice)
 - [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (Recommended for development)
 - [Docker](https://www.docker.com/) (Recommended for Database)
@@ -74,7 +74,7 @@ Ensure your SQL Server is running. Update the connection string in appsettings.D
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=norskapi;User Id=your_userId;Password=your_password;Pooling=true;Min Pool Size=10;Max Pool Size=200;Connection Lifetime=180;Connection Timeout=30;Encrypt=false;"
+    "DefaultConnection": "Server=localhost;Database=Norskapi;User Id=yourusername;Password='yourpassword';Encrypt=false;Pooling=true;Min Pool Size=10;Max Pool Size=200;Connection Lifetime=180;Connection Timeout=30;Encrypt=false;"
   }
 }
 ```
