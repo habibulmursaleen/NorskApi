@@ -1,6 +1,6 @@
 # Norsk API
 
-A very comprehensive backend api for norsk learning application. 
+A comprehensive backend api service for norsk learning application. 
 
 ## Table of contents
 
@@ -14,7 +14,7 @@ A very comprehensive backend api for norsk learning application.
       - [Step 3: Set Up Docker and Database](#step-3-set-up-docker-and-database)
       - [Step 3: Apply Migrations](#step-3-apply-migrations)
       - [Step 4: Build and Run the Application](#step-4-build-and-run-the-application)
-      - [Test](#test)
+      - [Test (Under development)](#test-under-development)
   - [Endpoints](#endpoints)
       - [Subjunction Endpoint](#subjunction-endpoint)
       - [LocalExpression Endpoint](#localexpression-endpoint)
@@ -34,12 +34,12 @@ A very comprehensive backend api for norsk learning application.
 
 ![Norsk API Aggregate](Docs/norskapi-version2.png)
 
-This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .net 9application.
+This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .Net 9 application.
 
 ### Requirements
 
 - [.Net 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) or later
-- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (or any database of your choice)
+- [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (Recommended for Database)
 - [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (Recommended for development)
 - [Docker](https://www.docker.com/) (Recommended for Database)
 
@@ -47,10 +47,12 @@ This project follows Clean Architecture principles combined with Domain-Driven D
 
 This project is structured based on Clean Architecture, with separation into the following main layers:
 
-- **Core** - Contains the Domain layer, including entities, aggregates, value objects, and domain services.
+- **Presentation** 
+  - **API** - The Controllers for the API, handling requests and responses and mapping.
+  - **Contracts** - The DTO for the API, defining requests and responses.
 - **Application** - Contains use cases, DTOs, and interfaces.
+- **Domain** - Contains the Domain layer, including events, entities, aggregates, value objects, and domain services.
 - **Infrastructure** - Contains the implementations of repositories, data access, and integrations.
-- **WebApi** - The entry point for the API, handling requests and responses.
 
 ### Setup
 
@@ -122,7 +124,7 @@ dotnet watch run --project src/NorskApi.Api
 
 Open your brower and go to http://localhost:5160/swagger/index.html.
 
-#### Test
+#### Test (Under development)
 
 ```
 dotnet test
