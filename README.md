@@ -34,7 +34,7 @@ A very comprehensive backend api for norsk learning application.
 
 ![Norsk API Aggregate](Docs/norskapi-version2.png)
 
-This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .net 9application.
+This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .Net 9application.
 
 ### Requirements
 
