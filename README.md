@@ -14,7 +14,7 @@ A comprehensive backend api service for norsk learning application.
       - [Step 3: Set Up Docker and Database](#step-3-set-up-docker-and-database)
       - [Step 3: Apply Migrations](#step-3-apply-migrations)
       - [Step 4: Build and Run the Application](#step-4-build-and-run-the-application)
-      - [Test](#test)
+      - [Test (Under development)](#test-under-development)
   - [Endpoints](#endpoints)
       - [Subjunction Endpoint](#subjunction-endpoint)
       - [LocalExpression Endpoint](#localexpression-endpoint)
@@ -124,7 +124,7 @@ dotnet watch run --project src/NorskApi.Api
 
 Open your brower and go to http://localhost:5160/swagger/index.html.
 
-#### Test
+#### Test (Under development)
 
 ```
 dotnet test
