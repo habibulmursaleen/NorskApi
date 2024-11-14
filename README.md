@@ -32,7 +32,7 @@ A very comprehensive backend api for norsk learning application.
       - [Quiz Endpoint](#quiz-endpoint)
       - [Norskprove Endpoint](#norskprove-endpoint)
 
-![Norsk API Aggregate](norskapi-version2.png)
+![Norsk API Aggregate](Docs/norskapi-version2.png)
 
 This project follows Clean Architecture principles combined with Domain-Driven Design (DDD) to create a maintainable and scalable .net 9application.
 
