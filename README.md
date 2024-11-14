@@ -38,7 +38,7 @@ This project follows Clean Architecture principles combined with Domain-Driven D
 
 ### Requirements
 
-- [.net 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) or later
+- [.Net 9 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) or later
 - [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (or any database of your choice)
 - [Visual Studio](https://visualstudio.microsoft.com/) or [Visual Studio Code](https://code.visualstudio.com/) (Recommended for development)
 - [Docker](https://www.docker.com/) (Recommended for Database)
