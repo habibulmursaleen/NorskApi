@@ -2,18 +2,16 @@ using NorskApi.Domain.Common.Models;
 
 namespace NorskApi.Domain.EssayAggregate.ValueObjects;
 
-public sealed class RoleplayId : AggregateRootId<Guid>
+public sealed class RoleplayId : ValueObject
 {
     private RoleplayId() { }
 
-    private RoleplayId(Guid value)
+    public Guid Value { get; set; }
+
+    public RoleplayId(Guid value)
     {
         this.Value = value;
     }
-
-    public override Guid Value { get; protected set; }
-
-    public static implicit operator Guid(RoleplayId data) => data.Value;
 
     public static RoleplayId CreateUnique()
     {
