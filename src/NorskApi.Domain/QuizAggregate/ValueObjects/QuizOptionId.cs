@@ -1,20 +1,17 @@
 using NorskApi.Domain.Common.Models;
 
 namespace NorskApi.Domain.QuizAggregate.ValueObjects;
-public sealed class QuizOptionId : AggregateRootId<Guid>
-{
-    private QuizOptionId()
-    {
-    }
 
-    private QuizOptionId(Guid value)
+public sealed class QuizOptionId : ValueObject
+{
+    private QuizOptionId() { }
+
+    public Guid Value { get; set; }
+
+    public QuizOptionId(Guid value)
     {
         this.Value = value;
     }
-
-    public override Guid Value { get; protected set; }
-
-    public static implicit operator Guid(QuizOptionId data) => data.Value;
 
     public static QuizOptionId CreateUnique()
     {
