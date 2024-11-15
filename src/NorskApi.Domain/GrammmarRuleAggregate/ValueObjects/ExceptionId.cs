@@ -2,20 +2,16 @@ using NorskApi.Domain.Common.Models;
 
 namespace NorskApi.Domain.GrammmarRuleAggregate.ValueObjects;
 
-public sealed class ExceptionId : AggregateRootId<Guid>
+public sealed class ExceptionId : ValueObject
 {
-    private ExceptionId()
-    {
-    }
+    private ExceptionId() { }
 
-    private ExceptionId(Guid value)
+    public Guid Value { get; set; }
+
+    public ExceptionId(Guid value)
     {
         this.Value = value;
     }
-
-    public override Guid Value { get; protected set; }
-
-    public static implicit operator Guid(ExceptionId data) => data.Value;
 
     public static ExceptionId CreateUnique()
     {
