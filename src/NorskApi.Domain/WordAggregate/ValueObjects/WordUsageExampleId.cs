@@ -4,9 +4,8 @@ namespace NorskApi.Domain.WordAggregate.ValueObjects;
 
 public sealed class WordUsageExampleId : ValueObject
 {
-#pragma warning disable CS0628 // New protected member declared in sealed type
-    public Guid Value { get; protected set; }
-#pragma warning restore CS0628 // New protected member declared in sealed type
+    public Guid Value { get; set; }
+
     private WordUsageExampleId() { }
 
     private WordUsageExampleId(Guid value)

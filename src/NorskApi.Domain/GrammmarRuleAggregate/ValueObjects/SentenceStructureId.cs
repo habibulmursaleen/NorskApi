@@ -2,18 +2,16 @@ using NorskApi.Domain.Common.Models;
 
 namespace NorskApi.Domain.GrammmarRuleAggregate.ValueObjects;
 
-public sealed class SentenceStructureId : AggregateRootId<Guid>
+public sealed class SentenceStructureId : ValueObject
 {
     private SentenceStructureId() { }
 
-    private SentenceStructureId(Guid value)
+    public Guid Value { get; set; }
+
+    public SentenceStructureId(Guid value)
     {
         this.Value = value;
     }
-
-    public override Guid Value { get; protected set; }
-
-    public static implicit operator Guid(SentenceStructureId data) => data.Value;
 
     public static SentenceStructureId CreateUnique()
     {
