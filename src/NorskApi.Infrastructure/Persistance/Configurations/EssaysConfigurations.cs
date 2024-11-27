@@ -83,7 +83,7 @@ public class EssaysConfigurations : IEntityTypeConfiguration<Essay>
             m => m.EssayActivityIds,
             reviewBuilder =>
             {
-                reviewBuilder.ToTable("Essay");
+                reviewBuilder.ToTable("EssayActivityIds");
 
                 reviewBuilder.WithOwner().HasForeignKey("EssayId");
 
@@ -95,6 +95,33 @@ public class EssaysConfigurations : IEntityTypeConfiguration<Essay>
                     .ValueGeneratedNever();
             }
         );
+
+        // when the lists of ids are nested into the parent entity, we need to set the property access mode to field
+        // customBuilder.OwnsMany(
+        //             x => x.EssayActivityIds,
+        //             quickKeyBuilder =>
+        //             {
+        //                 quickKeyBuilder.ToTable("EssayActivityIds");
+
+        //                 quickKeyBuilder
+        //                     .Property<Guid>("Id")
+        //                     .HasColumnName("Id")
+        //                     .ValueGeneratedOnAdd();
+        //                 quickKeyBuilder.HasKey("Id");
+
+        //                 quickKeyBuilder.WithOwner().HasForeignKey("EssayId"); //immediate parent entity
+
+        //                 quickKeyBuilder
+        //                     .Property(x => x.Value)
+        //                     .HasColumnName("ActivityId")
+        //                     .IsRequired()
+        //                     .ValueGeneratedNever();
+        //             }
+        //         );
+
+        //         customBuilder
+        //             .Navigation(x => x.EssayActivityIds)
+        //             .UsePropertyAccessMode(PropertyAccessMode.Field);
 
         builder
             .Metadata.FindNavigation(nameof(Essay.EssayActivityIds))!
