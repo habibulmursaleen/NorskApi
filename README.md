@@ -59,7 +59,7 @@ This project is structured based on Clean Architecture, with separation into the
 ####  Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/habibulmursaleen/NorskApi
+git clone https://github.com/habibulmursaleen/norsk-api
 cd NorskApi
 ```
 
